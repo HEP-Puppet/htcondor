@@ -1,0 +1,20 @@
+{
+  "name": "kreczko-htcondor",
+  "author": "kreczko",
+  "description": "Puppet module for HTCondor batch system",
+  "license": "Apache License, Version 2.0",
+  "project_page": "https://github.com/HEP-Puppet",
+  "source": "git@github.com:HEP-Puppet/puppet-htcondor.git",
+  "summary": "Puppet module for HTCondor batch system",
+  "version": "0.0.1",
+  "checksums": {
+    "Modulefile": "9a21e26533c2482adbe1ddd8a004f411",
+    "README.markdown": "2d4d98380b76ec642e1977614d346b9e",
+    "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
+    "manifests/init.pp": "a41ebf32e823405fedabc1de5d4beb23",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+    "tests/init.pp": "fb0edc205ac5225edb064016e4ad5273"
+  },
+  "dependencies": []
+}
