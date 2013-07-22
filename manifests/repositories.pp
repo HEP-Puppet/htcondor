@@ -1,3 +1,6 @@
+# Class: htcondor::repositories
+#
+# Provides yum repositories for HTCondor installation
 class htcondor::repositories (
   $install_repos = true,) {
   if $install_repos {
