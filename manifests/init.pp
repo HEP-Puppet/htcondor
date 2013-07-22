@@ -15,4 +15,6 @@ class htcondor (
   class { 'htcondor::repositories': install_repos => $install_repositories, }
 
   class { 'htcondor::install': }
+
+  class { 'htcondor::config': }
 }
