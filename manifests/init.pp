@@ -17,4 +17,6 @@ class htcondor (
   class { 'htcondor::install': }
 
   class { 'htcondor::config': }
+
+  class { 'htcondor::service': }
 }
