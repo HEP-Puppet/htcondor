@@ -10,6 +10,9 @@
 #
 # Sample Usage:
 #
-class htcondor {
+class htcondor (
+  $install_repositories = true,) {
+  class { 'htcondor::repositories': install_repos => $install_repositories, }
 
+  class { 'htcondor::install': }
 }

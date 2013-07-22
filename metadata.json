@@ -13,8 +13,9 @@
     "Modulefile": "9a21e26533c2482adbe1ddd8a004f411",
     "README.markdown": "52e7aa6abaa6c8e365807457aa0ac5f2",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
-    "manifests/init.pp": "a41ebf32e823405fedabc1de5d4beb23",
-    "manifests/repositories.pp": "1d99ae9d3e52f92978c3a6610f00c9c7",
+    "manifests/init.pp": "a0041ae5b17ef99c8ff7a1c95209a518",
+    "manifests/install.pp": "6cc63b8f642424c392735eaf2138cec7",
+    "manifests/repositories.pp": "23cee47e977c4bc776301a42eb3a6549",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
     "tests/init.pp": "fb0edc205ac5225edb064016e4ad5273"
