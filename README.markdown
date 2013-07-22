@@ -1,3 +1,5 @@
-# htcondor #
+Puppet module for HTCondor batch system
+=========================================
 
-This is the htcondor module. It provides...
+[![Build Status](https://www.travis-ci.org/kreczko/puppet-htcondor.png?branch=master)](https://www.travis-ci.org/kreczko/puppet-htcondor)
+
