@@ -19,4 +19,7 @@ class htcondor (
   class { 'htcondor::config': }
 
   class { 'htcondor::service': }
+
+  Class['htcondor::repositories'] -> Class['htcondor::install'] -> Class['htcondor::config'] -> Class['htcondor::service'
+    ]
 }

@@ -14,7 +14,7 @@
     "README.markdown": "52e7aa6abaa6c8e365807457aa0ac5f2",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
     "manifests/config.pp": "1f44e4ceb1f37e32958dd81e1512a33a",
-    "manifests/init.pp": "929655d7eb64fe6fb8c6fd38ed36369d",
+    "manifests/init.pp": "5e129c4ec469ca0046068926de984eae",
     "manifests/install.pp": "6cc63b8f642424c392735eaf2138cec7",
     "manifests/repositories.pp": "23cee47e977c4bc776301a42eb3a6549",
     "manifests/service.pp": "2e406ce0f34f26a791340407478e9947",
