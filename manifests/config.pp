@@ -16,6 +16,8 @@ class htcondor::config (
     ensure  => present,
     backup  => ".bak",
     content => template($template),
+    require => Package["condor"],
+    #notify  => Service["condor"], this should be exec {'condor_reconfig':}
   }
 
 }
