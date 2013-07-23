@@ -32,5 +32,5 @@ KILL = FALSE
 
 DAEMON_LIST = COLLECTOR, MASTER, NEGOTIATOR, SCHEDD, STARTD
 <% if @allow_write %>
-ALLOW_WRITE = $(ALLOW_WRITE), <%= allow_write.flatten.join(',') %> 
+ALLOW_WRITE = $(ALLOW_WRITE), <%= allow_write.flatten.join(', ') %> 
 <% end -%>

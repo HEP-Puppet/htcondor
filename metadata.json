@@ -22,7 +22,7 @@
     "manifests/service.pp": "2e406ce0f34f26a791340407478e9947",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
-    "templates/condor_config_CE.local.erb": "8b714a99d2a8ae97ef1dfbb98f749cdf",
+    "templates/condor_config_CE.local.erb": "9abe67566a62f0c660ca4b256f73dc17",
     "templates/condor_config_worker.local.erb": "05539155afb2f23e6608f6543a7d02b3",
     "tests/init.pp": "fb0edc205ac5225edb064016e4ad5273"
   },
