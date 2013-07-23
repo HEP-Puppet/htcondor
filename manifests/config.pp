@@ -6,10 +6,10 @@ class htcondor::config (
   $condor_host = $fqdn,
   $allow_write = [
     ]) {
-  $template = "${module_name}/condor_config_CE.local.erb"
-
   if $is_worker {
     $template = "${module_name}/condor_config_worker.local.erb"
+  } else {
+    $template = "${module_name}/condor_config_CE.local.erb"
   }
 
   file { '/etc/condor/condor_config.local':
@@ -17,7 +17,7 @@ class htcondor::config (
     backup  => ".bak",
     content => template($template),
     require => Package["condor"],
-    #notify  => Service["condor"], this should be exec {'condor_reconfig':}
+  # notify  => Service["condor"], this should be exec {'condor_reconfig':}
   }
 
 }
