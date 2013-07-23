@@ -16,7 +16,7 @@
     "files/condor_config": "9c50a7a8675a8b5f598b5086efa6891a",
     "files/condor_config.local": "abd6ee7a454ecfa51aa2ff08bbf4e308",
     "manifests/config.pp": "43230d22fc202c3a619704437d56e32c",
-    "manifests/init.pp": "5e129c4ec469ca0046068926de984eae",
+    "manifests/init.pp": "652cdb8a1d2860a8859fcffa9f09f77a",
     "manifests/install.pp": "6cc63b8f642424c392735eaf2138cec7",
     "manifests/repositories.pp": "7818275b74c81a610b554846fc758e42",
     "manifests/service.pp": "2e406ce0f34f26a791340407478e9947",
