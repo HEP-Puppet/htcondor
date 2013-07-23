@@ -13,13 +13,17 @@
     "Modulefile": "9a21e26533c2482adbe1ddd8a004f411",
     "README.markdown": "52e7aa6abaa6c8e365807457aa0ac5f2",
     "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
-    "manifests/config.pp": "1f44e4ceb1f37e32958dd81e1512a33a",
+    "files/condor_config": "9c50a7a8675a8b5f598b5086efa6891a",
+    "files/condor_config.local": "abd6ee7a454ecfa51aa2ff08bbf4e308",
+    "manifests/config.pp": "43230d22fc202c3a619704437d56e32c",
     "manifests/init.pp": "5e129c4ec469ca0046068926de984eae",
     "manifests/install.pp": "6cc63b8f642424c392735eaf2138cec7",
     "manifests/repositories.pp": "7818275b74c81a610b554846fc758e42",
     "manifests/service.pp": "2e406ce0f34f26a791340407478e9947",
     "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
     "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
+    "templates/condor_config_CE.local.erb": "8b714a99d2a8ae97ef1dfbb98f749cdf",
+    "templates/condor_config_worker.local.erb": "05539155afb2f23e6608f6543a7d02b3",
     "tests/init.pp": "fb0edc205ac5225edb064016e4ad5273"
   },
   "dependencies": []
