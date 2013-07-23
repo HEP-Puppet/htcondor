@@ -11,8 +11,8 @@ class htcondor::repositories (
         yumrepo { 'htcondor-stable':
           descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${major_release}",
           baseurl  => "http://research.cs.wisc.edu/htcondor/yum/stable/rhel${major_release}",
-          enabled  => true,
-          gpgcheck => false,
+          enabled  => 1,
+          gpgcheck => 0,
         }
       }
       'Debian'  : {
