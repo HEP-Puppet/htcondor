@@ -3,6 +3,7 @@
 	<name>htcondor</name>
 	<comment></comment>
 	<projects>
+		<project>puppetlabs-firewall</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

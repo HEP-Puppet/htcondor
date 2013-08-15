@@ -1,30 +1,18 @@
 {
   "name": "kreczko-htcondor",
+  "version": "0.0.1",
+  "summary": "Puppet module for HTCondor batch system",
   "author": "kreczko",
   "description": "Puppet module for HTCondor batch system",
-  "license": "Apache License, Version 2.0",
-  "project_page": "https://github.com/HEP-Puppet",
+  "dependencies": [
+    {
+      "name": "puppetlabs/firewall",
+      "version_requirement": "\u003e\u003d0.3.1"
+    }
+  ],
+  "types": [],
+  "checksums": {},
   "source": "git@github.com:HEP-Puppet/puppet-htcondor.git",
-  "summary": "Puppet module for HTCondor batch system",
-  "version": "0.0.1",
-  "checksums": {
-    ".gemfile": "f2a73f3c76933e38e004d3c2a939c56c",
-    ".travis.yml": "ece9944c5aad10729442838e2e571f9e",
-    "Modulefile": "9a21e26533c2482adbe1ddd8a004f411",
-    "README.markdown": "52e7aa6abaa6c8e365807457aa0ac5f2",
-    "Rakefile": "f37e6131fe7de9a49b09d31596f5fbf1",
-    "files/condor_config": "9c50a7a8675a8b5f598b5086efa6891a",
-    "files/condor_config.local": "abd6ee7a454ecfa51aa2ff08bbf4e308",
-    "manifests/config.pp": "0ef21172429a2645b519825a3048325d",
-    "manifests/init.pp": "652cdb8a1d2860a8859fcffa9f09f77a",
-    "manifests/install.pp": "6cc63b8f642424c392735eaf2138cec7",
-    "manifests/repositories.pp": "7818275b74c81a610b554846fc758e42",
-    "manifests/service.pp": "2e406ce0f34f26a791340407478e9947",
-    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
-    "spec/spec_helper.rb": "3ea886dd135e120afa31e0aab12e85b0",
-    "templates/condor_config_CE.local.erb": "9abe67566a62f0c660ca4b256f73dc17",
-    "templates/condor_config_worker.local.erb": "05539155afb2f23e6608f6543a7d02b3",
-    "tests/init.pp": "fb0edc205ac5225edb064016e4ad5273"
-  },
-  "dependencies": []
+  "project_page": "https://github.com/HEP-Puppet",
+  "license": "Apache License, Version 2.0"
 }
