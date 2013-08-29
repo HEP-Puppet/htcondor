@@ -87,8 +87,13 @@ class htcondor::config (
     require => Package['condor'],
   }
 
-  file { '/etc/condor/persistent': ensure => directory, }
-  file { ['/pool', '/pool/condor']: ensure => directory, }
+  file { [
+    '/pool',
+    '/pool/condor',
+    '/etc/condor/persistent']:
+    ensure => directory,
+    owner  => 'condor',
+  }
 
   file { '/etc/condor/pool_password':
     ensure => present,
