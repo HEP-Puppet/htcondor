@@ -1,17 +1,13 @@
-# RAL Tier-1 HTCondor configuration: security
+# HTCondor configuration: security
 
-UID_DOMAIN = gridpp.rl.ac.uk
+UID_DOMAIN = <%= @uid_domain -%>
 
-CONDOR_HOST =
-
-CENTRAL_MANAGER1 = condor01.gridpp.rl.ac.uk
-CENTRAL_MANAGER2 = condor02.gridpp.rl.ac.uk
-COLLECTOR_HOST = $(CENTRAL_MANAGER1),$(CENTRAL_MANAGER2)
+COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
 
 # Machines & users
-CMS = *@$(UID_DOMAIN)/condor01.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/condor02.gridpp.rl.ac.uk
-CES = *@$(UID_DOMAIN)/arc-ce01.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/arc-ce02.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/lcgvm21.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/cream-ce01.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/lcgvm-ce01.gridpp.rl.ac.uk
-WNS = *@$(UID_DOMAIN)/130.246.*
+CMS = <%= @$managers_with_uid_domain.flatten.join(', ') %>
+CES = <%= @$computing_elements_with_uid_domain.flatten.join(', ') %>
+WNS = <%= @$worker_nodes_with_uid_domain.flatten.join(', ') %>
 USERS = *@$(UID_DOMAIN)
 
 ##  Negotiator access.  Machines listed here are trusted central
@@ -33,14 +29,14 @@ HOSTALLOW_NEGOTIATOR_SCHEDD = $(COLLECTOR_HOST)
 # Authorization
 HOSTALLOW_WRITE = 
 ALLOW_WRITE = $(CMS), $(CES), $(WNS)
-ALLOW_READ = *@$(UID_DOMAIN)/*.gridpp.rl.ac.uk, tomcat/*.gridpp.rl.ac.uk, ldap/*.gridpp.rl.ac.uk
+ALLOW_READ = *@$(UID_DOMAIN)/*.$(UID_DOMAIN), tomcat/*.$(UID_DOMAIN), ldap/*.$(UID_DOMAIN)
 NEGOTIATOR.ALLOW_WRITE = $(CES), $(CMS)
 COLLECTOR.ALLOW_ADVERTISE_MASTER = $(CES), $(CMS), $(WNS)
 COLLECTOR.ALLOW_ADVERTISE_SCHEDD = $(CES)
 COLLECTOR.ALLOW_ADVERTISE_STARTD = $(WNS)
 SCHEDD.ALLOW_WRITE = $(USERS)
 SHADOW.ALLOW_WRITE = $(WNS), $(CES)
-ALLOW_DAEMON = condor_pool@$(UID_DOMAIN)/*.gridpp.rl.ac.uk, $(FULL_HOSTNAME)
+ALLOW_DAEMON = condor_pool@$(UID_DOMAIN)/*.$(UID_DOMAIN), $(FULL_HOSTNAME)
 ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
 ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 

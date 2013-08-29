@@ -10,8 +10,13 @@ class htcondor::config (
   $collector_name     = 'Personal Condor at $(FULL_HOSTNAME)',
   $machine_owner      = 'physics',
   $number_of_cpus     = 8,
+  $allow_write        = [],
+  $uid_domain         = 'example.com',
   # specify the networks with write access i.e. ["10.132.0.*"]
-  $allow_write        = []) {
+  $managers           = [],
+  $computing_elements = [],
+  $worker_nodes       = [],
+  $condor_password    = 'changeme',) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
@@ -48,7 +53,15 @@ class htcondor::config (
   # notify  => Service["condor"], this should be exec {'condor_reconfig':}
   }
 
+  file { '/etc/condor/config.d/10_security.config':
+    backup  => ".bak.${now}",
+    source  => "puppet:///modules/${module_name}/10_security.config",
+    require => Package['condor'],
+  }
+
   file { '/etc/condor/persistent': ensure => directory, }
+
+  file { '/etc/condor/pool_password': content => $condor_password }
 
   # files for certain roles
 
@@ -85,4 +98,9 @@ class htcondor::config (
     }
   }
 
+  # complex preparation of manager, computing_element and worker_nodes lists
+  $managers_with_uid_domain           = prefix($managers, '*@$(UID_DOMAIN)')
+  $computing_elements_with_uid_domain = prefix($computing_elements, '*@$(UID_DOMAIN)'
+  )
+  $worker_nodes_with_uid_domain       = prefix($worker_nodes, '*@$(UID_DOMAIN)')
 }
