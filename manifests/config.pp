@@ -78,7 +78,7 @@ class htcondor::config (
 
   file { '/etc/condor/config.d/10_security.config':
     backup  => ".bak.${now}",
-    source  => "puppet:///modules/${module_name}/10_security.config",
+    source  => template("${module_name}/10_security.config.erb"),
     require => Package['condor'],
   }
 
