@@ -53,13 +53,13 @@ class htcondor::config (
   # files for certain roles
 
   if $is_ce {
-    file { '/etc/condor/condor.d/12_resourcelimits.config':
+    file { '/etc/condor/config.d/12_resourcelimits.config':
       backup  => ".bak.${now}",
       source  => "puppet:///modules/${module_name}/12_resourcelimits.config",
       require => Package['condor'],
     }
 
-    file { '/etc/condor/condor.d/21_schedd.config':
+    file { '/etc/condor/config.d/21_schedd.config':
       backup  => ".bak.${now}",
       content => template("${module_name}/21_schedd.config.erb"),
       require => Package['condor'],
@@ -68,9 +68,9 @@ class htcondor::config (
 
   if $is_manager {
     # TODO: fair shares
-    file { '/etc/condor/condor.d/22_manager.config':
+    file { '/etc/condor/config.d/22_manager.config':
       backup  => ".bak.${now}",
-      content => template("${module_name}/21_schedd.config.erb"),
+      content => template("${module_name}/22_manager.config.erb"),
       require => Package['condor'],
     }
     # TODO: high availability
@@ -78,7 +78,7 @@ class htcondor::config (
   }
 
   if $is_worker {
-    file { '/etc/condor/condor.d/20_workernode.config':
+    file { '/etc/condor/config.d/20_workernode.config':
       backup  => ".bak.${now}",
       content => template("${module_name}/20_workernode.config.erb"),
       require => Package['condor'],
