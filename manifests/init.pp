@@ -26,8 +26,7 @@ class htcondor (
   # specify the networks with write access i.e. ["10.132.0.*"]
   $managers             = [],
   $computing_elements   = [],
-  $worker_nodes         = [],
-  $condor_password      = 'changeme',) {
+  $worker_nodes         = [],) {
   class { 'htcondor::repositories': install_repos => $install_repositories, }
 
   class { 'htcondor::install': }
@@ -46,7 +45,6 @@ class htcondor (
     managers           => $managers,
     computing_elements => $computing_elements,
     worker_nodes       => $worker_nodes,
-    condor_password    => $condor_password,
   }
 
   class { 'htcondor::service':

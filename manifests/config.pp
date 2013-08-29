@@ -15,8 +15,7 @@ class htcondor::config (
   # specify the networks with write access i.e. ["10.132.0.*"]
   $managers           = [],
   $computing_elements = [],
-  $worker_nodes       = [],
-  $condor_password    = 'changeme',) {
+  $worker_nodes       = [],) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
@@ -89,8 +88,6 @@ class htcondor::config (
   }
 
   file { '/etc/condor/persistent': ensure => directory, }
-
-  file { '/etc/condor/pool_password': content => $condor_password }
 
   # files for certain roles
   if $is_ce {
