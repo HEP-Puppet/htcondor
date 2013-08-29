@@ -88,7 +88,7 @@ class htcondor::config (
   }
 
   file { '/etc/condor/persistent': ensure => directory, }
-  file { '/pool/condor': ensure => directory, }
+  file { ['/pool', '/pool/condor']: ensure => directory, }
 
   file { '/etc/condor/pool_password':
     ensure => present,
