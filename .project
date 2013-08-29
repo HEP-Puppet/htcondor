@@ -4,6 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>puppetlabs-firewall</project>
+		<project>puppetlabs-stdlib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
