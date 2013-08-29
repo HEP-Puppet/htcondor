@@ -2,8 +2,6 @@
 #
 # Configuration deployment for HTCondor
 class htcondor::config (
-  # |worker|CE|manager
-  $host_type          = 'worker',
   $is_worker          = false,
   $is_ce              = false,
   $is_manager         = false,
