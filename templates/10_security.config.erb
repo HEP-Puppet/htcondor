@@ -1,0 +1,70 @@
+# RAL Tier-1 HTCondor configuration: security
+
+UID_DOMAIN = gridpp.rl.ac.uk
+
+CONDOR_HOST =
+
+CENTRAL_MANAGER1 = condor01.gridpp.rl.ac.uk
+CENTRAL_MANAGER2 = condor02.gridpp.rl.ac.uk
+COLLECTOR_HOST = $(CENTRAL_MANAGER1),$(CENTRAL_MANAGER2)
+
+# Machines & users
+CMS = *@$(UID_DOMAIN)/condor01.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/condor02.gridpp.rl.ac.uk
+CES = *@$(UID_DOMAIN)/arc-ce01.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/arc-ce02.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/lcgvm21.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/cream-ce01.gridpp.rl.ac.uk, *@$(UID_DOMAIN)/lcgvm-ce01.gridpp.rl.ac.uk
+WNS = *@$(UID_DOMAIN)/130.246.*
+USERS = *@$(UID_DOMAIN)
+
+##  Negotiator access.  Machines listed here are trusted central
+##  managers.  You should normally not have to change this.
+HOSTALLOW_NEGOTIATOR = $(COLLECTOR_HOST)
+
+##  What machines have administrative rights for your pool?  This
+##  defaults to your central manager.  You should set it to the
+##  machine(s) where whoever is the HTCondor administrator(s) works
+##  (assuming you trust all the users who log into that/those
+##  machine(s), since this is machine-wide access you're granting).
+HOSTALLOW_ADMINISTRATOR = $(COLLECTOR_HOST)
+
+##  Now, with flocking (and HA) we need to let the SCHEDD trust the other
+##  negotiators we are flocking with as well.  You should normally
+##  not need to change this.
+HOSTALLOW_NEGOTIATOR_SCHEDD = $(COLLECTOR_HOST)
+
+# Authorization
+HOSTALLOW_WRITE = 
+ALLOW_WRITE = $(CMS), $(CES), $(WNS)
+ALLOW_READ = *@$(UID_DOMAIN)/*.gridpp.rl.ac.uk, tomcat/*.gridpp.rl.ac.uk, ldap/*.gridpp.rl.ac.uk
+NEGOTIATOR.ALLOW_WRITE = $(CES), $(CMS)
+COLLECTOR.ALLOW_ADVERTISE_MASTER = $(CES), $(CMS), $(WNS)
+COLLECTOR.ALLOW_ADVERTISE_SCHEDD = $(CES)
+COLLECTOR.ALLOW_ADVERTISE_STARTD = $(WNS)
+SCHEDD.ALLOW_WRITE = $(USERS)
+SHADOW.ALLOW_WRITE = $(WNS), $(CES)
+ALLOW_DAEMON = condor_pool@$(UID_DOMAIN)/*.gridpp.rl.ac.uk, $(FULL_HOSTNAME)
+ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
+ALLOW_CONFIG = root@$(FULL_HOSTNAME)
+
+# Don't allow nobody to run jobs
+SCHEDD.DENY_WRITE = nobody@$(UID_DOMAIN)
+
+# Authentication
+SEC_PASSWORD_FILE = /etc/condor/pool_password
+SEC_DEFAULT_AUTHENTICATION = REQUIRED
+SEC_READ_AUTHENTICATION = OPTIONAL
+SEC_CLIENT_AUTHENTICATION = REQUIRED
+SEC_DEFAULT_AUTHENTICATION_METHODS = PASSWORD,FS
+SCHEDD.SEC_WRITE_AUTHENTICATION_METHODS = FS,PASSWORD
+SCHEDD.SEC_DAEMON_AUTHENTICATION_METHODS = FS,PASSWORD
+SEC_CLIENT_AUTHENTICATION_METHODS = FS,PASSWORD,CLAIMTOBE
+SEC_READ_AUTHENTICATION_METHODS = FS,PASSWORD,CLAIMTOBE
+
+# Integrity
+SEC_DEFAULT_INTEGRITY  = REQUIRED
+SEC_DAEMON_INTEGRITY = REQUIRED
+SEC_NEGOTIATOR_INTEGRITY = REQUIRED
+
+# Encryption
+#SEC_DEFAULT_ENCRYPTION = OPTIONAL
+#SEC_READ_ENCRYPTION = OPTIONAL
+#SEC_CLIENT_ENCRYPTION = OPTIONAL
+
