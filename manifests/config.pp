@@ -89,6 +89,11 @@ class htcondor::config (
 
   file { '/etc/condor/persistent': ensure => directory, }
 
+  file { '/etc/condor/pool_password':
+    ensure => present,
+    source => "puppet:///modules/${module_name}/pool_password",
+  }
+
   # files for certain roles
   if $is_ce {
     file { '/etc/condor/config.d/12_resourcelimits.config':
