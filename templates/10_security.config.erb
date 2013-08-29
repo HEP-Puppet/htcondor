@@ -5,9 +5,9 @@ UID_DOMAIN = <%= @uid_domain -%>
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
 
 # Machines & users
-CMS = <%= @$managers_with_uid_domain.flatten.join(', ') %>
-CES = <%= @$computing_elements_with_uid_domain.flatten.join(', ') %>
-WNS = <%= @$worker_nodes_with_uid_domain.flatten.join(', ') %>
+CMS = <%= @managers_with_uid_domain.flatten.join(', ') %>
+CES = <%= @computing_elements_with_uid_domain.flatten.join(', ') %>
+WNS = <%= @worker_nodes_with_uid_domain.flatten.join(', ') %>
 USERS = *@$(UID_DOMAIN)
 
 ##  Negotiator access.  Machines listed here are trusted central
