@@ -32,6 +32,13 @@ class htcondor::config (
     File['/etc/condor/config.d/10_security.config'],
     ]
 
+  # complex preparation of manager, computing_element and worker_nodes lists
+  $managers_with_uid_domain           = prefix($managers, '*@$(UID_DOMAIN)/')
+  $computing_elements_with_uid_domain = prefix($computing_elements, '*@$(UID_DOMAIN)/'
+  )
+  $worker_nodes_with_uid_domain       = prefix($worker_nodes, '*@$(UID_DOMAIN)/'
+  )
+
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
     $temp_list               = concat($default_daemon_list, $ce_daemon_list)
@@ -78,7 +85,7 @@ class htcondor::config (
 
   file { '/etc/condor/config.d/10_security.config':
     backup  => ".bak.${now}",
-    source  => template("${module_name}/10_security.config.erb"),
+    content => template("${module_name}/10_security.config.erb"),
     require => Package['condor'],
   }
 
@@ -121,15 +128,8 @@ class htcondor::config (
     }
   }
 
-  exec { 'condor_reconfig':
-    command     => "/usr/sbin/condor_reconfig ${fqdn}",
+  exec { '/usr/sbin/condor_reconfig':
     subscribe   => $config_files,
     refreshonly => true,
   }
-
-  # complex preparation of manager, computing_element and worker_nodes lists
-  $managers_with_uid_domain           = prefix($managers, '*@$(UID_DOMAIN)')
-  $computing_elements_with_uid_domain = prefix($computing_elements, '*@$(UID_DOMAIN)'
-  )
-  $worker_nodes_with_uid_domain       = prefix($worker_nodes, '*@$(UID_DOMAIN)')
 }
