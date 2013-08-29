@@ -43,7 +43,7 @@ class htcondor::config (
 
   file { '/etc/condor/condor_config.local':
     backup  => ".bak.${now}",
-    content => "CONDOR_ADMIN = $condor_admin_email",
+    content => "CONDOR_ADMIN = $condor_admin_email\n",
     require => Package['condor'],
   # notify  => Service["condor"], this should be exec {'condor_reconfig':}
   }
