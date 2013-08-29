@@ -98,6 +98,20 @@ class htcondor::config (
     }
   }
 
+  exec { 'condor_reconfig':
+    command     => "/usr/sbin/condor_reconfig ${fqdn}",
+    subscribe   => [
+      File['/etc/condor/condor_config'],
+      File['/etc/condor/condor_config.local'],
+      File['/etc/condor/config.d/10_security.config'],
+      File['/etc/condor/config.d/12_resourcelimits.config'],
+      File['/etc/condor/config.d/21_schedd.config'],
+      File['/etc/condor/config.d/22_manager.config'],
+      File['/etc/condor/config.d/20_workernode.config'],
+      ],
+    refreshonly => true,
+  }
+
   # complex preparation of manager, computing_element and worker_nodes lists
   $managers_with_uid_domain           = prefix($managers, '*@$(UID_DOMAIN)')
   $computing_elements_with_uid_domain = prefix($computing_elements, '*@$(UID_DOMAIN)'
