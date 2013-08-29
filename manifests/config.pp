@@ -26,17 +26,40 @@ class htcondor::config (
 
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
+  $common_config_files = [
+    File['/etc/condor/condor_config'],
+    File['/etc/condor/condor_config.local'],
+    File['/etc/condor/config.d/10_security.config'],
+    ]
 
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
-    $temp_list   = concat($default_daemon_list, $ce_daemon_list)
-    $daemon_list = concat($temp_list, $manage_daemon_list)
+    $temp_list               = concat($default_daemon_list, $ce_daemon_list)
+    $daemon_list             = concat($temp_list, $manage_daemon_list)
+    $additional_config_files = [
+      File['/etc/condor/config.d/12_resourcelimits.config'],
+      File['/etc/condor/config.d/21_schedd.config'],
+      File['/etc/condor/config.d/22_manager.config'],
+      ]
+    $config_files            = concat($common_config_files, 
+    $additional_config_files)
   } elsif $is_ce {
-    $daemon_list = concat($default_daemon_list, $ce_daemon_list)
+    $daemon_list             = concat($default_daemon_list, $ce_daemon_list)
+    $additional_config_files = [
+      File['/etc/condor/config.d/12_resourcelimits.config'],
+      File['/etc/condor/config.d/21_schedd.config'],
+      ]
+    $config_files            = concat($common_config_files, 
+    $additional_config_files)
   } elsif $is_worker {
-    $daemon_list = concat($default_daemon_list, $worker_daemon_list)
+    $daemon_list             = concat($default_daemon_list, $worker_daemon_list)
+    $additional_config_files = [File['/etc/condor/config.d/20_workernode.config'
+        ],]
+    $config_files            = concat($common_config_files, 
+    $additional_config_files)
   } else {
-    $daemon_list = $default_daemon_list
+    $daemon_list  = $default_daemon_list
+    $config_files = $common_config_files
   }
 
   # files common between machines
@@ -64,7 +87,6 @@ class htcondor::config (
   file { '/etc/condor/pool_password': content => $condor_password }
 
   # files for certain roles
-
   if $is_ce {
     file { '/etc/condor/config.d/12_resourcelimits.config':
       backup  => ".bak.${now}",
@@ -77,6 +99,7 @@ class htcondor::config (
       content => template("${module_name}/21_schedd.config.erb"),
       require => Package['condor'],
     }
+
   }
 
   if $is_manager {
@@ -100,15 +123,7 @@ class htcondor::config (
 
   exec { 'condor_reconfig':
     command     => "/usr/sbin/condor_reconfig ${fqdn}",
-    subscribe   => [
-      File['/etc/condor/condor_config'],
-      File['/etc/condor/condor_config.local'],
-      File['/etc/condor/config.d/10_security.config'],
-      File['/etc/condor/config.d/12_resourcelimits.config'],
-      File['/etc/condor/config.d/21_schedd.config'],
-      File['/etc/condor/config.d/22_manager.config'],
-      File['/etc/condor/config.d/20_workernode.config'],
-      ],
+    subscribe   => $config_files,
     refreshonly => true,
   }
 
