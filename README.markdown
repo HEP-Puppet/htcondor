@@ -5,8 +5,7 @@ Puppet module for HTCondor batch system
 
 Installation requirements
 =========================================
-- pool_password file created with ```bash
-condor_store_cred -f <path_to_htcondor_module>/files/pool_password```
+- pool_password file created with ```condor_store_cred -f <path_to_htcondor_module>/files/pool_password```
 
 TODO
 =========================================
