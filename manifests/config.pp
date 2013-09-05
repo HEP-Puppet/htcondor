@@ -6,6 +6,9 @@ class htcondor::config (
   $is_ce              = false,
   $is_manager         = false,
   $condor_host        = $fqdn,
+  #use if condor host has two NICs 
+  #and only the private should be used for condor
+  $condor_host_ip     = '',
   $condor_admin_email = 'root@mysite.org',
   $collector_name     = 'Personal Condor at $(FULL_HOSTNAME)',
   $machine_owner      = 'physics',

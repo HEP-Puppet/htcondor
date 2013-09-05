@@ -3,6 +3,9 @@
 UID_DOMAIN = <%= @uid_domain -%>
 
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
+<% if !@condor_host_ip.empty? -%>
+NETWORK_INTERFACE = <%= @condor_host_ip %>
+<% end -%>
 
 # Machines & users
 CMS = <%= @managers_with_uid_domain.flatten.join(', ') %>

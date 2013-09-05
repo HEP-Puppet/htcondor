@@ -16,6 +16,9 @@ class htcondor (
   $is_ce                = false,
   $is_manager           = false,
   $condor_host          = $fqdn,
+  # use if condor host has two NICs
+  # and only the private should be used for condor
+  $condor_host_ip       = '',
   $condor_admin_email   = 'root@mysite.org',
   $collector_name       = 'Personal Condor at $(FULL_HOSTNAME)',
   $machine_owner        = 'physics',
@@ -36,6 +39,7 @@ class htcondor (
     is_ce              => $is_ce,
     is_manager         => $is_manager,
     condor_host        => $condor_host,
+    condor_host_ip     => $condor_host_ip,
     condor_admin_email => $condor_admin_email,
     collector_name     => $collector_name,
     machine_owner      => $machine_owner,
