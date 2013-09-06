@@ -1,6 +1,6 @@
 # HTCondor configuration: security
 
-UID_DOMAIN = <%= @uid_domain -%>
+UID_DOMAIN = <%= @uid_domain %>
 
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
 <% if !@condor_host_ip.empty? -%>

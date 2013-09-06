@@ -1,6 +1,6 @@
-MachineOwner = <%= @machine_owner -%>
+MachineOwner = <%= @machine_owner %>
 StartJobs = True
-NUM_CPUS = <%= @number_of_cpus -%>
+NUM_CPUS = <%= @number_of_cpus %>
 
 STARTD_ATTRS = $(STARTD_ATTRS) MachineOwner, StartJobs
 
@@ -78,5 +78,4 @@ MAX_NUM_STARTD_LOG = 10
 
 ##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
 ##  The list is a comma or space separated list of subsystem names
-DAEMON_LIST = <%= @daemon_list.flatten.join(', ') -%>
-
+DAEMON_LIST = <%= @daemon_list.flatten.join(', ') %>
