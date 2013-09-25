@@ -1,0 +1,43 @@
+# HTCondor configuration: central manager
+
+## Pool's short description
+COLLECTOR_NAME = <%= @collector_name -%>
+
+##  When is this machine willing to start a job?
+START = FALSE
+
+## Max number of processes to deal with query requests
+COLLECTOR_QUERY_WORKERS	= 16
+
+## Weight slots using CPUs
+NEGOTIATOR_USE_SLOT_WEIGHTS = True
+
+## See: https://condor-wiki.cs.wisc.edu/index.cgi/tktview?tn=3271
+NEGOTIATOR_ALLOW_QUOTA_OVERSUBSCRIPTION = False
+
+## Advertise numbers of idle jobs weighted by required CPUs per job
+NEGOTIATOR_USE_WEIGHTED_DEMAND=True
+
+## Try to prevent starvation (high memory and/or multi-core jobs)
+#GROUP_QUOTA_ROUND_ROBIN_RATE=100
+
+## We don't want preemption ever to be used
+PREEMPTION_REQUIREMENTS = False
+NEGOTIATOR_CONSIDER_PREEMPTION = False
+
+## Don't match jobs to slots that have a retirement time remaining (default is false anyway)
+NEGOTIATOR_CONSIDER_EARLY_PREEMPTION = False
+
+## Logs
+MAX_NEGOTIATOR_LOG = 104857600
+MAX_NUM_NEGOTIATOR_LOG = 10
+
+MAX_COLLECTOR_LOG = 104857600
+MAX_NUM_COLLECTOR_LOG = 10
+
+MAX_MASTER_LOG = 104857600
+MAX_NUM_MASTER_LOG = 10
+
+##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
+##  The list is a comma or space separated list of subsystem names
+DAEMON_LIST = <%= @daemon_list.flatten.join(', ') %>
