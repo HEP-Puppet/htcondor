@@ -6,8 +6,8 @@ class htcondor::config (
   $is_ce              = false,
   $is_manager         = false,
   $condor_host        = $fqdn,
-  #use if condor host has two NICs 
-  #and only the private should be used for condor
+  # use if condor host has two NICs
+  # and only the private should be used for condor
   $condor_host_ip     = '',
   $condor_admin_email = 'root@mysite.org',
   $collector_name     = 'Personal Condor at $(FULL_HOSTNAME)',
@@ -80,7 +80,7 @@ class htcondor::config (
 
   file { '/etc/condor/condor_config.local':
     backup  => ".bak.${now}",
-    content => "CONDOR_ADMIN = $condor_admin_email\n",
+    content => template("${module_name}/condor_config.local.erb"),
     require => Package['condor'],
   # notify  => Service["condor"], this should be exec {'condor_reconfig':}
   }
