@@ -14,6 +14,7 @@ class htcondor::config (
   # use if condor host has two NICs
   # and only the private should be used for condor
   $condor_host_ip     = '',
+  $custom_attribute   = 'NORDUGRID_QUEUE',
   $is_ce              = false,
   $is_manager         = false,
   $is_worker          = false,
