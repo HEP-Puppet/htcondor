@@ -81,11 +81,6 @@ class htcondor::config (
     worker_nodes       => $worker_nodes,
   }
 
-  file { '/etc/condor/config.d/10_security.config':
-    content => template("${module_name}/10_security.config.erb"),
-    require => Package['condor'],
-  }
-
   file { ['/pool', '/pool/condor', '/etc/condor/persistent']:
     ensure => directory,
     owner  => 'condor',
