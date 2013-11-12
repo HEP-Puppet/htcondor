@@ -3,6 +3,7 @@
 # Configuration deployment for HTCondor
 class htcondor::config (
   $allow_write        = [],
+  $cluster_has_multiple_domains = false,
   $collector_name     = 'Personal Condor at $(FULL_HOSTNAME)',
   $computing_elements = [],
   $condor_admin_email = 'root@mysite.org',
@@ -75,10 +76,11 @@ class htcondor::config (
   }
 
   class { 'htcondor::config::security':
-    computing_elements => $computing_elements,
-    managers           => $managers,
-    uid_domain         => $uid_domain,
-    worker_nodes       => $worker_nodes,
+    cluster_has_multiple_domains => $cluster_has_multiple_domains,
+    computing_elements           => $computing_elements,
+    managers                     => $managers,
+    uid_domain                   => $uid_domain,
+    worker_nodes                 => $worker_nodes,
   }
 
   file { ['/pool', '/pool/condor', '/etc/condor/persistent']:

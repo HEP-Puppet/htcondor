@@ -12,12 +12,13 @@
 #
 class htcondor (
   $allow_write          = [],
-  # use if condor host has two NICs
-  # and only the private should be used for condor
+  $cluster_has_multiple_domains = false,
   $collector_name       = 'Personal Condor at $(FULL_HOSTNAME)',
   $computing_elements   = [],
   $condor_admin_email   = 'root@mysite.org',
   $condor_host          = $fqdn,
+  # use if condor host has two NICs
+  # and only the private should be used for condor
   $condor_host_ip       = '',
   $custom_attribute     = 'NORDUGRID_QUEUE',
   $install_repositories = true,
@@ -35,6 +36,7 @@ class htcondor (
 
   class { 'htcondor::config':
     allow_write        => $allow_write,
+    cluster_has_multiple_domains => $cluster_has_multiple_domains,
     collector_name     => $collector_name,
     computing_elements => $computing_elements,
     condor_host        => $condor_host,
