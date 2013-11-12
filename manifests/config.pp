@@ -2,9 +2,10 @@
 #
 # Configuration deployment for HTCondor
 class htcondor::config (
-  $is_worker          = false,
-  $is_ce              = false,
-  $is_manager         = false,
+  $allow_write        = [],
+  $collector_name     = 'Personal Condor at $(FULL_HOSTNAME)',
+  $computing_elements = [],
+  $condor_admin_email = 'root@mysite.org',
   $condor_host        = $fqdn,
   # pool_password can also be served from central file location using hiera
   $pool_password      = 'puppet:///modules/${module_name}/pool_password',
@@ -13,21 +14,19 @@ class htcondor::config (
   # use if condor host has two NICs
   # and only the private should be used for condor
   $condor_host_ip     = '',
-  $condor_admin_email = 'root@mysite.org',
-  $collector_name     = 'Personal Condor at $(FULL_HOSTNAME)',
+  $is_ce              = false,
+  $is_manager         = false,
+  $is_worker          = false,
   $machine_owner      = 'physics',
+  $managers           = [],
   $number_of_cpus     = 8,
-  $allow_write        = [],
   $uid_domain         = 'example.com',
   # specify the networks with write access i.e. ["10.132.0.*"]
-  $managers           = [],
-  $computing_elements = [],
   $worker_nodes       = [],) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
   $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR']
-
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
   $common_config_files = [
@@ -35,14 +34,6 @@ class htcondor::config (
     File['/etc/condor/condor_config.local'],
     File['/etc/condor/config.d/10_security.config'],
     ]
-
-  # complex preparation of manager, computing_element and worker_nodes lists
-  $managers_with_uid_domain           = prefix($managers, 'condor_pool@$(UID_DOMAIN)/'
-  )
-  $computing_elements_with_uid_domain = prefix($computing_elements, 'condor_pool@$(UID_DOMAIN)/'
-  )
-  $worker_nodes_with_uid_domain       = prefix($worker_nodes, 'condor_pool@$(UID_DOMAIN)/'
-  )
 
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
@@ -69,7 +60,6 @@ class htcondor::config (
     $additional_config_files = [File['/etc/condor/config.d/22_manager.config'],]
     $config_files            = concat($common_config_files,
     $additional_config_files)
-
   } elsif $is_worker {
     $daemon_list             = concat($default_daemon_list, $worker_daemon_list)
     $additional_config_files = [File['/etc/condor/config.d/20_workernode.config'
@@ -93,6 +83,13 @@ class htcondor::config (
     content => template("${module_name}/condor_config.local.erb"),
     require => Package['condor'],
   # notify  => Service["condor"], this should be exec {'condor_reconfig':}
+  }
+
+  class { 'htcondor::config::security':
+    computing_elements => $computing_elements,
+    managers           => $managers,
+    uid_domain         => $uid_domain,
+    worker_nodes       => $worker_nodes,
   }
 
   file { '/etc/condor/config.d/10_security.config':
