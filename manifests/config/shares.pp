@@ -1,0 +1,3 @@
+class htcondor::config::shares(){
+  
+}

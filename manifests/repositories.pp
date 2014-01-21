@@ -13,6 +13,7 @@ class htcondor::repositories (
           baseurl  => "http://research.cs.wisc.edu/htcondor/yum/stable/rhel${major_release}",
           enabled  => 1,
           gpgcheck => 0,
+          exclude => 'condor.i386',
         }
       }
       'Debian'  : {
