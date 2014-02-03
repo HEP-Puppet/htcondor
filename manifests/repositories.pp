@@ -2,7 +2,9 @@
 #
 # Provides yum repositories for HTCondor installation
 class htcondor::repositories (
-  $install_repos = true,) {
+  $install_repos = true,
+  $condor_priority = '99',
+  ) {
   if $install_repos {
     $major_release = regsubst($::operatingsystemrelease, '^(\d+)\.\d+$', '\1')
 
@@ -13,6 +15,7 @@ class htcondor::repositories (
           baseurl  => "http://research.cs.wisc.edu/htcondor/yum/stable/rhel${major_release}",
           enabled  => 1,
           gpgcheck => 0,
+	  priority =>  "${condor_priority}",
         }
       }
       'Debian'  : {
