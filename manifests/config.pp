@@ -38,11 +38,12 @@ class htcondor::config (
     ]
 
   # complex preparation of manager, computing_element and worker_nodes lists
-  $managers_with_uid_domain           = prefix($managers, '*@$(UID_DOMAIN)/')
-  $computing_elements_with_uid_domain = prefix($computing_elements, '*@$(UID_DOMAIN)/'
-  )
-  $worker_nodes_with_uid_domain       = prefix($worker_nodes, '*@$(UID_DOMAIN)/'
-  )
+   $managers_with_uid_domain           = prefix($managers, 'condor_pool@$(UID_DOMAIN)/')
+   $computing_elements_with_uid_domain = prefix($computing_elements, 'condor_pool@$(UID_DOMAIN)/'
+   )
+   $worker_nodes_with_uid_domain       = prefix($worker_nodes, 'condor_pool@$(UID_DOMAIN)/'
+   )
+
 
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
