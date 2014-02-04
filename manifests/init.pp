@@ -12,10 +12,12 @@
 #
 class htcondor (
   $install_repositories = true,
+  $condor_priority      = '99',
   $is_worker            = false,
   $is_ce                = false,
   $is_manager           = false,
   $condor_host          = $fqdn,
+  $pool_password        = "puppet:///modules/${module_name}/pool_password",
   # use if condor host has two NICs
   # and only the private should be used for condor
   $condor_host_ip       = '',
@@ -30,7 +32,10 @@ class htcondor (
   $managers             = [],
   $computing_elements   = [],
   $worker_nodes         = [],) {
-  class { 'htcondor::repositories': install_repos => $install_repositories, }
+  class { 'htcondor::repositories':
+    install_repos      => $install_repositories,
+    condor_priority    => $condor_priority,
+ }
 
   class { 'htcondor::install': }
 
@@ -38,6 +43,7 @@ class htcondor (
     is_worker          => $is_worker,
     is_ce              => $is_ce,
     is_manager         => $is_manager,
+    pool_password      => $pool_password,
     condor_host        => $condor_host,
     condor_host_ip     => $condor_host_ip,
     condor_admin_email => $condor_admin_email,
