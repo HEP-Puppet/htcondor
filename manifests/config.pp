@@ -121,6 +121,10 @@ class htcondor::config (
 
   if $is_manager {
     # TODO: fair shares
+    file { '/etc/condor/config.d/11_fairshares.config':
+      content => template("${module_name}/11_fairshares.config.erb"),
+      require => Package['condor'],
+    }
     file { '/etc/condor/config.d/22_manager.config':
       content => template("${module_name}/22_manager.config.erb"),
       require => Package['condor'],
