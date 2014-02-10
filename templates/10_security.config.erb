@@ -3,45 +3,39 @@
 UID_DOMAIN = <%= @uid_domain %>
 
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
-<% if !@condor_host_ip.empty? -%>
-NETWORK_INTERFACE = <%= @condor_host_ip %>
+
+<% if @cluster_has_multiple_domains == true then -%>
+TRUST_UID_DOMAIN = True
 <% end -%>
 
 # Machines & users
-CMS = <%= @managers_with_uid_domain.flatten.join(', ') %>
-CES = <%= @computing_elements_with_uid_domain.flatten.join(', ') %>
-WNS = <%= @worker_nodes_with_uid_domain.flatten.join(', ') %>
+CMS = <%= @managers.flatten.join(', ') %>
+CES = <%= @computing_elements.flatten.join(', ') %>
+WNS = <%= @worker_nodes.flatten.join(', ') %>
+
 USERS = *@$(UID_DOMAIN)
 
-##  Negotiator access.  Machines listed here are trusted central
-##  managers.  You should normally not have to change this.
-HOSTALLOW_NEGOTIATOR = $(COLLECTOR_HOST)
-
-##  What machines have administrative rights for your pool?  This
-##  defaults to your central manager.  You should set it to the
-##  machine(s) where whoever is the HTCondor administrator(s) works
-##  (assuming you trust all the users who log into that/those
-##  machine(s), since this is machine-wide access you're granting).
-HOSTALLOW_ADMINISTRATOR = $(COLLECTOR_HOST)
-
-##  Now, with flocking (and HA) we need to let the SCHEDD trust the other
-##  negotiators we are flocking with as well.  You should normally
-##  not need to change this.
-HOSTALLOW_NEGOTIATOR_SCHEDD = $(COLLECTOR_HOST)
-
-# Authorization
-HOSTALLOW_WRITE = 
 ALLOW_WRITE = $(CMS), $(CES), $(WNS)
-ALLOW_READ = *@$(UID_DOMAIN)/*.$(UID_DOMAIN), tomcat/*.$(UID_DOMAIN), ldap/*.$(UID_DOMAIN)
-NEGOTIATOR.ALLOW_WRITE = $(CES), $(CMS)
-COLLECTOR.ALLOW_ADVERTISE_MASTER = $(CES), $(CMS), $(WNS)
-COLLECTOR.ALLOW_ADVERTISE_SCHEDD = $(CES)
-COLLECTOR.ALLOW_ADVERTISE_STARTD = $(WNS)
-SCHEDD.ALLOW_WRITE = $(USERS)
-SHADOW.ALLOW_WRITE = $(WNS), $(CES)
-ALLOW_DAEMON = condor_pool@$(UID_DOMAIN)/*.$(UID_DOMAIN), $(FULL_HOSTNAME)
-ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
-ALLOW_CONFIG = root@$(FULL_HOSTNAME)
+#debugging
+#ALLOW_READ  = $(USERS)/*.$(UID_DOMAIN), tomcat/*.$(UID_DOMAIN), ldap/*.$(UID_DOMAIN)
+#ALLOW_DAEMON = condor_pool@$(UID_DOMAIN), condor@$(UID_DOMAIN), $(FULL_HOSTNAME)
+#ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
+#ALLOW_CONFIG = root@$(FULL_HOSTNAME)
+
+#NEGOTIATOR.ALLOW_WRITE = $(CES), $(CMS)
+
+#if the CE has a private NIC, it needs to be included here as well
+#COLLECTOR.ALLOW_ADVERTISE_MASTER = $(CES), $(CMS), $(WNS)
+#COLLECTOR.ALLOW_ADVERTISE_SCHEDD = $(CES)
+#COLLECTOR.ALLOW_ADVERTISE_STARTD = $(WNS)
+
+#SCHEDD.ALLOW_WRITE = $(USERS)
+
+#SHADOW.ALLOW_WRITE = $(WNS), $(CES)
+
+#ALLOW_DAEMON = condor_pool@$(UID_DOMAIN), condor@$(UID_DOMAIN), $(FULL_HOSTNAME)
+#ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
+#ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 
 # Don't allow nobody to run jobs
 SCHEDD.DENY_WRITE = nobody@$(UID_DOMAIN)
@@ -66,4 +60,3 @@ SEC_NEGOTIATOR_INTEGRITY = REQUIRED
 #SEC_DEFAULT_ENCRYPTION = OPTIONAL
 #SEC_READ_ENCRYPTION = OPTIONAL
 #SEC_CLIENT_ENCRYPTION = OPTIONAL
-
