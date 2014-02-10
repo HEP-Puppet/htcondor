@@ -6,6 +6,9 @@ class htcondor::config (
   $is_ce              = false,
   $is_manager         = false,
   $condor_host        = $fqdn,
+
+  # pool_password can also be served from central file location using hiera
+  $pool_password      = 'puppet:///modules/${module_name}/pool_password',
   #use if condor host has two NICs 
   #and only the private should be used for condor
   $condor_host_ip     = '',
@@ -35,11 +38,12 @@ class htcondor::config (
     ]
 
   # complex preparation of manager, computing_element and worker_nodes lists
-  $managers_with_uid_domain           = prefix($managers, '*@$(UID_DOMAIN)/')
-  $computing_elements_with_uid_domain = prefix($computing_elements, '*@$(UID_DOMAIN)/'
-  )
-  $worker_nodes_with_uid_domain       = prefix($worker_nodes, '*@$(UID_DOMAIN)/'
-  )
+   $managers_with_uid_domain           = prefix($managers, 'condor_pool@$(UID_DOMAIN)/')
+   $computing_elements_with_uid_domain = prefix($computing_elements, 'condor_pool@$(UID_DOMAIN)/'
+   )
+   $worker_nodes_with_uid_domain       = prefix($worker_nodes, 'condor_pool@$(UID_DOMAIN)/'
+   )
+
 
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
@@ -60,6 +64,15 @@ class htcondor::config (
       ]
     $config_files            = concat($common_config_files, 
     $additional_config_files)
+  } elsif  $is_manager {
+    # machine running only manager
+    $daemon_list             = concat($default_daemon_list, $manage_daemon_list)
+    $additional_config_files = [
+      File['/etc/condor/config.d/22_manager.config'],
+      ]
+    $config_files            = concat($common_config_files,
+    $additional_config_files)
+
   } elsif $is_worker {
     $daemon_list             = concat($default_daemon_list, $worker_daemon_list)
     $additional_config_files = [File['/etc/condor/config.d/20_workernode.config'
@@ -100,7 +113,7 @@ class htcondor::config (
 
   file { '/etc/condor/pool_password':
     ensure => present,
-    source => "puppet:///modules/${module_name}/pool_password",
+    source => "$pool_password",
   }
 
   # files for certain roles
