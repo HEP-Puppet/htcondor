@@ -1,0 +1,70 @@
+GROUP_NAMES = \
+              group_ALICE, \
+              group_ATLAS, \
+              group_CMS, \
+              group_LHCB, \
+              group_NONLHC, \
+              group_OTHER, \
+              group_ALICE.alice, \
+              group_ATLAS.atlas, \
+              group_ATLAS.atlas_pilot, \
+              group_ATLAS.prodatls, \
+              group_CMS.cms, \
+              group_CMS.cms_pilot, \
+              group_CMS.prodcms, \
+              group_LHCB.lhcb, \
+              group_LHCB.lhcb_pilot, \
+              group_LHCB.prodlhcb, \
+              group_NONLHC.dteam, \
+              group_NONLHC.ops, \
+              group_NONLHC.minos, \
+              group_NONLHC.h1, \
+              group_NONLHC.ilc, \
+              group_NONLHC.mice, \
+              group_NONLHC.spsna62, \
+              group_NONLHC.pheno, \
+              group_NONLHC.Super_B, \
+              group_NONLHC.superbpm, \
+              group_NONLHC.suprnemo, \
+              group_NONLHC.t2k, \
+              group_NONLHC.snoplus, \
+              group_NONLHC.snopluspm, \
+              group_NONLHC.biomed, \
+              group_NONLHC.zeus, \
+              group_NONLHC.fusn, \
+              group_NONLHC.geant, \
+              group_NONLHC.enmr, \
+              group_NONLHC.esr, \
+              group_OTHER.nagios
+              
+              
+
+GROUP_PRIO_FACTOR_group_ALICE  = 100000.00
+GROUP_PRIO_FACTOR_group_ATLAS  = 100000.00
+GROUP_PRIO_FACTOR_group_CMS    = 100000.00
+GROUP_PRIO_FACTOR_group_LHCB   = 100000.00
+GROUP_PRIO_FACTOR_group_NONLHC = 100000.00
+GROUP_PRIO_FACTOR_group_OTHER  = 100000.00
+
+# overall groups
+GROUP_QUOTA_DYNAMIC_group_ALICE             = 0.01 
+GROUP_QUOTA_DYNAMIC_group_ATLAS             = 0.01 
+GROUP_QUOTA_DYNAMIC_group_CMS               = 0.828 
+GROUP_QUOTA_DYNAMIC_group_LHCB              = 0.10 
+GROUP_QUOTA_DYNAMIC_group_NONLHC            = 0.05 
+GROUP_QUOTA_DYNAMIC_group_OTHER             = 0.002
+
+# intra-VO groups for LHC experiments
+GROUP_QUOTA_DYNAMIC_group_ALICE.alice       = 1.00
+
+GROUP_QUOTA_DYNAMIC_group_ATLAS.atlas       = 0.01
+GROUP_QUOTA_DYNAMIC_group_ATLAS.atlas_pilot = 0.39
+GROUP_QUOTA_DYNAMIC_group_ATLAS.prodatls    = 0.60
+
+GROUP_QUOTA_DYNAMIC_group_CMS.cms           = 0.04
+GROUP_QUOTA_DYNAMIC_group_CMS.cms_pilot     = 0.01
+GROUP_QUOTA_DYNAMIC_group_CMS.prodcms       = 0.95
+
+GROUP_QUOTA_DYNAMIC_group_LHCB.lhcb         = 0.01
+GROUP_QUOTA_DYNAMIC_group_LHCB.lhcb_pilot   = 0.98
+GROUP_QUOTA_DYNAMIC_group_LHCB.prodlhcb     = 0.01
