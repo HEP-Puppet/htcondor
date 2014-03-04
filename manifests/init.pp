@@ -29,6 +29,15 @@
 # when creating queues with ARC CEs
 # Default: NORDUGRID_QUEUE
 #
+# [*include_username_in_accounting*]
+# Bool. If false the accounting groups used are of the form
+# group_<group_name>.<subgroup>
+# and if true
+# group_<group_name>.<subgroup>.<user name>
+#
+# [*install_repositories*]
+# Bool to install repositories or not
+#
 # [*is_ce*]
 # If machine is a computing element or a scheduler (condor term)
 #
@@ -79,12 +88,13 @@ class htcondor (
     }
   }
   ,
-  $cluster_has_multiple_domains = false,
+  $cluster_has_multiple_domains   = false,
   $collector_name        = 'Personal Condor at $(FULL_HOSTNAME)',
   $computing_elements    = [],
   $condor_admin_email    = 'root@mysite.org',
   $condor_priority       = '99',
   $custom_attribute      = 'NORDUGRID_QUEUE',
+  $include_username_in_accounting = false,
   $install_repositories  = true,
   $is_ce                 = false,
   $is_manager            = false,

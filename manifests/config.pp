@@ -29,6 +29,12 @@
 # when creating queues with ARC CEs
 # Default: NORDUGRID_QUEUE
 #
+# [*include_username_in_accounting*]
+# Bool. If false the accounting groups used are of the form
+# group_<group_name>.<subgroup>
+# and if true
+# group_<group_name>.<subgroup>.<user name>
+#
 # [*is_ce*]
 # If machine is a computing element or a scheduler (condor term)
 #
@@ -62,7 +68,7 @@
 # List of worker nodes
 #
 class htcondor::config (
-  $accounting_groups            = {
+  $accounting_groups              = {
     'CMS'            => {
       priority_factor => 10000.00,
       dynamic_quota   => 0.80,
@@ -74,11 +80,12 @@ class htcondor::config (
     }
   }
   ,
-  $cluster_has_multiple_domains = false,
+  $cluster_has_multiple_domains   = false,
   $collector_name = 'Personal Condor at $(FULL_HOSTNAME)',
-  $computing_elements           = [],
-  $condor_admin_email           = 'root@mysite.org',
-  $custom_attribute             = 'NORDUGRID_QUEUE',
+  $computing_elements             = [],
+  $condor_admin_email             = 'root@mysite.org',
+  $custom_attribute               = 'NORDUGRID_QUEUE',
+  $include_username_in_accounting = false,
   $is_ce          = false,
   $is_manager     = false,
   $is_worker      = false,
@@ -88,7 +95,7 @@ class htcondor::config (
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $uid_domain     = 'example.com',
-  $use_accounting_groups        = false,
+  $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
   $worker_nodes   = [],) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
