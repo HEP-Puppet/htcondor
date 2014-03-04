@@ -13,13 +13,16 @@ ifThenElse(regexp("prd",Owner),	"production",\
 ifThenElse(regexp("pil",Owner),"pilot",\
 ifThenElse(regexp("sgm",Owner),"admin",\
 x509UserProxyVOName)))
-AcctGroup = strcat("group_",x509UserProxyVOName,".",AcctSubGroup)
-# condor uses AcctGroup, but some monitoring scripts use AccountingGroup
-# let's have both.
-AccountingGroup = $(AcctGroup)
+<% if @include_username_in_accounting -%>
 # This one is not useful for grid sites but is useful if you want to
 # implement user based quotas:
 # group_<name>.<subgroup>.<user name>
-#AcctGroup = strcat("group_",x509UserProxyVOName,".",AcctSubGroup,".",Owner)
+AcctGroup = strcat("group_",x509UserProxyVOName,".",AcctSubGroup,".",Owner)
+<% else -%>
+AcctGroup = strcat("group_",x509UserProxyVOName,".",AcctSubGroup)
+<% end -%>
+# condor uses AcctGroup, but some monitoring scripts use AccountingGroup
+# let's have both.
+AccountingGroup = $(AcctGroup)
 SUBMIT_EXPRS = $(SUBMIT_EXPRS) AcctGroup AcctSubGroup AccountingGroup
 <% end -%>
