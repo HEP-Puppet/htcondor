@@ -101,7 +101,7 @@ class htcondor (
   $is_worker             = false,
   $machine_owner         = 'physics',
   $managers              = [],
-  $number_of_cpus        = 8,
+  $number_of_cpus        = undef,
   $pool_home             = '/pool',
   $pool_password         = "puppet:///modules/${module_name}/pool_password",
   $uid_domain            = 'example.com',

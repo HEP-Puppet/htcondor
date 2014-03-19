@@ -91,7 +91,7 @@ class htcondor::config (
   $is_worker      = false,
   $machine_owner  = 'physics',
   $managers       = [],
-  $number_of_cpus = 8,
+  $number_of_cpus = undef,
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
