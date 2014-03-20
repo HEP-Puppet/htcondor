@@ -35,6 +35,17 @@
 # and if true
 # group_<group_name>.<subgroup>.<user name>
 #
+# [*high_priority_groups*]
+# A hash of groups with high priority. It is used for the group sorting
+# expression for condor. Groups with lower value are considered first.
+# example:
+# $high_priority_groups = {
+#                         'cms.admin' => -30,
+#                         'ops'       => -20,
+#                         'dteam'     => -10,
+#                         }
+# This will consider the group cms.admin first, followed by ops and dteam.
+#
 # [*is_ce*]
 # If machine is a computing element or a scheduler (condor term)
 #
@@ -85,6 +96,12 @@ class htcondor::config (
   $computing_elements             = [],
   $condor_admin_email             = 'root@mysite.org',
   $custom_attribute               = 'NORDUGRID_QUEUE',
+  $high_priority_groups           = {
+    'cms.admin' => -30,
+    'ops'       => -20,
+    'dteam'     => -10,
+  }
+  ,
   $include_username_in_accounting = false,
   $is_ce          = false,
   $is_manager     = false,

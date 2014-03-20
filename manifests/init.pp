@@ -29,6 +29,17 @@
 # when creating queues with ARC CEs
 # Default: NORDUGRID_QUEUE
 #
+# [*high_priority_groups*]
+# A hash of groups with high priority. It is used for the group sorting
+# expression for condor. Groups with lower value are considered first.
+# example:
+# $high_priority_groups = {
+#                         'cms.admin' => -30,
+#                         'ops'       => -20,
+#                         'dteam'     => -10,
+#                         }
+# This will consider the group cms.admin first, followed by ops and dteam.
+#
 # [*include_username_in_accounting*]
 # Bool. If false the accounting groups used are of the form
 # group_<group_name>.<subgroup>
@@ -94,6 +105,12 @@ class htcondor (
   $condor_admin_email    = 'root@mysite.org',
   $condor_priority       = '99',
   $custom_attribute      = 'NORDUGRID_QUEUE',
+  $high_priority_groups  = {
+    'cms.admin' => -30,
+    'ops'       => -20,
+    'dteam'     => -10,
+  }
+  ,
   $include_username_in_accounting = false,
   $install_repositories  = true,
   $is_ce                 = false,
@@ -115,12 +132,14 @@ class htcondor (
   }
 
   class { 'htcondor::config':
-    accounting_groups            => $accounting_groups,
-    cluster_has_multiple_domains => $cluster_has_multiple_domains,
+    accounting_groups              => $accounting_groups,
+    cluster_has_multiple_domains   => $cluster_has_multiple_domains,
     collector_name => $collector_name,
-    computing_elements           => $computing_elements,
-    condor_admin_email           => $condor_admin_email,
-    custom_attribute             => $custom_attribute,
+    computing_elements             => $computing_elements,
+    condor_admin_email             => $condor_admin_email,
+    custom_attribute               => $custom_attribute,
+    high_priority_groups           => $high_priority_groups,
+    include_username_in_accounting => $include_username_in_accounting,
     is_ce          => $is_ce,
     is_manager     => $is_manager,
     is_worker      => $is_worker,
@@ -129,7 +148,7 @@ class htcondor (
     number_of_cpus => $number_of_cpus,
     pool_password  => $pool_password,
     uid_domain     => $uid_domain,
-    use_accounting_groups        => $use_accounting_groups,
+    use_accounting_groups          => $use_accounting_groups,
     worker_nodes   => $worker_nodes,
   }
 
