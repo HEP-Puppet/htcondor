@@ -1,9 +1,3 @@
-## Restrictions on max number of running jobs per user. By default
-## there are no limits.
-
-CMSSGM_LIMIT = 10
-ATLASSGM_LIMIT = 10
-
 ## Half-life of user priorities
 PRIORITY_HALFLIFE = 43200
 
@@ -22,6 +16,15 @@ GROUP_NAMES = \
 <% else -%>
               group_<%= key %>, \
 <% end -%>
+<% end -%>
+
+<% if @high_priority_groups -%>
+# consider high_priority groups first
+GROUP_SORT_EXPR = ifThenElse(AccountingGroup=?="<none>", 3.4e+38, \
+<% @high_priority_groups.keys.sort.each do |key| -%>
+ifThenElse(AccountingGroup=?="group_<%= key -%>", <%= @high_priority_groups[key] -%>, \
+<% end -%>
+ifThenElse(GroupQuota > 0, GroupResourcesInUse/GroupQuota, 3.3e+38)))))
 <% end -%>
 
 # Default priorities
