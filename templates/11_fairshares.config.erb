@@ -13,8 +13,9 @@ GROUP_AUTOREGROUP = True
 
 # groups
 <% keys = @accounting_groups.keys.sort -%>
+
 GROUP_NAMES = \
-<% (1..keys.length.to_i-1).each do |i| -%>
+<% (0..keys.length.to_i-1).each do |i| -%>
 <% key = keys[i] -%>
 <% if i == keys.length.to_i-1 -%>
               group_<%= key %>

@@ -91,9 +91,10 @@ class htcondor::config (
   $is_worker      = false,
   $machine_owner  = 'physics',
   $managers       = [],
-  $number_of_cpus = 8,
+  $number_of_cpus = undef,
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
+  $pool_home      = '/pool',
   $uid_domain     = 'example.com',
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
@@ -164,7 +165,7 @@ class htcondor::config (
     require => Package['condor'],
   }
 
-  file { ['/pool', '/pool/condor', '/etc/condor/persistent']:
+  file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
     ensure => directory,
     owner  => 'condor',
   }

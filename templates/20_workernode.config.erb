@@ -1,7 +1,11 @@
 MachineOwner = <%= @machine_owner %>
 StartJobs = True
+## NUM_CPUS based on heira (if defined), otherwise on facter
+<% if  @number_of_cpus -%>
 NUM_CPUS = <%= @number_of_cpus %>
-
+<% else -%>
+NUM_CPUS = <%= @processorcount %>
+<% end -%>
 # custom attribute for easier splitting into queues
 # with ARC CE (using condor_requirements=" && custom_attribute"
 <%= @custom_attribute %> = True
@@ -62,7 +66,7 @@ UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 MASTER_UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 
 ## Location of scratch directories
-EXECUTE = /pool/condor
+EXECUTE = <%= @pool_home %>/condor
 
 ## Make sure jobs have independent PID namespaces
 USE_PID_NAMESPACES = true
