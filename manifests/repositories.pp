@@ -3,19 +3,31 @@
 # Provides yum repositories for HTCondor installation
 class htcondor::repositories (
   $install_repos   = true,
+  $dev_repos       = false,
   $condor_priority = '99',) {
   if $install_repos {
     $major_release = regsubst($::operatingsystemrelease, '^(\d+)\.\d+$', '\1')
 
     case $::osfamily {
       'RedHat'  : {
-        yumrepo { 'htcondor-stable':
-          descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${major_release}",
-          baseurl  => "http://research.cs.wisc.edu/htcondor/yum/stable/rhel${major_release}",
-          enabled  => 1,
-          gpgcheck => 0,
-          priority => "${condor_priority}",
-          exclude  => 'condor.i386',
+        if $dev_repos {
+          yumrepo { 'htcondor-development':
+            descr    => "HTCondor Development RPM Repository for Redhat Enterprise Linux ${major_release}",
+            baseurl  => "http://research.cs.wisc.edu/htcondor/yum/development/rhel${major_release}",
+            enabled  => 1,
+            gpgcheck => 0,
+            priority => "${condor_priority}",
+            exclude  => 'condor.i386',
+          }
+        } else {
+          yumrepo { 'htcondor-stable':
+            descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${major_release}",
+            baseurl  => "http://research.cs.wisc.edu/htcondor/yum/stable/rhel${major_release}",
+            enabled  => 1,
+            gpgcheck => 0,
+            priority => "${condor_priority}",
+            exclude  => 'condor.i386',
+          }
         }
       }
       'Debian'  : {
