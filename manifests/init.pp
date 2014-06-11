@@ -123,7 +123,15 @@ class htcondor (
   $pool_password         = "puppet:///modules/${module_name}/pool_password",
   $uid_domain            = 'example.com',
   $use_accounting_groups = false,
-  $worker_nodes          = [],) {
+  $worker_nodes          = [],
+  
+  #default params
+  $condor_user = root,
+  $condor_group= root,
+  $condor_uid  = 0,
+  $condor_gid  = 0,
+  
+  ) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
     condor_priority => $condor_priority,
@@ -152,6 +160,10 @@ class htcondor (
     uid_domain     => $uid_domain,
     use_accounting_groups          => $use_accounting_groups,
     worker_nodes   => $worker_nodes,
+    condor_user => $condor_user,
+    condor_group=> $condor_group,
+    condor_uid  => $condor_uid,
+    condor_gid  => $condor_gid,
   }
 
   class { 'htcondor::service':
