@@ -178,6 +178,7 @@ class htcondor::config (
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
+    mode => 644,
   }
 
   file { '/etc/condor/condor_config.local':
@@ -186,6 +187,7 @@ class htcondor::config (
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
+    mode => 644,
   }
 
   file { '/etc/condor/config.d/10_security.config':
@@ -193,11 +195,13 @@ class htcondor::config (
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
+    mode => 644,
   }
 
   file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
     ensure => directory,
     owner  => 'condor',
+    mode => 644,
   }
 
   #even if condor runs as condor, it just drops privileges and needs to start as root.
@@ -209,6 +213,7 @@ class htcondor::config (
     source => $pool_password,
     owner => root,
     group => root,
+    mode => 640,
   }
 
   # files for certain roles
@@ -218,6 +223,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
 
     file { '/etc/condor/config.d/21_schedd.config':
@@ -225,6 +231,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
 
   }
@@ -236,6 +243,7 @@ class htcondor::config (
         require => Package['condor'],
         owner => $condor_user,
         group => $condor_group,
+        mode => 644,
       }
     }
 
@@ -244,6 +252,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
     # TODO: high availability
     # TODO: defrag
@@ -255,6 +264,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
   }
 
