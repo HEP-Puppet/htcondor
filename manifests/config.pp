@@ -200,11 +200,15 @@ class htcondor::config (
     owner  => 'condor',
   }
 
+  #even if condor runs as condor, it just drops privileges and needs to start as root.
+  #if file is not owned by root, condor will throw this error :
+  #06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real uid
+  #06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real uid
   file { '/etc/condor/pool_password':
     ensure => present,
     source => $pool_password,
-    owner => $condor_user,
-    group => $condor_group,
+    owner => root,
+    group => root,
   }
 
   # files for certain roles
