@@ -133,7 +133,8 @@ class htcondor (
   }
 
   class { 'htcondor::install':
-    ensure => $condor_version,
+    ensure    => $condor_version,
+    dev_repos => $dev_repositories,
   }
 
   class { 'htcondor::config':
