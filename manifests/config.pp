@@ -115,7 +115,14 @@ class htcondor::config (
   $uid_domain     = 'example.com',
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
-  $worker_nodes   = [],) {
+  $worker_nodes   = [],
+  
+  $condor_user = root,
+  $condor_group= root,
+  $condor_uid  = 0,
+  $condor_gid  = 0,
+  
+  ) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
@@ -169,17 +176,23 @@ class htcondor::config (
     backup  => ".bak.${now}",
     source  => "puppet:///modules/${module_name}/condor_config",
     require => Package['condor'],
+    owner => $condor_user,
+    group => $condor_group,
   }
 
   file { '/etc/condor/condor_config.local':
     backup  => ".bak.${now}",
     content => template("${module_name}/condor_config.local.erb"),
     require => Package['condor'],
+    owner => $condor_user,
+    group => $condor_group,
   }
 
   file { '/etc/condor/config.d/10_security.config':
     content => template("${module_name}/10_security.config.erb"),
     require => Package['condor'],
+    owner => $condor_user,
+    group => $condor_group,
   }
 
   file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
@@ -190,6 +203,8 @@ class htcondor::config (
   file { '/etc/condor/pool_password':
     ensure => present,
     source => $pool_password,
+    owner => $condor_user,
+    group => $condor_group,
   }
 
   # files for certain roles
@@ -197,11 +212,15 @@ class htcondor::config (
     file { '/etc/condor/config.d/12_resourcelimits.config':
       content => template("${module_name}/12_resourcelimits.config.erb"),
       require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
     }
 
     file { '/etc/condor/config.d/21_schedd.config':
       content => template("${module_name}/21_schedd.config.erb"),
       require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
     }
 
   }
@@ -211,12 +230,16 @@ class htcondor::config (
       file { '/etc/condor/config.d/11_fairshares.config':
         content => template("${module_name}/11_fairshares.config.erb"),
         require => Package['condor'],
+        owner => $condor_user,
+        group => $condor_group,
       }
     }
 
     file { '/etc/condor/config.d/22_manager.config':
       content => template("${module_name}/22_manager.config.erb"),
       require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
     }
     # TODO: high availability
     # TODO: defrag
@@ -226,6 +249,8 @@ class htcondor::config (
     file { '/etc/condor/config.d/20_workernode.config':
       content => template("${module_name}/20_workernode.config.erb"),
       require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
     }
   }
 
