@@ -133,11 +133,14 @@ class htcondor::config (
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
   $common_config_files = [
-    File['/etc/condor/condor_config'],
     File['/etc/condor/condor_config.local'],
     File['/etc/condor/config.d/10_security.config'],
     ]
 
+  unless $use_pkg_condor_config {
+    $common_config_files = [ File['/etc/condor/condor_config'] ] + $common_config_files
+  }
+  
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
     $temp_list               = concat($default_daemon_list, $ce_daemon_list)
