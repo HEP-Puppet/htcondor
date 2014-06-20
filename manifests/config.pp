@@ -109,6 +109,8 @@ class htcondor::config (
   $machine_owner  = 'physics',
   $managers       = [],
   $number_of_cpus = undef,
+  $use_gsi_kerberos_security = false,
+  $certificate_mapfile = "puppet:///modules/${module_name}/certificate_mapfile",
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
@@ -198,6 +200,15 @@ class htcondor::config (
   file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
     ensure => directory,
     owner  => 'condor',
+  }
+
+  if $use_gsi_kerberos_security {
+      file { '/etc/condor/certificate_mapfile':
+        ensure => present,
+        source => $certificate_mapfile,
+        owner => $condor_user,
+        group => $condor_group,
+      }
   }
 
   file { '/etc/condor/pool_password':
