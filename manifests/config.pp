@@ -103,6 +103,7 @@ class htcondor::config (
   }
   ,
   $include_username_in_accounting = false,
+  $use_pkg_condor_config          = false,
   $is_ce          = false,
   $is_manager     = false,
   $is_worker      = false,
@@ -174,12 +175,14 @@ class htcondor::config (
   }
 
   # files common between machines
-  file { '/etc/condor/condor_config':
-    backup  => ".bak.${now}",
-    source  => "puppet:///modules/${module_name}/condor_config",
-    require => Package['condor'],
-    owner => $condor_user,
-    group => $condor_group,
+  unless $use_pkg_condor_config {
+    file { '/etc/condor/condor_config':
+      backup  => ".bak.${now}",
+      source  => "puppet:///modules/${module_name}/condor_config",
+      require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
+    }
   }
 
   file { '/etc/condor/condor_config.local':
