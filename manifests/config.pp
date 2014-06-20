@@ -215,13 +215,13 @@ class htcondor::config (
         owner => $condor_user,
         group => $condor_group,
       }
-  }
 
-  file { '/etc/condor/pool_password':
-    ensure => present,
-    source => $pool_password,
-    owner => $condor_user,
-    group => $condor_group,
+    file { '/etc/condor/pool_password':
+      ensure => present,
+      source => $pool_password,
+      owner => $condor_user,
+      group => $condor_group,
+    }
   }
 
   # files for certain roles
