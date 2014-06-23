@@ -122,6 +122,15 @@ class htcondor::config (
   $condor_uid  = 0,
   $condor_gid  = 0,
   
+  #template selection. Allow for user to override
+  $template_config_local    = "${module_name}/condor_config.local.erb",
+  $template_security        = "${module_name}/10_security.config.erb",
+  $template_resourcelimits  = "${module_name}/12_resourcelimits.config.erb",
+  $template_schedd          = "${module_name}/21_schedd.config.erb",
+  $template_fairshares      = "${module_name}/11_fairshares.config.erb",
+  $template_manager         = "${module_name}/22_manager.config.erb",
+  $template_workernode      = "${module_name}/20_workernode.config.erb",
+  
   ) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
@@ -183,7 +192,7 @@ class htcondor::config (
 
   file { '/etc/condor/condor_config.local':
     backup  => ".bak.${now}",
-    content => template("${module_name}/condor_config.local.erb"),
+    content => template($template_config_local),
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
@@ -191,7 +200,7 @@ class htcondor::config (
   }
 
   file { '/etc/condor/config.d/10_security.config':
-    content => template("${module_name}/10_security.config.erb"),
+    content => template($template_security),
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
@@ -219,7 +228,7 @@ class htcondor::config (
   # files for certain roles
   if $is_ce {
     file { '/etc/condor/config.d/12_resourcelimits.config':
-      content => template("${module_name}/12_resourcelimits.config.erb"),
+      content => template($template_resourcelimits),
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
@@ -227,7 +236,7 @@ class htcondor::config (
     }
 
     file { '/etc/condor/config.d/21_schedd.config':
-      content => template("${module_name}/21_schedd.config.erb"),
+      content => template($template_schedd),
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
@@ -239,7 +248,7 @@ class htcondor::config (
   if $is_manager {
     if $use_accounting_groups {
       file { '/etc/condor/config.d/11_fairshares.config':
-        content => template("${module_name}/11_fairshares.config.erb"),
+        content => template($template_fairshares),
         require => Package['condor'],
         owner => $condor_user,
         group => $condor_group,
@@ -248,7 +257,7 @@ class htcondor::config (
     }
 
     file { '/etc/condor/config.d/22_manager.config':
-      content => template("${module_name}/22_manager.config.erb"),
+      content => template($template_manager),
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
@@ -260,7 +269,7 @@ class htcondor::config (
 
   if $is_worker {
     file { '/etc/condor/config.d/20_workernode.config':
-      content => template("${module_name}/20_workernode.config.erb"),
+      content => template($template_workernode),
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
