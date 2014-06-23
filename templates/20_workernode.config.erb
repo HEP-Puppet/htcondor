@@ -6,9 +6,12 @@ NUM_CPUS = <%= @number_of_cpus %>
 <% else -%>
 NUM_CPUS = <%= @processorcount %>
 <% end -%>
+
+<% if @custom_attribute -%>
 # custom attribute for easier splitting into queues
 # with ARC CE (using condor_requirements=" && custom_attribute"
 <%= @custom_attribute %> = True
+<% end -%>
 
 STARTD_ATTRS = <%= @custom_attribute %>, $(STARTD_ATTRS) MachineOwner, StartJobs
 
