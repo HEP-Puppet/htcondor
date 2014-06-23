@@ -5,7 +5,7 @@ PeriodicRemove = false
 request_memory = int(JobMemoryLimit/1024.0)
 SUBMIT_EXPRS = $(SUBMIT_EXPRS) use_x509userproxy,request_memory
 DELEGATE_JOB_GSI_CREDENTIALS = False
-EMAIL_DOMAIN = localhost
+EMAIL_DOMAIN = <%= @email_domain %>
 
 <% if @is_ce == true -%>
 AcctSubGroup = \ 

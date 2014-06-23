@@ -93,6 +93,7 @@ class htcondor::config (
   ,
   $cluster_has_multiple_domains   = false,
   $collector_name = 'Personal Condor at $(FULL_HOSTNAME)',
+  $email_domain                   = 'localhost',
   $computing_elements             = [],
   $condor_admin_email             = 'root@mysite.org',
   $custom_attribute               = 'NORDUGRID_QUEUE',
