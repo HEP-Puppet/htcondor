@@ -178,6 +178,7 @@ class htcondor::config (
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
+    mode => 644,
   }
 
   file { '/etc/condor/condor_config.local':
@@ -186,6 +187,7 @@ class htcondor::config (
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
+    mode => 644,
   }
 
   file { '/etc/condor/config.d/10_security.config':
@@ -193,18 +195,25 @@ class htcondor::config (
     require => Package['condor'],
     owner => $condor_user,
     group => $condor_group,
+    mode => 644,
   }
 
   file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
     ensure => directory,
     owner  => 'condor',
+    mode => 644,
   }
 
+  #even if condor runs as condor, it just drops privileges and needs to start as root.
+  #if file is not owned by root, condor will throw this error :
+  #06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real uid
+  #06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real uid
   file { '/etc/condor/pool_password':
     ensure => present,
     source => $pool_password,
-    owner => $condor_user,
-    group => $condor_group,
+    owner => root,
+    group => root,
+    mode => 640,
   }
 
   # files for certain roles
@@ -214,6 +223,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
 
     file { '/etc/condor/config.d/21_schedd.config':
@@ -221,6 +231,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
 
   }
@@ -232,6 +243,7 @@ class htcondor::config (
         require => Package['condor'],
         owner => $condor_user,
         group => $condor_group,
+        mode => 644,
       }
     }
 
@@ -240,6 +252,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
     # TODO: high availability
     # TODO: defrag
@@ -251,6 +264,7 @@ class htcondor::config (
       require => Package['condor'],
       owner => $condor_user,
       group => $condor_group,
+      mode => 644,
     }
   }
 

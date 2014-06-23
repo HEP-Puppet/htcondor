@@ -24,7 +24,8 @@ GROUP_SORT_EXPR = ifThenElse(AccountingGroup=?="<none>", 3.4e+38, \
 <% @high_priority_groups.keys.sort.each do |key| -%>
 ifThenElse(AccountingGroup=?="group_<%= key -%>", <%= @high_priority_groups[key] -%>, \
 <% end -%>
-ifThenElse(GroupQuota > 0, GroupResourcesInUse/GroupQuota, 3.3e+38)))))
+ifThenElse(GroupQuota > 0, GroupResourcesInUse/GroupQuota, 3.3e+38)\
+)<% @high_priority_groups.keys.sort.each do |key| -%>)<%end%>
 <% end -%>
 
 # Default priorities
