@@ -53,7 +53,6 @@ ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 SCHEDD.DENY_WRITE = nobody@$(UID_DOMAIN)
 
 <% if @use_gsi_kerberos_security then -%>
-use SECURITY : STRONG
 
 # Authentication
 SEC_DEFAULT_AUTHENTICATION = REQUIRED
