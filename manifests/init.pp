@@ -128,6 +128,8 @@ class htcondor (
   $pool_home             = '/pool',
   $pool_password         = "puppet:///modules/${module_name}/pool_password",
   $uid_domain            = 'example.com',
+  $default_domain_name   = $uid_domain,
+  $filesystem_domain     = $uid_domain,
   $use_accounting_groups = false,
   $worker_nodes          = [],
   
@@ -171,6 +173,8 @@ class htcondor (
     pool_home      => $pool_home,
     pool_password  => $pool_password,
     uid_domain     => $uid_domain,
+    default_domain_name   => $default_domain_name,
+    filesystem_domain     => $filesystem_domain,
     use_accounting_groups          => $use_accounting_groups,
     worker_nodes   => $worker_nodes,
     condor_user => $condor_user,

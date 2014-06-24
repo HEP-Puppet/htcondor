@@ -117,6 +117,8 @@ class htcondor::config (
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
   $uid_domain     = 'example.com',
+  $default_domain_name = $uid_domain,
+  $filesystem_domain = $uid_domain,
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
   $worker_nodes   = [],
