@@ -11,7 +11,5 @@ class htcondor::install (
   }
   package { 'condor':
     ensure  => $ensure,
-    require => [
-      Yumrepo[$repo]],
   }
 }
