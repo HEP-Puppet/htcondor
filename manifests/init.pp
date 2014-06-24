@@ -81,6 +81,17 @@
 # [*worker_nodes*]
 # List of worker nodes
 #
+#
+# Templates parameters : these parameters allow for user to override the default templates, for their needs, ie for instance for a different fairshare
+#
+#  $template_config_local
+#  $template_security
+#  $template_resourcelimits
+#  $template_schedd
+#  $template_fairshares
+#  $template_manager
+#  $template_workernode
+#
 # Actions:
 #
 # Requires: see Modulefile
@@ -131,6 +142,15 @@ class htcondor (
   $condor_uid  = 0,
   $condor_gid  = 0,
   
+  #template selection. Allow for user to override
+  $template_config_local    = "${module_name}/condor_config.local.erb",
+  $template_security        = "${module_name}/10_security.config.erb",
+  $template_resourcelimits  = "${module_name}/12_resourcelimits.config.erb",
+  $template_schedd          = "${module_name}/21_schedd.config.erb",
+  $template_fairshares      = "${module_name}/11_fairshares.config.erb",
+  $template_manager         = "${module_name}/22_manager.config.erb",
+  $template_workernode      = "${module_name}/20_workernode.config.erb",
+  
   ) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
@@ -164,6 +184,15 @@ class htcondor (
     condor_group=> $condor_group,
     condor_uid  => $condor_uid,
     condor_gid  => $condor_gid,
+    
+    #template selection. Allow for user to override
+    template_config_local => $template_config_local,
+    template_security => $template_security,
+    template_resourcelimits => $template_resourcelimits,
+    template_schedd => $template_schedd,
+    template_fairshares => $template_fairshares,
+    template_manager => $template_manager,
+    template_workernode => $template_workernode,
   }
 
   class { 'htcondor::service':
