@@ -58,7 +58,7 @@ ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 # Don't allow nobody to run jobs
 SCHEDD.DENY_WRITE = nobody@$(UID_DOMAIN)
 
-<% if @use_gsi_kerberos_security then -%>
+<% if @use_kerberos_security then -%>
 
 # Authentication
 SEC_DEFAULT_AUTHENTICATION = REQUIRED
