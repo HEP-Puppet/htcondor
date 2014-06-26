@@ -11,9 +11,12 @@ NUM_CPUS = <%= @processorcount %>
 # custom attribute for easier splitting into queues
 # with ARC CE (using condor_requirements=" && custom_attribute"
 <%= @custom_attribute %> = True
-<% end -%>
 
 STARTD_ATTRS = <%= @custom_attribute %>, $(STARTD_ATTRS) MachineOwner, StartJobs
+<% else -%>
+
+STARTD_ATTRS = $(STARTD_ATTRS) MachineOwner, StartJobs
+<% end -%>
 
 ## Permanent way of stopping jobs from starting
 STARTD.SETTABLE_ATTRS_ADMINISTRATOR = StartJobs
