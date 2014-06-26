@@ -46,6 +46,7 @@ PREEMPT = FALSE
 ## Overcommit memory by 50% and quantize the detected memory
 MEMORY = 1.5 * quantize( $(DETECTED_MEMORY), 1000 )
 
+<% if @partitionable_slots -%>
 ## Partitionable slots
 NUM_SLOTS = 1
 SLOT_TYPE_1               = cpus=100%,mem=100%,auto
@@ -54,6 +55,7 @@ SLOT_TYPE_1_PARTITIONABLE = TRUE
 
 ## Without this lots of memory (& hence job slots) will be wasted
 MODIFY_REQUEST_EXPR_REQUESTMEMORY = quantize(RequestMemory,100)
+<% end -%>
 
 ## Disable preemption by machine RANK by ranking all jobs equally
 RANK = 0

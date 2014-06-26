@@ -111,6 +111,7 @@ class htcondor::config (
   $machine_owner  = 'physics',
   $managers       = [],
   $number_of_cpus = undef,
+  $partitionable_slots = true,
   $request_memory = true,
   $use_kerberos_security = false,
   $certificate_mapfile = "puppet:///modules/${module_name}/certificate_mapfile",
