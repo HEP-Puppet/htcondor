@@ -43,10 +43,10 @@ KILL = FALSE
 ## (as opposed to killing it instantaneously)
 PREEMPT = FALSE
 
+<% if @partitionable_slots -%>
 ## Overcommit memory by 50% and quantize the detected memory
 MEMORY = 1.5 * quantize( $(DETECTED_MEMORY), 1000 )
 
-<% if @partitionable_slots -%>
 ## Partitionable slots
 NUM_SLOTS = 1
 SLOT_TYPE_1               = cpus=100%,mem=100%,auto
