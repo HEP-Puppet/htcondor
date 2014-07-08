@@ -298,9 +298,4 @@ class htcondor::config (
       mode => 644,
     }
   }
-
-  exec { '/usr/sbin/condor_reconfig':
-    subscribe   => $config_files,
-    refreshonly => true,
-  }
 }

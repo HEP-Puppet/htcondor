@@ -8,4 +8,11 @@ class htcondor::service {
     hasrestart => true,
     hasstatus  => true,
   }
+
+  exec { '/usr/sbin/condor_reconfig':
+    subscribe   => $htcondor::config::config_files,
+    refreshonly => true,
+  }
+
+  Service['condor'] -> Exec['/usr/sbin/condor_reconfig']
 }
