@@ -152,7 +152,8 @@ class htcondor::config (
     ]
 
   unless $use_pkg_condor_config {
-    $common_config_files = [ File['/etc/condor/condor_config'] ] + $common_config_files
+    $condor_main_config = [ File['/etc/condor/condor_config'] ]
+    $common_config_files = concat($condor_main_config, $common_config_files)
   }
   
   if $is_ce and $is_manager {
