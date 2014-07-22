@@ -220,7 +220,13 @@ class htcondor::config (
     mode => 644,
   }
 
-  file { ["${pool_home}/condor", "/etc/condor/persistent"]:
+#  file { ["${pool_home}","${pool_home}/condor", "/etc/condor/persistent"]:
+#    ensure => directory,
+#    owner  => 'condor',
+#    mode => 644,
+#  }
+
+  file { ["/etc/condor/persistent"]:
     ensure => directory,
     owner  => 'condor',
     mode => 644,
