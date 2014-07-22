@@ -118,6 +118,7 @@ class htcondor::config (
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
+  $pool_create    = true,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
   $filesystem_domain = $uid_domain,
@@ -221,10 +222,13 @@ class htcondor::config (
     mode => 644,
   }
 
-  file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
-    ensure => directory,
-    owner  => 'condor',
-    mode => 644,
+
+  if $pool_create {
+    file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
+      ensure => directory,
+      owner  => 'condor',
+      mode => 644,
+    }
   }
 
   if $use_kerberos_security {
