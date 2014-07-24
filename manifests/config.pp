@@ -97,6 +97,7 @@ class htcondor::config (
   $computing_elements             = [],
   $condor_admin_email             = 'root@mysite.org',
   $custom_attribute               = 'NORDUGRID_QUEUE',
+  $enable_multicore               = false,
   $high_priority_groups           = {
     'cms.admin' => -30,
     'ops'       => -20,
@@ -151,13 +152,18 @@ class htcondor::config (
   $template_manager         = "${module_name}/22_manager.config.erb",
   $template_workernode      = "${module_name}/20_workernode.config.erb",
   $template_ganglia         = "${module_name}/23_ganglia.config.erb",
+  $template_defrag          = "${module_name}/33_defrag.config.erb",
   
   ) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
-  $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR']
   $ganglia_daemon_list = ['GANGLIAD']
+  if $enable_multicore { 
+    $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG'] }
+  else {
+    $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR'] }
+  
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
   $common_config_files = [
@@ -172,6 +178,7 @@ class htcondor::config (
   
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
+<<<<<<< HEAD:code/manifests/config.pp
     if $ganglia_cluster_name {
       $temp_list               = concat($default_daemon_list, $ce_daemon_list)
       $temp2_list              = concat($temp_list, $ganglia_daemon_list)
@@ -191,7 +198,8 @@ class htcondor::config (
         File['/etc/condor/config.d/12_resourcelimits.config'],
         File['/etc/condor/config.d/21_schedd.config'],
         File['/etc/condor/config.d/22_manager.config'],
-        ]
+        File['/etc/condor/config.d/33_defrag.config'],
+      ]
       $config_files            = concat($common_config_files,
       $additional_config_files)
     }
@@ -216,7 +224,10 @@ class htcondor::config (
       $additional_config_files)
     } else {
       $daemon_list             = concat($default_daemon_list, $manage_daemon_list)
-      $additional_config_files = [File['/etc/condor/config.d/22_manager.config'],]
+      $additional_config_files = [
+        File['/etc/condor/config.d/22_manager.config'],
+        File['/etc/condor/config.d/33_defrag.config'],
+      ]
       $config_files            = concat($common_config_files,
       $additional_config_files)
     }
@@ -352,8 +363,16 @@ class htcondor::config (
       group => $condor_group,
       mode => 644,
     }
+     
+     file { '/etc/condor/config.d/33_defrag.config':
+      content => template($template_defrag),
+      require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
+      mode => 644,
+    }
+
     # TODO: high availability
-    # TODO: defrag
   }
 
   if $is_worker {
