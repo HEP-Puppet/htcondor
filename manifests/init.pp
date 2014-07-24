@@ -116,6 +116,7 @@ class htcondor (
   $condor_admin_email    = 'root@mysite.org',
   $condor_priority       = '99',
   $custom_attribute      = 'NORDUGRID_QUEUE',
+  $enable_multicore      = false,
   $high_priority_groups  = {
     'cms.admin' => -30,
     'ops'       => -20,
@@ -150,6 +151,7 @@ class htcondor (
   $template_fairshares      = "${module_name}/11_fairshares.config.erb",
   $template_manager         = "${module_name}/22_manager.config.erb",
   $template_workernode      = "${module_name}/20_workernode.config.erb",
+  $template_defrag          = "${module_name}/33_defrag.config.erb",
   
   ) {
   class { 'htcondor::repositories':
@@ -167,6 +169,7 @@ class htcondor (
     computing_elements             => $computing_elements,
     condor_admin_email             => $condor_admin_email,
     custom_attribute               => $custom_attribute,
+    enable_multicore               => $enable_multicore,
     high_priority_groups           => $high_priority_groups,
     include_username_in_accounting => $include_username_in_accounting,
     is_ce          => $is_ce,
@@ -193,6 +196,7 @@ class htcondor (
     template_fairshares => $template_fairshares,
     template_manager => $template_manager,
     template_workernode => $template_workernode,
+    template_defrag => $template_defrag,  
   }
 
   class { 'htcondor::service':

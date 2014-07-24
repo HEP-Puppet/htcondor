@@ -1,14 +1,27 @@
-DAEMON_LIST = $(DAEMON_LIST) DEFRAG
-DEFRAG_INTERVAL = 3600
-DEFRAG_DRAINING_MACHINES_PER_HOUR = 1.0
+DEFRAG_INTERVAL = 600
+DEFRAG_DRAINING_MACHINES_PER_HOUR = 60
 DEFRAG_MAX_CONCURRENT_DRAINING = 8
 DEFRAG_MAX_WHOLE_MACHINES = 20
 DEFRAG_SCHEDULE = graceful
 
+## Allow some defrag configuration to be settable
+DEFRAG.SETTABLE_ATTRS_ADMINISTRATOR = DEFRAG_MAX_CONCURRENT_DRAINING,DEFRAG_DRAINING_MACHINES_PER_HOUR,DEFRAG_MAX_WHOLE_MACHINES
+ENABLE_RUNTIME_CONFIG = TRUE
+
+## Which machines are more desirable to drain
+DEFRAG_RANK = ifThenElse(Cpus >= 8, -10, (TotalCpus - Cpus)/(8.0 - Cpus))
+
 # Define a whole machine to be anything with 8 cores.
 # Prevents us from draining off a full machine since we know we need
 # at most 8 cores.
-DEFRAG_WHOLE_MACHINE_EXPR = ((Cpus == TotalCpus) || (Cpus >= 8))
+DEFRAG_WHOLE_MACHINE_EXPR = ((Cpus == TotalCpus) || (Cpus >= 8)) && StartJobs =?= True
+
+# Decide which machines to drain
+# # - must not be cloud machines
+# # - must be healthy
+# # - must be configured to actually start new jobs
+# DEFRAG_REQUIREMENTS = PartitionableSlot && Offline =!= True && RalCluster =!= "wn-cloud" && StartJobs =?= True && NODE_IS_HEALTHY =?= True
+DEFRAG_REQUIREMENTS = PartitionableSlot && Offline =!= True && StartJobs =?= True 
 
 ## Logs
 MAX_DEFRAG_LOG = 104857600
