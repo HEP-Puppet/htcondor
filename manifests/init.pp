@@ -140,7 +140,7 @@ class htcondor (
   $certificate_mapfile   = "puppet:///modules/${caller_module_name}/certificate_mapfile",
   $pool_home             = '/pool',
   $pool_create           = true,
-  $queues                = undef,
+  $queues                = hiera('grid_queues', undef),
   $pool_password         = "puppet:///modules/${module_name}/pool_password",
   $uid_domain            = 'example.com',
   $default_domain_name   = $uid_domain,
