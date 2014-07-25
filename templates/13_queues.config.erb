@@ -1,0 +1,4 @@
+PERIODIC_EXPR_INTERVAL = 5
+MAX_PERIODIC_EXPR_INTERVAL = 10
+SYSTEM_PERIODIC_REMOVE = !member(BatchQueue, {<%= @queues.keys.map{|k| '"' + k + '"'}.join(', ') %>})
+
