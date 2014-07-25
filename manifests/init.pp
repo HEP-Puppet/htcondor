@@ -215,7 +215,7 @@ class htcondor (
     template_config_local => $template_config_local,
     template_security => $template_security,
     template_resourcelimits => $template_resourcelimits,
-    template_queues          = $template_queues,
+    template_queues => $template_queues,
     template_schedd => $template_schedd,
     template_fairshares => $template_fairshares,
     template_manager => $template_manager,
