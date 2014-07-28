@@ -1,9 +1,9 @@
 ## Half-life of user priorities
-PRIORITY_HALFLIFE = 43200
+PRIORITY_HALFLIFE = <%= @priority_halflife %>
 
 # Allow groups to use more than their fairshare if others aren't busy
-GROUP_ACCEPT_SURPLUS = True
-GROUP_AUTOREGROUP = True
+GROUP_ACCEPT_SURPLUS = <%= @group_accept_surplus %>
+GROUP_AUTOREGROUP = <%= @group_autoregroup %>
 
 # groups
 <% keys = @accounting_groups.keys.sort -%>
@@ -29,7 +29,7 @@ ifThenElse(GroupQuota > 0, GroupResourcesInUse/GroupQuota, 3.3e+38)\
 <% end -%>
 
 # Default priorities
-DEFAULT_PRIO_FACTOR            = 100000.00
+DEFAULT_PRIO_FACTOR            = <%= @default_prio_factor %>
 <% @accounting_groups.keys.sort.each do |key| -%>
 <% value = @accounting_groups[key] -%>
 <% if value.has_key?('priority_factor') -%>

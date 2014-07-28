@@ -103,6 +103,10 @@ class htcondor::config (
     'dteam'     => -10,
   }
   ,
+  $priority_halflife     = 43200,
+  $default_prio_factor   = 100000.00,
+  $group_accept_surplus  = true,
+  $group_autoregroup     = true,
   $include_username_in_accounting = false,
   $use_pkg_condor_config          = false,
   $is_ce          = false,
@@ -119,6 +123,7 @@ class htcondor::config (
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
   $queues         = hiera('grid_queues', undef),
+  $leave_job_in_queue = undef,
   $pool_create    = true,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
