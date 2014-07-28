@@ -211,8 +211,8 @@ class htcondor (
     certificate_mapfile => $certificate_mapfile,
     pool_home      => $pool_home,
     queues         => $queues,
-    periodic_expr_interval = $periodic_expr_interval,
-    max_periodic_expr_interval = $max_periodic_expr_interval,
+    periodic_expr_interval => $periodic_expr_interval,
+    max_periodic_expr_interval => $max_periodic_expr_interval,
     remove_held_jobs_after = $remove_held_jobs_after,
     leave_job_in_queue => $leave_job_in_queue
     pool_create    => $pool_create,
