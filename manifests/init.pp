@@ -214,7 +214,7 @@ class htcondor (
     periodic_expr_interval => $periodic_expr_interval,
     max_periodic_expr_interval => $max_periodic_expr_interval,
     remove_held_jobs_after => $remove_held_jobs_after,
-    leave_job_in_queue => $leave_job_in_queue
+    leave_job_in_queue => $leave_job_in_queue,
     pool_create    => $pool_create,
     pool_password  => $pool_password,
     uid_domain     => $uid_domain,
