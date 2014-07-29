@@ -178,7 +178,6 @@ class htcondor::config (
   
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
-<<<<<<< HEAD:code/manifests/config.pp
     if $ganglia_cluster_name {
       $temp_list               = concat($default_daemon_list, $ce_daemon_list)
       $temp2_list              = concat($temp_list, $ganglia_daemon_list)
@@ -384,4 +383,10 @@ class htcondor::config (
       mode => 644,
     }
   }
+
+  #this exec must be created in the service.pp file if we want to properly handle order including at first run, since the service must be started before the reconfig is done
+  #AND there is an upper Class order saying config must be done before starting service.
+  #$config_files is already a "File" resouce collection.
+  $config_files ~> Exec['/usr/sbin/condor_reconfig']
+
 }
