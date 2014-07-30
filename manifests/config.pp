@@ -295,8 +295,9 @@ class htcondor::config (
     }
   }
 
-  exec { '/usr/sbin/condor_reconfig':
-    subscribe   => $config_files,
-    refreshonly => true,
-  }
+  #this exec must be created in the service.pp file if we want to properly handle order including at first run, since the service must be started before the reconfig is done
+  #AND there is an upper Class order saying config must be done before starting service.
+  #$config_files is already a "File" resouce collection.
+  $config_files ~> Exec['/usr/sbin/condor_reconfig']
+
 }
