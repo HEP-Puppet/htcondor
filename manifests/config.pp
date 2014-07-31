@@ -127,6 +127,7 @@ class htcondor::config (
   $max_periodic_expr_interval = 1200,
   $remove_held_jobs_after = 1200,
   $leave_job_in_queue = undef,
+  $ganglia_cluster_name = false,
   $pool_create    = true,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
@@ -149,12 +150,14 @@ class htcondor::config (
   $template_fairshares      = "${module_name}/11_fairshares.config.erb",
   $template_manager         = "${module_name}/22_manager.config.erb",
   $template_workernode      = "${module_name}/20_workernode.config.erb",
+  $template_ganglia         = "${module_name}/23_ganglia.config.erb",
   
   ) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
   $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR']
+  $ganglia_daemon_list = ['GANGLIAD']
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
   $common_config_files = [
@@ -169,15 +172,29 @@ class htcondor::config (
   
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
-    $temp_list               = concat($default_daemon_list, $ce_daemon_list)
-    $daemon_list             = concat($temp_list, $manage_daemon_list)
-    $additional_config_files = [
-      File['/etc/condor/config.d/12_resourcelimits.config'],
-      File['/etc/condor/config.d/21_schedd.config'],
-      File['/etc/condor/config.d/22_manager.config'],
-      ]
-    $config_files            = concat($common_config_files,
-    $additional_config_files)
+    if $ganglia_cluster_name {
+      $temp_list               = concat($default_daemon_list, $ce_daemon_list)
+      $temp2_list              = concat($temp_list, $ganglia_daemon_list)
+      $daemon_list             = concat($temp2_list, $manage_daemon_list)
+      $additional_config_files = [
+        File['/etc/condor/config.d/12_resourcelimits.config'],
+        File['/etc/condor/config.d/21_schedd.config'],
+        File['/etc/condor/config.d/22_manager.config'],
+        File['/etc/condor/config.d/23_ganglia.config'],
+        ]
+      $config_files            = concat($common_config_files,
+      $additional_config_files)
+    } else {
+      $temp_list               = concat($default_daemon_list, $ce_daemon_list)
+      $daemon_list             = concat($temp_list, $manage_daemon_list)
+      $additional_config_files = [
+        File['/etc/condor/config.d/12_resourcelimits.config'],
+        File['/etc/condor/config.d/21_schedd.config'],
+        File['/etc/condor/config.d/22_manager.config'],
+        ]
+      $config_files            = concat($common_config_files,
+      $additional_config_files)
+    }
   } elsif $is_ce {
     $daemon_list             = concat($default_daemon_list, $ce_daemon_list)
     $additional_config_files = [
@@ -188,10 +205,21 @@ class htcondor::config (
     $additional_config_files)
   } elsif $is_manager {
     # machine running only manager
-    $daemon_list             = concat($default_daemon_list, $manage_daemon_list)
-    $additional_config_files = [File['/etc/condor/config.d/22_manager.config'],]
-    $config_files            = concat($common_config_files,
-    $additional_config_files)
+    if $ganglia_cluster_name {
+      $temp_list               = concat($default_daemon_list, $manage_daemon_list)
+      $daemon_list             = concat($temp_list, $ganglia_daemon_list)
+      $additional_config_files = [
+        File['/etc/condor/config.d/22_manager.config'],
+        File['/etc/condor/config.d/23_ganglia.config'],
+        ]
+      $config_files            = concat($common_config_files,
+      $additional_config_files)
+    } else {
+      $daemon_list             = concat($default_daemon_list, $manage_daemon_list)
+      $additional_config_files = [File['/etc/condor/config.d/22_manager.config'],]
+      $config_files            = concat($common_config_files,
+      $additional_config_files)
+    }
   } elsif $is_worker {
     $daemon_list             = concat($default_daemon_list, $worker_daemon_list)
     $additional_config_files = [File['/etc/condor/config.d/20_workernode.config'
@@ -295,6 +323,16 @@ class htcondor::config (
     if $use_accounting_groups {
       file { '/etc/condor/config.d/11_fairshares.config':
         content => template($template_fairshares),
+        require => Package['condor'],
+        owner => $condor_user,
+        group => $condor_group,
+        mode => 644,
+      }
+    }
+
+    if $ganglia_cluster_name {
+      file { '/etc/condor/config.d/23_ganglia.config':
+        content => template($template_ganglia),
         require => Package['condor'],
         owner => $condor_user,
         group => $condor_group,
