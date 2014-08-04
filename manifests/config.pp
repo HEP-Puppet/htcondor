@@ -267,6 +267,12 @@ class htcondor::config (
       owner  => 'condor',
       mode => 644,
     }
+  } else {
+    file { ["/etc/condor/persistent"]:
+      ensure => directory,
+      owner  => 'condor',
+      mode => 644,
+    }  
   }
 
   if $use_kerberos_security {
