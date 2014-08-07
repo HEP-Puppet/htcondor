@@ -97,12 +97,14 @@ class htcondor::config (
   $condor_admin_email             = 'root@mysite.org',
   $custom_attribute               = 'NORDUGRID_QUEUE',
   $enable_multicore               = false,
+  $enable_healthcheck             = false,
   $high_priority_groups           = {
     'cms.admin' => -30,
     'ops'       => -20,
     'dteam'     => -10,
   }
   ,
+  $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
   $is_ce          = false,
   $is_manager     = false,
@@ -293,6 +295,14 @@ class htcondor::config (
       group => $condor_group,
       mode => 644,
     }
+    
+   file { '/usr/local/bin/healhcheck_wn_condor':
+      source   => "${health_check_script}",
+      owner    => $condor_user,
+      group    => $condor_group,
+      mode     => 655,
+    }
+
   }
 
   #this exec must be created in the service.pp file if we want to properly handle order including at first run, since the service must be started before the reconfig is done
