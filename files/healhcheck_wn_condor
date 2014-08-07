@@ -1,0 +1,268 @@
+#!/bin/sh
+#  Worker node health check script, to run from condor startd
+
+# Modified by jpk <jpk@gridpp.rl.ac.uk>
+# on Tue Aug 13 09:06:46 BST 2013
+#
+# -d option on Tue Sep  3 09:56:40 BST 2013
+# Tests extended to include space on /pool and
+#
+# Modified by jpk <jpk@gridpp.rl.ac.uk>
+# on Wed Mar  5 10:31:27 GMT 2014
+#  
+# Set NODE_STATUS variable 
+# Added '-x fuse' option to df 
+# Added Alice to list of VOs being tested in CVMFS
+#
+# Note to explain healhcheck script with per VO disabling.
+# If we want to disable jobs starts on a per VO basis the script needs to return something like:
+# NODE_IS_HEALTHY = True && (regexp("atl", Owner) =!= False) && (regexp("cms", Owner) =!= False)
+
+
+DATE=$(date)
+PROGRAM=`basename $0`
+SHOSTNAME=$(hostname -s)
+Nmesg=""				# per test message
+TellNagios="All_OK"			# What to tell nagios
+mesg="NODE_IS_HEALTHY = True"		# Default OK to condor
+test_file="/home/pool/condor/andrewIsGreat"	# A test file name
+rc=0					# exit code, 0 by default
+upfoo=0                                 # Uptime variable
+exit_code=0				# script and nagios exit code
+LOGGER="/usr/bin/env logger"		# logger program
+log_message="Failed healthcheck:"	# log message preamble
+debug_val=0				# to debug or not debug ?
+NAGIOS_SERVER="t2nagios04.physics.ox.ac.uk"         # Nagios server obviously
+typeset -i no_dead_guys                 # number of dead cvmfs repos
+declare -a dead_guys                    # Array to hold dead cvmfs user regex
+declare -a file_systems                 # Array to hold list of filesystems
+
+# we need a hash to map VOs to regex
+# Only declare it once
+declare -A vos
+vos["atlas.cern.ch"]=atl
+vos["atlas-condb.cern.ch"]=atl
+vos["cms.cern.ch"]=cms
+vos["lhcb.cern.ch"]=lhcb
+vos["alice.cern.ch"]=alice
+
+
+# first check for debug on command line.
+case "$1" in
+        -d|--debug)
+             debug_val=1
+              shift
+              ;;
+esac
+
+function debug() {
+        if [ $debug_val -gt 0 ]
+        then
+                echo
+                echo "DEBUG: $@"
+        fi
+}
+
+# We only want debug - nothing else.
+if [ $# -gt 0 ]
+then
+	echo ""
+	echo "Wrong input for $PROGRAM, -d is the only option"
+	exit 3
+fi
+
+function tell_and_die() {
+	# function called to deal with critical condition.
+	# no dead repos or more than 2 dead repos
+	if [ $no_dead_guys -ge 2 -o $no_dead_guys -le 0 ]	# more than 2 dead repos
+	then
+		mesg="NODE_IS_HEALTHY = False"	# Message for condor
+		TellNagios=$@			# Message for nagios
+		exit_code=2 			# Nagios critical
+		echo $mesg			# standard out to condor
+		echo "NODE_STATUS = \"$TellNagios\""
+		log_message="$log_message  ${TellNagios}" 	# log message
+	else
+		for dead in ${dead_guys[@]}
+		do
+		mesg="$mesg && (regexp(\"$dead\", Owner) =?= False)"
+		done
+		TellNagios=$@			# Message for nagios
+		exit_code=1 			# Nagios warn
+		echo $mesg			# standard out to condor
+		echo "NODE_STATUS = \"$TellNagios\""
+		log_message="$log_message  $TellNagios" 	# log message
+	fi
+	if [ $debug_val -gt 0 ] 	# if debug, we want to know what is going on
+  	then
+		echo $log_message
+		return
+	fi
+	/bin/echo -e "${SHOSTNAME}\tCondor Health check\t${exit_code}\t${TellNagios}"| /usr/sbin/send_nsca -H ${NAGIOS_SERVER} -c /etc/nagios/send_nsca.cfg 
+	$LOGGER $log_message
+	exit ${exit_code}
+}
+
+debug "starting ${PROGRAM} on ${DATE}"
+
+# Cvmfs check for major VOs.
+# This test depends on the nagios check_cvmfs script being available, so check first
+if [ ! -f /usr/lib64/nagios/plugins/check_cvmfs ]
+then
+	Nmesg="Problem: check cvmfs2.sh not available"
+        tell_and_die $Nmesg
+fi
+debug "CVMFS check for selected VOs"
+for vo in  "${!vos[@]}"
+do
+
+	debug "Checking $vo"
+	if [ $debug_val -gt 0 ]
+	then
+		/usr/lib64/nagios/plugins/check_cvmfs $vo
+		rc=$?
+	else
+		/usr/lib64/nagios/plugins/check_cvmfs $vo >/dev/null 2>&1
+		rc=$?
+	fi
+
+	if [ $rc -gt 0 ]
+	then
+		Nmesg="${Nmesg} Problem: CVMFS for ${vo} "
+		dead_guys=("${dead_guys[@]}" ${vos[$vo]})
+	fi
+done
+
+# lets see if we got any dead_guys
+no_dead_guys=${#dead_guys[@]}
+if [ $no_dead_guys -gt 0 ]
+then
+        tell_and_die $Nmesg
+fi
+# end of cvmfs checks
+
+# Read-only filesystem check. Cant run the whole thing cos we would need root.
+# But we can check a condor directory.
+debug "Testing for writable /home/pool/condor"
+if [ ! -d /home/pool/condor ]  # no condor dir
+then
+	Nmesg="Problem: No condor scratch area"
+	tell_and_die $Nmesg
+fi
+
+trap "rm -f $test_file; exit" INT TERM EXIT
+touch ${test_file} 1> /dev/null 2>&1
+rc=$?
+rm -f ${test_file} > /dev/null 2>&1
+trap - INT TERM EXIT
+
+if [ $rc -gt 0 ]
+then
+	Nmesg="Problem: Condor cant write to condor scratch area"
+	tell_and_die $Nmesg
+else
+	debug "condor scratch area is writable"
+fi
+
+# check swap
+# This test depends on the nagios check_swap script being available, so check first
+if [ ! -f /usr/lib64/nagios/plugins/check_swap ]
+then
+	Nmesg="Problem: No check swap script available"
+        tell_and_die $Nmesg
+fi
+debug "Testing swap free"
+if [ $debug_val -gt 0 ]
+then
+	/usr/lib64/nagios/plugins/check_swap -w 25% -c 20%
+	rc=$?
+else
+	/usr/lib64/nagios/plugins/check_swap -w 25% -c 20% >/dev/null 2>&1
+	rc=$?
+fi
+if [ $rc -gt 0 ]
+then
+	Nmesg="Problem: Swap in use, less than 25% free"
+        tell_and_die $Nmesg
+fi
+
+# check disk pool
+# This test  and the next one depends on the nagios check_disk script being available,
+# so check first
+if [ ! -f /usr/lib64/nagios/plugins/check_disk ]
+then
+	Nmesg="Problem: No check disk script available"
+        tell_and_die $Nmesg
+fi
+
+debug "Testing space on /home/pool"
+if [ $debug_val -gt 0 ]
+then
+	/usr/lib64/nagios/plugins/check_disk  -c 5000 -p /home/pool
+	rc=$?
+else
+	/usr/lib64/nagios/plugins/check_disk  -c 5000 -p /home/pool >/dev/null 2>&1
+	rc=$?
+fi
+if [ $rc -gt 0 ]
+then
+	Nmesg="Problem: less than 5000Mb free on /home/pool"
+        tell_and_die $Nmesg
+fi
+
+# Check all other filesystems have at least 5% free.
+# Note that this purposely does not check cvmfs or rather fuse
+file_systems=`df -lh -x fuse | sed -ne '/^\/dev/s/^.*\% \([^ ]*\)$/\1/p'`
+
+for dir in ${file_systems[@]}
+do
+        debug "Testing %age space free on $dir"
+        if [ $debug_val -gt 0 ]
+        then
+                /usr/lib64/nagios/plugins/check_disk  -c 5% -p $dir
+                rc=$?
+        else
+                /usr/lib64/nagios/plugins/check_disk  -c 5% -p $dir >/dev/null 2>&1
+                rc=$?
+        fi
+
+        if [ $rc -gt 0 ]
+        then
+		debug "less than 5% free on $dir"
+		Nmesg="${Nmesg} Problem: less than 5% free on $dir "
+        fi
+done
+if [ ! -z "$Nmesg" ]
+then
+        tell_and_die $Nmesg
+fi
+# End of filesystems check
+
+# Uptime check
+debug "Testing uptime is > 10 mins"
+if [ $debug_val -gt 0 ]
+        then
+        uptime  | awk '{print "Machine up: " $3 " " $4}'
+fi
+
+upfoo=$(uptime | awk '{if (match($4, "min")) print $3 ; else print "100"}')
+if [ $upfoo -le 10 ]
+then
+	Nmesg="Problem: Machine up less than 10 minutes."
+        tell_and_die $Nmesg
+fi
+
+## End of checks
+
+# Default OK
+# first tell nagger, but only if not running debug.
+if [ $debug_val -eq  0 ]
+then
+/bin/echo -e "${SHOSTNAME}\tCondor Health check\t${exit_code}\t${TellNagios}"| /usr/sbin/send_nsca -H $NAGIOS_SERVER -c /etc/nagios/send_nsca.cfg 
+fi
+# echo our message to condor
+echo $mesg
+echo "NODE_STATUS = \"$TellNagios\""
+# exit
+exit ${exit_code}
+

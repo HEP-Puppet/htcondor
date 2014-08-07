@@ -96,12 +96,15 @@ class htcondor::config (
   $computing_elements             = [],
   $condor_admin_email             = 'root@mysite.org',
   $custom_attribute               = 'NORDUGRID_QUEUE',
+  $enable_multicore               = false,
+  $enable_healthcheck             = false,
   $high_priority_groups           = {
     'cms.admin' => -30,
     'ops'       => -20,
     'dteam'     => -10,
   }
   ,
+  $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
   $is_ce          = false,
   $is_manager     = false,
@@ -130,12 +133,17 @@ class htcondor::config (
   $template_fairshares      = "${module_name}/11_fairshares.config.erb",
   $template_manager         = "${module_name}/22_manager.config.erb",
   $template_workernode      = "${module_name}/20_workernode.config.erb",
+  $template_defrag          = "${module_name}/33_defrag.config.erb",
   
   ) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
-  $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR']
+  if $enable_multicore { 
+    $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG'] }
+  else {
+    $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR'] }
+  
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
   $common_config_files = [
@@ -152,6 +160,7 @@ class htcondor::config (
       File['/etc/condor/config.d/12_resourcelimits.config'],
       File['/etc/condor/config.d/21_schedd.config'],
       File['/etc/condor/config.d/22_manager.config'],
+      File['/etc/condor/config.d/33_defrag.config'],
       ]
     $config_files            = concat($common_config_files,
     $additional_config_files)
@@ -166,7 +175,10 @@ class htcondor::config (
   } elsif $is_manager {
     # machine running only manager
     $daemon_list             = concat($default_daemon_list, $manage_daemon_list)
-    $additional_config_files = [File['/etc/condor/config.d/22_manager.config'],]
+    $additional_config_files = [
+      File['/etc/condor/config.d/22_manager.config'],
+      File['/etc/condor/config.d/33_defrag.config'],
+    ]
     $config_files            = concat($common_config_files,
     $additional_config_files)
   } elsif $is_worker {
@@ -263,8 +275,16 @@ class htcondor::config (
       group => $condor_group,
       mode => 644,
     }
+     
+     file { '/etc/condor/config.d/33_defrag.config':
+      content => template($template_defrag),
+      require => Package['condor'],
+      owner => $condor_user,
+      group => $condor_group,
+      mode => 644,
+    }
+
     # TODO: high availability
-    # TODO: defrag
   }
 
   if $is_worker {
@@ -275,6 +295,14 @@ class htcondor::config (
       group => $condor_group,
       mode => 644,
     }
+    
+   file { '/usr/local/bin/healhcheck_wn_condor':
+      source   => "${health_check_script}",
+      owner    => $condor_user,
+      group    => $condor_group,
+      mode     => 655,
+    }
+
   }
 
   #this exec must be created in the service.pp file if we want to properly handle order including at first run, since the service must be started before the reconfig is done
