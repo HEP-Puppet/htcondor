@@ -260,7 +260,6 @@ class htcondor::config (
     mode => 644,
   }
 
-
   if $pool_create {
     file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
       ensure => directory,
