@@ -128,7 +128,7 @@ class htcondor::config (
   $remove_held_jobs_after = 1200,
   $leave_job_in_queue = undef,
   $ganglia_cluster_name = false,
-  $pool_create    = true,
+  $pool_create    = false,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
   $filesystem_domain = $uid_domain,
