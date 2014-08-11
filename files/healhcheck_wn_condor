@@ -21,7 +21,7 @@
 
 DATE=$(date)
 PROGRAM=`basename $0`
-SHOSTNAME=$(hostname -s)
+SHOSTNAME=$(hostname )
 Nmesg=""				# per test message
 TellNagios="All_OK"			# What to tell nagios
 mesg="NODE_IS_HEALTHY = True"		# Default OK to condor
@@ -32,7 +32,7 @@ exit_code=0				# script and nagios exit code
 LOGGER="/usr/bin/env logger"		# logger program
 log_message="Failed healthcheck:"	# log message preamble
 debug_val=0				# to debug or not debug ?
-NAGIOS_SERVER="t2nagios04.physics.ox.ac.uk"         # Nagios server obviously
+NAGIOS_SERVER="t2manage04.physics.ox.ac.uk"         # Nagios server obviously
 typeset -i no_dead_guys                 # number of dead cvmfs repos
 declare -a dead_guys                    # Array to hold dead cvmfs user regex
 declare -a file_systems                 # Array to hold list of filesystems
