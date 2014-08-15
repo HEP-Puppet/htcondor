@@ -170,7 +170,7 @@ class htcondor::config (
   $default_daemon_list = ['MASTER']
 
   if $use_pkg_condor_config {
-    $condor_config_files = [
+    $common_config_files = [
       File['/etc/condor/condor_config.local'],
       File['/etc/condor/config.d/10_security.config'],
     ]
