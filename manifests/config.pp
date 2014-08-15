@@ -168,16 +168,18 @@ class htcondor::config (
   
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
-  $common_config_files_base = [
-    File['/etc/condor/condor_config.local'],
-    File['/etc/condor/config.d/10_security.config'],
-    ]
 
   if $use_pkg_condor_config {
-    $condor_config_files = $condor_config_files_base
+    $condor_config_files = [
+      File['/etc/condor/condor_config.local'],
+      File['/etc/condor/config.d/10_security.config'],
+    ]
   } else {
-    $condor_main_config = [ File['/etc/condor/condor_config'] ]
-    $common_config_files = concat($condor_main_config, $common_config_files_base)
+    $common_config_files = [
+      File['/etc/condor/condor_config'],
+      File['/etc/condor/condor_config.local'],
+      File['/etc/condor/config.d/10_security.config'],
+    ]
   } 
   
   if $is_ce and $is_manager {
