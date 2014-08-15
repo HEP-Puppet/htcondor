@@ -131,7 +131,7 @@ class htcondor::config (
   $remove_held_jobs_after = 1200,
   $leave_job_in_queue = undef,
   $ganglia_cluster_name = false,
-  $pool_create    = false,
+  $pool_create    = true,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
   $filesystem_domain = $uid_domain,
@@ -168,15 +168,17 @@ class htcondor::config (
   
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
-  $common_config_files = [
+  $common_config_files_base = [
     File['/etc/condor/condor_config.local'],
     File['/etc/condor/config.d/10_security.config'],
     ]
 
-  unless $use_pkg_condor_config {
+  if $use_pkg_condor_config {
+    $condor_config_files = $condor_config_files_base
+  } else {
     $condor_main_config = [ File['/etc/condor/condor_config'] ]
-    $common_config_files = concat($condor_main_config, $common_config_files)
-  }
+    $common_config_files = concat($condor_main_config, $common_config_files_base)
+  } 
   
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
