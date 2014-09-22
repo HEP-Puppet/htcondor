@@ -118,6 +118,11 @@ class htcondor::config (
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
+  $queues                     = hiera('grid_queues', undef),
+  $periodic_expr_interval     = 60,
+  $max_periodic_expr_interval = 1200,
+  $remove_held_jobs_after     = 1200,
+  $leave_job_in_queue         = undef,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
   $filesystem_domain   = $uid_domain,
