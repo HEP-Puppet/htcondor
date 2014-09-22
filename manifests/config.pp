@@ -93,6 +93,7 @@ class htcondor::config (
   ,
   $cluster_has_multiple_domains   = false,
   $collector_name = 'Personal Condor at $(FULL_HOSTNAME)',
+  $email_domain                   = 'localhost',
   $computing_elements             = [],
   $condor_admin_email             = 'root@mysite.org',
   $custom_attribute               = 'NORDUGRID_QUEUE',
@@ -118,6 +119,8 @@ class htcondor::config (
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
   $uid_domain     = 'example.com',
+  $default_domain_name = $uid_domain,
+  $filesystem_domain   = $uid_domain,
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
   $worker_nodes   = [],
