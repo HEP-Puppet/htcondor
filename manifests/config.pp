@@ -105,6 +105,10 @@ class htcondor::config (
     'dteam'     => -10,
   }
   ,
+  $priority_halflife     = 43200,
+  $default_prio_factor   = 100000.00,
+  $group_accept_surplus  = true,
+  $group_autoregroup     = true,
   $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
   $is_ce          = false,
