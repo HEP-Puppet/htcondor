@@ -111,6 +111,7 @@ class htcondor::config (
   $group_autoregroup     = true,
   $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
+  $use_pkg_condor_config = false,
   $is_ce          = false,
   $is_manager     = false,
   $is_worker      = false,
@@ -131,6 +132,7 @@ class htcondor::config (
   $leave_job_in_queue         = undef,
   $ganglia_cluster_name = false,
   $uid_domain     = 'example.com',
+  $pool_create = true,
   $default_domain_name = $uid_domain,
   $filesystem_domain   = $uid_domain,
   $use_accounting_groups          = false,
@@ -166,11 +168,18 @@ class htcondor::config (
 
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
-  $common_config_files = [
-    File['/etc/condor/condor_config'],
-    File['/etc/condor/condor_config.local'],
-    File['/etc/condor/config.d/10_security.config'],
-    ]
+  if $use_pkg_condor_config {
+    $common_config_files = [
+      File['/etc/condor/condor_config.local'],
+      File['/etc/condor/config.d/10_security.config'],
+      ]
+  } else {
+    $common_config_files = [
+      File['/etc/condor/condor_config'],
+      File['/etc/condor/condor_config.local'],
+      File['/etc/condor/config.d/10_security.config'],
+      ]
+  }
 
   if $is_ce and $is_manager {
     # machine is both CE and manager (for small sites)
@@ -240,13 +249,15 @@ class htcondor::config (
   }
 
   # files common between machines
-  file { '/etc/condor/condor_config':
-    backup  => ".bak.${now}",
-    source  => "puppet:///modules/${module_name}/condor_config",
-    require => Package['condor'],
-    owner => $condor_user,
-    group => $condor_group,
-    mode => 644,
+unless $use_pkg_condor_config {
+    file { '/etc/condor/condor_config':
+      backup  => ".bak.${now}",
+      source  => "puppet:///modules/${module_name}/condor_config",
+      require => Package['condor'],
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => 644,
+    }
   }
 
   file { '/etc/condor/condor_config.local':
@@ -266,10 +277,19 @@ class htcondor::config (
     mode => 644,
   }
 
-  file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
+  if $pool_create {
+    $condor_directories = [
+      "${pool_home}",
+      "${pool_home}/condor",
+      "/etc/condor/persistent"]
+  } else {
+    $condor_directories = ["/etc/condor/persistent"]
+  }
+
+  file { $condor_directories:
     ensure => directory,
     owner  => 'condor',
-    mode => 644,
+    mode   => 644,
   }
 
   if $use_kerberos_security {
