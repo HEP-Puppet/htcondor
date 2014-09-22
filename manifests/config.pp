@@ -119,6 +119,8 @@ class htcondor::config (
   $number_of_cpus = undef,
   $partitionable_slots = true,
   $request_memory = true,
+  $use_kerberos_security = false,
+  $certificate_mapfile = "puppet:///modules/${module_name}/certificate_mapfile",
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
@@ -240,16 +242,28 @@ class htcondor::config (
     mode => 644,
   }
 
-  #even if condor runs as condor, it just drops privileges and needs to start as root.
-  #if file is not owned by root, condor will throw this error :
-  #06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real uid
-  #06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real uid
-  file { '/etc/condor/pool_password':
-    ensure => present,
-    source => $pool_password,
-    owner => root,
-    group => root,
-    mode => 640,
+  if $use_kerberos_security {
+    file { '/etc/condor/certificate_mapfile':
+      ensure => present,
+      source => $certificate_mapfile,
+      owner  => $condor_user,
+      group  => $condor_group,
+    }
+  } else {
+    # even if condor runs as condor, it just drops privileges and needs to start
+    # as root.
+    # if file is not owned by root, condor will throw this error :
+    # 06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real
+    # uid
+    # 06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real
+    # uid
+    file { '/etc/condor/pool_password':
+      ensure => present,
+      source => $pool_password,
+      owner  => root,
+      group  => root,
+      mode   => 640,
+    }
   }
 
   # files for certain roles
