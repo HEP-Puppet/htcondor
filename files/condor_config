@@ -195,7 +195,7 @@ STARTER_STANDARD	= $(SBIN)/condor_starter.std
 STARTER_LOCAL		= $(SBIN)/condor_starter
 STARTD_ADDRESS_FILE	= $(LOG)/.startd_address
 BenchmarkTimer = (time() - LastBenchmark)
-RunBenchmarks : (LastBenchmark == 0 ) || ($(BenchmarkTimer) >= (4 * $(HOUR)))
+RunBenchmarks = (LastBenchmark == 0 ) || ($(BenchmarkTimer) >= (4 * $(HOUR)))
 benchmarks_joblist = mips kflops
 benchmarks_max_job_load = 1.0
 benchmarks_mips_executable = $(LIBEXEC)/condor_mips
