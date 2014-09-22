@@ -2,7 +2,11 @@ CONDOR_IDS = <%= @condor_uid %>.<%= @condor_gid %>
 CONDOR_ADMIN = <%= @condor_admin_email %>
 use_x509userproxy = True
 PeriodicRemove = false
+<% if @request_memory -%>
 request_memory = int(JobMemoryLimit/1024.0)
+<% else -%>
+request_memory = 0
+<% end -%>
 SUBMIT_EXPRS = $(SUBMIT_EXPRS) use_x509userproxy,request_memory
 DELEGATE_JOB_GSI_CREDENTIALS = False
 EMAIL_DOMAIN = localhost
