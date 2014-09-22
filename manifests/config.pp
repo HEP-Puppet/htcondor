@@ -112,6 +112,7 @@ class htcondor::config (
   $machine_owner  = 'physics',
   $managers       = [],
   $number_of_cpus = undef,
+  $partitionable_slots = true,
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
@@ -119,12 +120,12 @@ class htcondor::config (
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
   $worker_nodes   = [],
-  
+
   $condor_user = root,
   $condor_group= root,
   $condor_uid  = 0,
   $condor_gid  = 0,
-  
+
   #template selection. Allow for user to override
   $template_config_local    = "${module_name}/condor_config.local.erb",
   $template_security        = "${module_name}/10_security.config.erb",
@@ -134,16 +135,16 @@ class htcondor::config (
   $template_manager         = "${module_name}/22_manager.config.erb",
   $template_workernode      = "${module_name}/20_workernode.config.erb",
   $template_defrag          = "${module_name}/33_defrag.config.erb",
-  
+
   ) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
-  if $enable_multicore { 
+  if $enable_multicore {
     $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG'] }
   else {
     $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR'] }
-  
+
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
   $common_config_files = [
@@ -275,7 +276,7 @@ class htcondor::config (
       group => $condor_group,
       mode => 644,
     }
-     
+
      file { '/etc/condor/config.d/33_defrag.config':
       content => template($template_defrag),
       require => Package['condor'],
@@ -295,7 +296,7 @@ class htcondor::config (
       group => $condor_group,
       mode => 644,
     }
-    
+
    file { '/usr/local/bin/healhcheck_wn_condor':
       source   => "${health_check_script}",
       owner    => $condor_user,
