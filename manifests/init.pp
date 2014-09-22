@@ -115,6 +115,7 @@ class htcondor (
   $computing_elements    = [],
   $condor_admin_email    = 'root@mysite.org',
   $condor_priority       = '99',
+  $condor_version        = 'present',
   $custom_attribute      = 'NORDUGRID_QUEUE',
   $enable_multicore      = false,
   $enable_healthcheck    = false,
@@ -127,6 +128,7 @@ class htcondor (
   $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
   $install_repositories  = true,
+  $dev_repositories      = false,
   $is_ce                 = false,
   $is_manager            = false,
   $is_worker             = false,
@@ -159,10 +161,13 @@ class htcondor (
   ) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
+    dev_repos       => $dev_repositories,
     condor_priority => $condor_priority,
   }
 
   class { 'htcondor::install':
+    ensure => $condor_version,
+    dev_repos => $dev_repositories,
   }
 
   class { 'htcondor::config':
