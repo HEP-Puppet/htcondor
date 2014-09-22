@@ -115,6 +115,7 @@ class htcondor (
   $computing_elements    = [],
   $condor_admin_email    = 'root@mysite.org',
   $condor_priority       = '99',
+  $condor_version        = 'present',
   $custom_attribute      = 'NORDUGRID_QUEUE',
   $enable_multicore      = false,
   $enable_healthcheck    = false,
@@ -127,6 +128,7 @@ class htcondor (
   $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
   $install_repositories  = true,
+  $dev_repositories      = false,
   $is_ce                 = false,
   $is_manager            = false,
   $is_worker             = false,
@@ -138,13 +140,13 @@ class htcondor (
   $uid_domain            = 'example.com',
   $use_accounting_groups = false,
   $worker_nodes          = [],
-  
+
   #default params
   $condor_user = root,
   $condor_group= root,
   $condor_uid  = 0,
   $condor_gid  = 0,
-  
+
   #template selection. Allow for user to override
   $template_config_local    = "${module_name}/condor_config.local.erb",
   $template_security        = "${module_name}/10_security.config.erb",
@@ -154,14 +156,17 @@ class htcondor (
   $template_manager         = "${module_name}/22_manager.config.erb",
   $template_workernode      = "${module_name}/20_workernode.config.erb",
   $template_defrag          = "${module_name}/33_defrag.config.erb",
-  
+
   ) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
+    dev_repos       => $dev_repositories,
     condor_priority => $condor_priority,
   }
 
   class { 'htcondor::install':
+    ensure => $condor_version,
+    dev_repos => $dev_repositories,
   }
 
   class { 'htcondor::config':
@@ -191,7 +196,7 @@ class htcondor (
     condor_group=> $condor_group,
     condor_uid  => $condor_uid,
     condor_gid  => $condor_gid,
-    
+
     #template selection. Allow for user to override
     template_config_local => $template_config_local,
     template_security => $template_security,
@@ -200,7 +205,7 @@ class htcondor (
     template_fairshares => $template_fairshares,
     template_manager => $template_manager,
     template_workernode => $template_workernode,
-    template_defrag => $template_defrag,  
+    template_defrag => $template_defrag,
   }
 
   class { 'htcondor::service':

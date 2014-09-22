@@ -2,10 +2,14 @@
 #
 # Install HTCondor packages
 class htcondor::install (
-  $ensure = present,) {
+  $ensure = present,
+  $dev_repos = false,) {
+  if $dev_repos {
+    $repo = 'htcondor-development'
+  } else {
+    $repo = 'htcondor-stable'
+  }
   package { 'condor':
     ensure  => $ensure,
-    require => [
-      Yumrepo['htcondor-stable']],
   }
 }
