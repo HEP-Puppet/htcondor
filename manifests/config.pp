@@ -122,6 +122,11 @@ class htcondor::config (
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
+  $queues                     = hiera('grid_queues', undef),
+  $periodic_expr_interval     = 60,
+  $max_periodic_expr_interval = 1200,
+  $remove_held_jobs_after     = 1200,
+  $leave_job_in_queue         = undef,
   $uid_domain     = 'example.com',
   $default_domain_name = $uid_domain,
   $filesystem_domain   = $uid_domain,
@@ -138,6 +143,7 @@ class htcondor::config (
   $template_config_local    = "${module_name}/condor_config.local.erb",
   $template_security        = "${module_name}/10_security.config.erb",
   $template_resourcelimits  = "${module_name}/12_resourcelimits.config.erb",
+  $template_queues          = "${module_name}/13_queues.config.erb",
   $template_schedd          = "${module_name}/21_schedd.config.erb",
   $template_fairshares      = "${module_name}/11_fairshares.config.erb",
   $template_manager         = "${module_name}/22_manager.config.erb",
@@ -251,19 +257,28 @@ class htcondor::config (
     file { '/etc/condor/config.d/12_resourcelimits.config':
       content => template($template_resourcelimits),
       require => Package['condor'],
-      owner => $condor_user,
-      group => $condor_group,
-      mode => 644,
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => 644,
     }
 
     file { '/etc/condor/config.d/21_schedd.config':
       content => template($template_schedd),
       require => Package['condor'],
-      owner => $condor_user,
-      group => $condor_group,
-      mode => 644,
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => 644,
     }
 
+    if $queues {
+      file { '/etc/condor/config.d/13_queues.config':
+        content => template($template_queues),
+        require => Package['condor'],
+        owner   => $condor_user,
+        group   => $condor_group,
+        mode    => 644,
+      }
+    }
   }
 
   if $is_manager {
