@@ -113,6 +113,7 @@ class htcondor::config (
   $managers       = [],
   $number_of_cpus = undef,
   $partitionable_slots = true,
+  $request_memory = true,
   # pool_password can also be served from central file location using hiera
   $pool_password  = "puppet:///modules/${module_name}/pool_password",
   $pool_home      = '/pool',
