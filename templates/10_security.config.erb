@@ -1,6 +1,12 @@
 # HTCondor configuration: security
 
+<% if @default_domain_name -%>
+DEFAULT_DOMAIN_NAME = <%= @default_domain_name %>
+<% end -%>
 UID_DOMAIN = <%= @uid_domain %>
+<% if @filesystem_domain -%>
+FILESYSTEM_DOMAIN = <%= @filesystem_domain %>
+<% end -%>
 
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
 
