@@ -132,6 +132,7 @@ class htcondor::config (
   $leave_job_in_queue         = undef,
   $ganglia_cluster_name = false,
   $uid_domain     = 'example.com',
+  $pool_create = true,
   $default_domain_name = $uid_domain,
   $filesystem_domain   = $uid_domain,
   $use_accounting_groups          = false,
@@ -276,10 +277,19 @@ unless $use_pkg_condor_config {
     mode => 644,
   }
 
-  file { ["${pool_home}", "${pool_home}/condor", "/etc/condor/persistent"]:
+  if $pool_create {
+    $condor_directories = [
+      "${pool_home}",
+      "${pool_home}/condor",
+      "/etc/condor/persistent"]
+  } else {
+    $condor_directories = ["/etc/condor/persistent"]
+  }
+
+  file { $condor_directories:
     ensure => directory,
     owner  => 'condor',
-    mode => 644,
+    mode   => 644,
   }
 
   if $use_kerberos_security {
