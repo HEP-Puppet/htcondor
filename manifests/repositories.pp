@@ -27,7 +27,7 @@ class htcondor::repositories (
             enabled  => 1,
             gpgcheck => 0,
             priority => "${condor_priority}",
-            exclude  => 'condor.i386',
+            exclude  => 'condor.i386, condor.i686',
             before => [Package['condor']],
           }
         }
