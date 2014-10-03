@@ -39,7 +39,7 @@ KILL = FALSE
 ## When to nicely stop a job?
 ## (as opposed to killing it instantaneously)
 PREEMPT = FALSE
-
+<% if @partitionable_slots -%>
 ## Overcommit memory by 50% and quantize the detected memory
 MEMORY = 1.5 * quantize( $(DETECTED_MEMORY), 1000 )
 
@@ -51,7 +51,7 @@ SLOT_TYPE_1_PARTITIONABLE = TRUE
 
 ## Without this lots of memory (& hence job slots) will be wasted
 MODIFY_REQUEST_EXPR_REQUESTMEMORY = quantize(RequestMemory,100)
-
+<% end -%>
 ## Disable preemption by machine RANK by ranking all jobs equally
 RANK = 0
 

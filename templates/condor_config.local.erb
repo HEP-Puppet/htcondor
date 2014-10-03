@@ -2,10 +2,19 @@ CONDOR_IDS = <%= @condor_uid %>.<%= @condor_gid %>
 CONDOR_ADMIN = <%= @condor_admin_email %>
 use_x509userproxy = True
 PeriodicRemove = false
+<% if @request_memory -%>
 request_memory = int(JobMemoryLimit/1024.0)
-SUBMIT_EXPRS = $(SUBMIT_EXPRS) use_x509userproxy,request_memory
+<% else -%>
+request_memory = 0
+<% end -%>
+<% if @leave_job_in_queue -%>
+LeaveJobInQueue = (time() - CompletionDate) > <%= @leave_job_in_queue %>
+<% else -%>
+LeaveJobInQueue = False
+<% end -%>
+SUBMIT_EXPRS = $(SUBMIT_EXPRS) use_x509userproxy,request_memory,LeaveJobInQueue
 DELEGATE_JOB_GSI_CREDENTIALS = False
-EMAIL_DOMAIN = localhost
+EMAIL_DOMAIN = <%= @email_domain %>
 
 <% if @is_ce == true -%>
 AcctSubGroup = \ 
