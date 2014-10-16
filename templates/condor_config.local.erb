@@ -17,11 +17,12 @@ DELEGATE_JOB_GSI_CREDENTIALS = False
 EMAIL_DOMAIN = <%= @email_domain %>
 
 <% if @is_ce == true -%>
-AcctSubGroup = \ 
+AcctSubGroup = \
+ifThenElse(RequestCpus > 1, "multicore",\ 
 ifThenElse(regexp("prd",Owner),	"production",\
 ifThenElse(regexp("pil",Owner),"pilot",\
 ifThenElse(regexp("sgm",Owner),"admin",\
-x509UserProxyVOName)))
+x509UserProxyVOName))))
 <% if @include_username_in_accounting -%>
 # This one is not useful for grid sites but is useful if you want to
 # implement user based quotas:

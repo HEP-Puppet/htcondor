@@ -19,13 +19,14 @@ GROUP_NAMES = \
 <% end -%>
 
 <% if @high_priority_groups -%>
-# consider high_priority groups first
+# consider high_priority groups first and make sure that multi core slot doesn't disappear quickly
 GROUP_SORT_EXPR = ifThenElse(AccountingGroup=?="<none>", 3.4e+38, \
 <% @high_priority_groups.keys.sort.each do |key| -%>
 ifThenElse(AccountingGroup=?="group_<%= key -%>", <%= @high_priority_groups[key] -%>, \
 <% end -%>
+ifThenElse(regexp("multicore",AccountingGroup),ifThenElse(GroupQuota > 0,-2+GroupResourcesInUse/GroupQuota,-1), \
 ifThenElse(GroupQuota > 0, GroupResourcesInUse/GroupQuota, 3.3e+38)\
-)<% @high_priority_groups.keys.sort.each do |key| -%>)<%end%>
+))<% @high_priority_groups.keys.sort.each do |key| -%>)<%end%>
 <% end -%>
 
 # Default priorities
