@@ -141,8 +141,8 @@ class htcondor::config (
   $worker_nodes        = [],
   $condor_user         = root,
   $condor_group        = root,
-  $condor_uid          = undef,
-  $condor_gid          = undef,
+  $condor_uid          = 0,
+  $condor_gid          = 0,
   # template selection. Allow for user to override
   $template_config_local          = "${module_name}/condor_config.local.erb",
   $template_security   = "${module_name}/10_security.config.erb",
