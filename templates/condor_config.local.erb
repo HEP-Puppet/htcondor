@@ -1,4 +1,6 @@
+<% if @condor_uid and @condor_gid -%>
 CONDOR_IDS = <%= @condor_uid %>.<%= @condor_gid %>
+<% end -%>
 CONDOR_ADMIN = <%= @condor_admin_email %>
 use_x509userproxy = True
 PeriodicRemove = false
