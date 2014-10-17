@@ -7,9 +7,9 @@ Installation requirements
 =========================================
 - pool_password file created with ```condor_store_cred -f <path_to_htcondor_module>/files/pool_password```
 
-TODO
+Tests
 =========================================
-- [ ] high availability
-- [ ] DEFRAG
-- [ ] fair shares
-- [ ] HDFS
+Please run
+```bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'```
+and make sure no errors are present when submitting code.
+
