@@ -79,7 +79,7 @@
 # List of worker nodes
 #
 class htcondor::config (
-  $accounting_groups              = {
+  $accounting_groups   = {
     'CMS'            => {
       priority_factor => 10000.00,
       dynamic_quota   => 0.80,
@@ -92,83 +92,82 @@ class htcondor::config (
   }
   ,
   $cluster_has_multiple_domains   = false,
-  $collector_name = 'Personal Condor at $(FULL_HOSTNAME)',
-  $email_domain                   = 'localhost',
-  $computing_elements             = [],
-  $condor_admin_email             = 'root@mysite.org',
-  $custom_attribute               = 'NORDUGRID_QUEUE',
-  $enable_multicore               = false,
-  $enable_healthcheck             = false,
+  $collector_name      = 'Personal Condor at $(FULL_HOSTNAME)',
+  $email_domain        = 'localhost',
+  $computing_elements  = [],
+  $condor_admin_email  = 'root@mysite.org',
+  $custom_attribute    = 'NORDUGRID_QUEUE',
+  $enable_multicore    = false,
+  $enable_healthcheck  = false,
   $high_priority_groups           = {
     'cms.admin' => -30,
     'ops'       => -20,
     'dteam'     => -10,
   }
   ,
-  $priority_halflife     = 43200,
-  $default_prio_factor   = 100000.00,
-  $group_accept_surplus  = true,
-  $group_autoregroup     = true,
-  $health_check_script   =  "puppet:///modules/${module_name}/healhcheck_wn_condor",
+  $priority_halflife   = 43200,
+  $default_prio_factor = 100000.00,
+  $group_accept_surplus           = true,
+  $group_autoregroup   = true,
+  $health_check_script = "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
-  $use_pkg_condor_config = false,
-  $is_ce          = false,
-  $is_manager     = false,
-  $is_worker      = false,
-  $machine_owner  = 'physics',
-  $managers       = [],
-  $number_of_cpus = undef,
+  $use_pkg_condor_config          = false,
+  $is_ce               = false,
+  $is_manager          = false,
+  $is_worker           = false,
+  $machine_owner       = 'physics',
+  $managers            = [],
+  $number_of_cpus      = undef,
   $partitionable_slots = true,
   $memory_overcommit   = 1.5,
-  $request_memory = true,
-  $use_kerberos_security = false,
+  $request_memory      = true,
+  $use_kerberos_security          = false,
   $certificate_mapfile = "puppet:///modules/${module_name}/certificate_mapfile",
   # pool_password can also be served from central file location using hiera
-  $pool_password  = "puppet:///modules/${module_name}/pool_password",
-  $pool_home      = '/pool',
-  $queues                     = hiera('grid_queues', undef),
-  $periodic_expr_interval     = 60,
-  $max_periodic_expr_interval = 1200,
-  $remove_held_jobs_after     = 1200,
-  $leave_job_in_queue         = undef,
-  $ganglia_cluster_name = false,
-  $uid_domain     = 'example.com',
-  $pool_create = true,
+  $pool_password       = "puppet:///modules/${module_name}/pool_password",
+  $pool_home           = '/pool',
+  $queues              = hiera('grid_queues', undef),
+  $periodic_expr_interval         = 60,
+  $max_periodic_expr_interval     = 1200,
+  $remove_held_jobs_after         = 1200,
+  $leave_job_in_queue  = undef,
+  $ganglia_cluster_name           = false,
+  $uid_domain          = 'example.com',
+  $pool_create         = true,
   $default_domain_name = $uid_domain,
   $filesystem_domain   = $uid_domain,
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
-  $worker_nodes   = [],
-
-  $condor_user = root,
-  $condor_group= root,
-  $condor_uid  = 0,
-  $condor_gid  = 0,
-
-  #template selection. Allow for user to override
-  $template_config_local    = "${module_name}/condor_config.local.erb",
-  $template_security        = "${module_name}/10_security.config.erb",
-  $template_resourcelimits  = "${module_name}/12_resourcelimits.config.erb",
-  $template_queues          = "${module_name}/13_queues.config.erb",
-  $template_schedd          = "${module_name}/21_schedd.config.erb",
-  $template_fairshares      = "${module_name}/11_fairshares.config.erb",
-  $template_manager         = "${module_name}/22_manager.config.erb",
-  $template_workernode      = "${module_name}/20_workernode.config.erb",
-  $template_ganglia         = "${module_name}/23_ganglia.config.erb",
-  $template_defrag          = "${module_name}/33_defrag.config.erb",
-
-  ) {
+  $worker_nodes        = [],
+  $condor_user         = root,
+  $condor_group        = root,
+  $condor_uid          = 0,
+  $condor_gid          = 0,
+  # template selection. Allow for user to override
+  $template_config_local          = "${module_name}/condor_config.local.erb",
+  $template_security   = "${module_name}/10_security.config.erb",
+  $template_resourcelimits        = "${module_name}/12_resourcelimits.config.erb",
+  $template_queues     = "${module_name}/13_queues.config.erb",
+  $template_schedd     = "${module_name}/21_schedd.config.erb",
+  $template_fairshares = "${module_name}/11_fairshares.config.erb",
+  $template_manager    = "${module_name}/22_manager.config.erb",
+  $template_workernode = "${module_name}/20_workernode.config.erb",
+  $template_ganglia    = "${module_name}/23_ganglia.config.erb",
+  $template_defrag     = "${module_name}/33_defrag.config.erb",) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
   $ganglia_daemon_list = ['GANGLIAD']
+
   if $enable_multicore {
-    $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG'] }
-  else {
-    $manage_daemon_list  = ['COLLECTOR', 'NEGOTIATOR'] }
+    $manage_daemon_list = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG']
+  } else {
+    $manage_daemon_list = ['COLLECTOR', 'NEGOTIATOR']
+  }
 
   # default daemon, runs everywhere
   $default_daemon_list = ['MASTER']
+
   if $use_pkg_condor_config {
     $common_config_files = [
       File['/etc/condor/condor_config.local'],
@@ -250,14 +249,14 @@ class htcondor::config (
   }
 
   # files common between machines
-unless $use_pkg_condor_config {
+  unless $use_pkg_condor_config {
     file { '/etc/condor/condor_config':
       backup  => ".bak.${now}",
       source  => "puppet:///modules/${module_name}/condor_config",
       require => Package['condor'],
       owner   => $condor_user,
       group   => $condor_group,
-      mode    => 644,
+      mode    => '0644',
     }
   }
 
@@ -265,32 +264,32 @@ unless $use_pkg_condor_config {
     backup  => ".bak.${now}",
     content => template($template_config_local),
     require => Package['condor'],
-    owner => $condor_user,
-    group => $condor_group,
-    mode => 644,
+    owner   => $condor_user,
+    group   => $condor_group,
+    mode    => '0644',
   }
 
   file { '/etc/condor/config.d/10_security.config':
     content => template($template_security),
     require => Package['condor'],
-    owner => $condor_user,
-    group => $condor_group,
-    mode => 644,
+    owner   => $condor_user,
+    group   => $condor_group,
+    mode    => '0644',
   }
 
   if $pool_create {
     $condor_directories = [
       "${pool_home}",
       "${pool_home}/condor",
-      "/etc/condor/persistent"]
+      '/etc/condor/persistent']
   } else {
-    $condor_directories = ["/etc/condor/persistent"]
+    $condor_directories = ['/etc/condor/persistent']
   }
 
   file { $condor_directories:
     ensure => directory,
     owner  => 'condor',
-    mode   => 644,
+    mode   => '0644',
   }
 
   if $use_kerberos_security {
@@ -313,7 +312,7 @@ unless $use_pkg_condor_config {
       source => $pool_password,
       owner  => root,
       group  => root,
-      mode   => 640,
+      mode   => '0640',
     }
   }
 
@@ -324,7 +323,7 @@ unless $use_pkg_condor_config {
       require => Package['condor'],
       owner   => $condor_user,
       group   => $condor_group,
-      mode    => 644,
+      mode    => '0644',
     }
 
     file { '/etc/condor/config.d/21_schedd.config':
@@ -332,7 +331,7 @@ unless $use_pkg_condor_config {
       require => Package['condor'],
       owner   => $condor_user,
       group   => $condor_group,
-      mode    => 644,
+      mode    => '0644',
     }
 
     if $queues {
@@ -341,7 +340,7 @@ unless $use_pkg_condor_config {
         require => Package['condor'],
         owner   => $condor_user,
         group   => $condor_group,
-        mode    => 644,
+        mode    => '0644',
       }
     }
   }
@@ -351,18 +350,18 @@ unless $use_pkg_condor_config {
       file { '/etc/condor/config.d/11_fairshares.config':
         content => template($template_fairshares),
         require => Package['condor'],
-        owner => $condor_user,
-        group => $condor_group,
-        mode => 644,
+        owner   => $condor_user,
+        group   => $condor_group,
+        mode    => '0644',
       }
     }
 
     file { '/etc/condor/config.d/22_manager.config':
       content => template($template_manager),
       require => Package['condor'],
-      owner => $condor_user,
-      group => $condor_group,
-      mode => 644,
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => '0644',
     }
 
     if $ganglia_cluster_name {
@@ -371,16 +370,16 @@ unless $use_pkg_condor_config {
         require => Package['condor'],
         owner   => $condor_user,
         group   => $condor_group,
-        mode    => 644,
+        mode    => '0644',
       }
     }
 
-     file { '/etc/condor/config.d/33_defrag.config':
+    file { '/etc/condor/config.d/33_defrag.config':
       content => template($template_defrag),
       require => Package['condor'],
-      owner => $condor_user,
-      group => $condor_group,
-      mode => 644,
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => '0644',
     }
 
     # TODO: high availability
@@ -390,23 +389,26 @@ unless $use_pkg_condor_config {
     file { '/etc/condor/config.d/20_workernode.config':
       content => template($template_workernode),
       require => Package['condor'],
-      owner => $condor_user,
-      group => $condor_group,
-      mode => 644,
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => '0644',
     }
 
-   file { '/usr/local/bin/healhcheck_wn_condor':
-      source   => "${health_check_script}",
-      owner    => $condor_user,
-      group    => $condor_group,
-      mode     => 655,
+    file { '/usr/local/bin/healhcheck_wn_condor':
+      source => "${health_check_script}",
+      owner  => $condor_user,
+      group  => $condor_group,
+      mode   => '0655',
     }
 
   }
 
-  #this exec must be created in the service.pp file if we want to properly handle order including at first run, since the service must be started before the reconfig is done
-  #AND there is an upper Class order saying config must be done before starting service.
-  #$config_files is already a "File" resouce collection.
+  # this exec must be created in the service.pp file if we want to properly
+  # handle order including at first run, since the service must be started
+  # before the reconfig is done
+  # AND there is an upper Class order saying config must be done before starting
+  # service.
+  # $config_files is already a "File" resouce collection.
   $config_files ~> Exec['/usr/sbin/condor_reconfig']
 
 }
