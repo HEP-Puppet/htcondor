@@ -17,8 +17,8 @@ class htcondor::repositories (
             enabled  => 1,
             gpgcheck => 0,
             priority => "${condor_priority}",
-            exclude  => 'condor.i386',
-            before => [Package['condor']],
+            exclude  => 'condor.i386, condor.i686',
+            before   => [Package['condor']],
           }
         } else {
           yumrepo { 'htcondor-stable':
@@ -28,7 +28,7 @@ class htcondor::repositories (
             gpgcheck => 0,
             priority => "${condor_priority}",
             exclude  => 'condor.i386, condor.i686',
-            before => [Package['condor']],
+            before   => [Package['condor']],
           }
         }
       }
