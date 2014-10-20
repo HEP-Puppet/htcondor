@@ -34,13 +34,6 @@ HOSTALLOW_NEGOTIATOR_SCHEDD = $(COLLECTOR_HOST)
 
 ALLOW_READ = */*.$(UID_DOMAIN)
 ALLOW_WRITE = $(CMS), $(CES), $(WNS)
-#debugging
-#ALLOW_READ  = $(USERS)/*.$(UID_DOMAIN), tomcat/*.$(UID_DOMAIN), ldap/*.$(UID_DOMAIN)
-#ALLOW_DAEMON = condor_pool@$(UID_DOMAIN), condor@$(UID_DOMAIN), $(FULL_HOSTNAME)
-#ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
-#ALLOW_CONFIG = root@$(FULL_HOSTNAME)
-
-#NEGOTIATOR.ALLOW_WRITE = $(CES), $(CMS)
 
 #if the CE has a private NIC, it needs to be included here as well
 COLLECTOR.ALLOW_ADVERTISE_MASTER = $(CES), $(CMS), $(WNS)
@@ -51,8 +44,12 @@ SCHEDD.ALLOW_WRITE = $(USERS), $(CES)
 
 #SHADOW.ALLOW_WRITE = $(WNS), $(CES)
 
-ALLOW_DAEMON = condor@$(UID_DOMAIN)/*.$(UID_DOMAIN), condor_pool@$(UID_DOMAIN)/*.$(UID_DOMAIN)
-ALLOW_ADMINISTRATOR = *@$(UID_DOMAIN)/$(FULL_HOSTNAME)
+ALLOW_DAEMON = <%= @condor_user %>@$(UID_DOMAIN)/*.$(UID_DOMAIN), condor_pool@$(UID_DOMAIN)/*.$(UID_DOMAIN)
+<% if @condor_user == 'root' and @condor_group == 'root' -%>
+ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(FULL_HOSTNAME)
+<% else -%>
+ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(FULL_HOSTNAME), <%= @condor_user %>@$(UID_DOMAIN)/$(FULL_HOSTNAME)
+<% end -%>
 ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 
 # Don't allow nobody to run jobs
