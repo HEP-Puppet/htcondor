@@ -302,7 +302,8 @@ class htcondor::config (
       owner  => $condor_user,
       group  => $condor_group,
     }
-  } else {
+  }
+  if $use_password_security {
     # even if condor runs as condor, it just drops privileges and needs to start
     # as root.
     # if file is not owned by root, condor will throw this error :
