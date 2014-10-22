@@ -134,7 +134,8 @@ class htcondor::config (
   $uid_domain                     = 'example.com',
   $pool_create                    = true,
   $default_domain_name            = $uid_domain,
-  $filesystem_domain              = $uid_domain,
+  # HTCondor parameter FILESYSTEM_DOMAIN
+  $filesystem_domain              = $::fqdn,
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
   $worker_nodes                   = [],

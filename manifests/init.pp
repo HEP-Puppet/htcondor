@@ -157,7 +157,8 @@ class htcondor (
   $pool_password                  = "puppet:///modules/${module_name}/pool_password",
   $uid_domain                     = 'example.com',
   $default_domain_name            = $uid_domain,
-  $filesystem_domain              = $uid_domain,
+  # HTCondor parameter FILESYSTEM_DOMAIN
+  $filesystem_domain              = $::fqdn,
   $use_accounting_groups          = false,
   $worker_nodes                   = [],
   # default params
