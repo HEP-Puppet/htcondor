@@ -44,7 +44,7 @@ SCHEDD.ALLOW_WRITE = $(USERS), $(CES)
 
 #SHADOW.ALLOW_WRITE = $(WNS), $(CES)
 
-ALLOW_DAEMON = <%= @condor_user %>@$(UID_DOMAIN)/*.$(UID_DOMAIN), condor_pool@$(UID_DOMAIN)/*.$(UID_DOMAIN)
+ALLOW_DAEMON = <%= @condor_user %>@$(UID_DOMAIN), condor_pool@$(UID_DOMAIN)
 <% if @condor_user == 'root' and @condor_group == 'root' -%>
 ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(FULL_HOSTNAME)
 <% else -%>
