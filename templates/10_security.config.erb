@@ -1,5 +1,4 @@
 # HTCondor configuration: security
-
 <% if @default_domain_name -%>
 DEFAULT_DOMAIN_NAME = <%= @default_domain_name %>
 <% end -%>
@@ -7,9 +6,7 @@ UID_DOMAIN = <%= @uid_domain %>
 <% if @filesystem_domain -%>
 FILESYSTEM_DOMAIN = <%= @filesystem_domain %>
 <% end -%>
-
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
-
 <% if @cluster_has_multiple_domains == true then -%>
 TRUST_UID_DOMAIN = True
 <% end -%>
@@ -18,7 +15,6 @@ TRUST_UID_DOMAIN = True
 CMS = <%= @managers.flatten.join(', ') %>
 CES = <%= @computing_elements.flatten.join(', ') %>
 WNS = <%= @worker_nodes.flatten.join(', ') %>
-
 USERS = *@$(UID_DOMAIN)
 
 # Clear out any old-style HOSTALLOW settings:
@@ -41,8 +37,6 @@ COLLECTOR.ALLOW_ADVERTISE_SCHEDD = $(CES)
 COLLECTOR.ALLOW_ADVERTISE_STARTD = $(WNS)
 
 SCHEDD.ALLOW_WRITE = $(USERS), $(CES)
-
-#SHADOW.ALLOW_WRITE = $(WNS), $(CES)
 
 ALLOW_DAEMON = <%= @condor_user %>@$(UID_DOMAIN), condor_pool@$(UID_DOMAIN)
 <% if @condor_user == 'root' and @condor_group == 'root' -%>
