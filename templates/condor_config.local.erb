@@ -4,7 +4,11 @@ CONDOR_IDS = 0.0
 CONDOR_IDS = <%= @condor_uid %>.<%= @condor_gid %>
 <% end -%>
 CONDOR_ADMIN = <%= @condor_admin_email %>
+<% if @use_x509userproxy == true -%>
 use_x509userproxy = True
+<% else -%>
+use_x509userproxy = False
+<% end -%>
 PeriodicRemove = false
 <% if @request_memory -%>
 request_memory = int(JobMemoryLimit/1024.0)

@@ -181,6 +181,7 @@ class htcondor (
   $use_filesystem_security        = true,
   $use_kerberos_security          = false,
   $use_password_security          = true,
+  $use_x509userproxy              = true,
   ) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
