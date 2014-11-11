@@ -1,7 +1,8 @@
 Puppet module for HTCondor batch system
 =========================================
+Latest stable version: https://github.com/HEP-Puppet/htcondor/releases/tag/v1.1.0
 
-[![Build Status](https://www.travis-ci.org/kreczko/puppet-htcondor.png?branch=master)](https://www.travis-ci.org/kreczko/puppet-htcondor)
+[![Build Status](https://travis-ci.org/HEP-Puppet/htcondor.svg?branch=master)](https://travis-ci.org/HEP-Puppet/htcondor)
 
 Installation requirements
 =========================================
