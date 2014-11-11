@@ -145,7 +145,6 @@ class htcondor (
   $partitionable_slots            = true,
   $memory_overcommit              = 1.5,
   $request_memory                 = true,
-  $use_kerberos_security          = false,
   $certificate_mapfile            = "puppet:///modules/${module_name}/certificate_mapfile",
   $pool_home                      = '/pool',
   $pool_create                    = true,
@@ -176,7 +175,12 @@ class htcondor (
   $template_manager               = "${module_name}/22_manager.config.erb",
   $template_ganglia               = "${module_name}/23_ganglia.config.erb",
   $template_workernode            = "${module_name}/20_workernode.config.erb",
-  $template_defrag                = "${module_name}/33_defrag.config.erb",) {
+  $template_defrag                = "${module_name}/33_defrag.config.erb",
+  $use_fs_auth                    = true,
+  $use_password_auth              = true,
+  $use_kerberos_auth              = false,
+  $use_claim_to_be_auth           = false,
+  $cert_map_file                  = '/etc/condor/certificate_mapfile',) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
     dev_repos       => $dev_repositories,
@@ -215,7 +219,6 @@ class htcondor (
     partitionable_slots            => $partitionable_slots,
     memory_overcommit              => $memory_overcommit,
     request_memory                 => $request_memory,
-    use_kerberos_security          => $use_kerberos_security,
     certificate_mapfile            => $certificate_mapfile,
     pool_home                      => $pool_home,
     queues                         => $queues,
@@ -246,6 +249,11 @@ class htcondor (
     template_workernode            => $template_workernode,
     template_ganglia               => $template_ganglia,
     template_defrag                => $template_defrag,
+    use_fs_auth                    => $use_fs_auth,
+    use_password_auth              => $use_password_auth,
+    use_kerberos_auth              => $use_kerberos_auth,
+    use_claim_to_be_auth           => $use_claim_to_be_auth,
+
   }
 
   class { 'htcondor::service':
