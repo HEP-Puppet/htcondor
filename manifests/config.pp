@@ -121,7 +121,6 @@ class htcondor::config (
   $partitionable_slots = true,
   $memory_overcommit   = 1.5,
   $request_memory      = true,
-  $use_kerberos_security          = false,
   $certificate_mapfile = "puppet:///modules/${module_name}/certificate_mapfile",
   # pool_password can also be served from central file location using hiera
   $pool_password       = "puppet:///modules/${module_name}/pool_password",
@@ -153,12 +152,18 @@ class htcondor::config (
   $template_manager    = "${module_name}/22_manager.config.erb",
   $template_workernode = "${module_name}/20_workernode.config.erb",
   $template_ganglia    = "${module_name}/23_ganglia.config.erb",
-  $template_defrag     = "${module_name}/33_defrag.config.erb",) {
+  $template_defrag     = "${module_name}/33_defrag.config.erb",
+  $use_fs_auth                    = true,
+  $use_password_auth              = true,
+  $use_kerberos_auth              = false,
+  $use_claim_to_be_auth           = false,
+  $cert_map_file                  = '/etc/condor/certificate_mapfile',) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
   $ganglia_daemon_list = ['GANGLIAD']
-
+  $auth_string = construct_auth_string($use_fs_auth, $use_password_auth,
+  $use_kerberos_auth, $use_claim_to_be_auth)
   if $enable_multicore {
     $manage_daemon_list = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG']
   } else {
@@ -292,8 +297,8 @@ class htcondor::config (
     mode   => '0644',
   }
 
-  if $use_kerberos_security {
-    file { '/etc/condor/certificate_mapfile':
+  if $use_kerberos_auth {
+    file { $cert_map_file:
       ensure => present,
       source => $certificate_mapfile,
       owner  => $condor_user,
