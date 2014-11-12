@@ -7,15 +7,11 @@ describe "construct_auth_string function" do
     expect(Puppet::Parser::Functions.function("construct_auth_string")).to eq("function_construct_auth_string")
   end
 
-  context 'construct_auth_string FS test' do
-
+  context 'construct_auth_string test' do
     it "get FS right" do
       result = scope.function_construct_auth_string([true, false, false, false])
       expect(result).to eq('FS')
     end
-  end
-
-  context 'construct_auth_string test' do
     it "get FS,PASSWORD right" do
       result = scope.function_construct_auth_string([true, true, false, false])
       expect(result).to eq('FS,PASSWORD')
