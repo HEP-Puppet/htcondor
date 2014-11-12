@@ -122,6 +122,7 @@ class htcondor::config (
   $memory_overcommit   = 1.5,
   $request_memory      = true,
   $certificate_mapfile = "puppet:///modules/${module_name}/certificate_mapfile",
+  $kerberos_mapfile    = "puppet:///modules/${module_name}/kerberos_mapfile",
   # pool_password can also be served from central file location using hiera
   $pool_password       = "puppet:///modules/${module_name}/pool_password",
   $pool_home           = '/pool',
@@ -157,7 +158,10 @@ class htcondor::config (
   $use_password_auth              = true,
   $use_kerberos_auth              = false,
   $use_claim_to_be_auth           = false,
-  $cert_map_file                  = '/etc/condor/certificate_mapfile',) {
+  $use_cert_map_file              = false,
+  $use_krb_map_file               = false,
+  $cert_map_file                  = '/etc/condor/certificate_mapfile',
+  $krb_map_file                   = '/etc/condor/kerberos_mapfile',) {
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
@@ -298,13 +302,26 @@ class htcondor::config (
   }
 
   if $use_kerberos_auth {
-    file { $cert_map_file:
-      ensure => present,
-      source => $certificate_mapfile,
-      owner  => $condor_user,
-      group  => $condor_group,
+    if $use_cert_map_file {
+      file { $cert_map_file:
+        ensure => present,
+        source => $certificate_mapfile,
+        owner  => $condor_user,
+        group  => $condor_group,
+      }
     }
-  } else {
+
+    if $use_krb_map_file {
+      file { $krb_map_file:
+        ensure => present,
+        source => $kerberos_mapfile,
+        owner  => $condor_user,
+        group  => $condor_group,
+      }
+    }
+  }
+
+  if $use_password_auth {
     # even if condor runs as condor, it just drops privileges and needs to start
     # as root.
     # if file is not owned by root, condor will throw this error :

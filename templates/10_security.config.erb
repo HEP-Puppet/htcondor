@@ -60,7 +60,12 @@ SCHEDD.SEC_DAEMON_AUTHENTICATION_METHODS = <%= @auth_string %>
 
 <% if @use_kerberos_auth then -%>
 SEC_ENABLE_MATCH_PASSWORD_AUTHENTICATION = True
+<% if @use_cert_map_file -%>
 CERTIFICATE_MAPFILE = <%= @cert_map_file %>
+<% end -%>
+<% if @use_krb_map_file -%>
+CERTIFICATE_MAPFILE = <%= @krb_map_file %>
+<% end -%>
 <% end -%>
 <% if @use_password_auth then -%>
 SEC_PASSWORD_FILE = /etc/condor/pool_password

@@ -146,6 +146,7 @@ class htcondor (
   $memory_overcommit              = 1.5,
   $request_memory                 = true,
   $certificate_mapfile            = "puppet:///modules/${module_name}/certificate_mapfile",
+  $kerberos_mapfile               = "puppet:///modules/${module_name}/kerberos_mapfile",
   $pool_home                      = '/pool',
   $pool_create                    = true,
   $queues                         = hiera('grid_queues', undef),
@@ -180,7 +181,11 @@ class htcondor (
   $use_password_auth              = true,
   $use_kerberos_auth              = false,
   $use_claim_to_be_auth           = false,
-  $cert_map_file                  = '/etc/condor/certificate_mapfile',) {
+  $use_cert_map_file              = false,
+  $use_krb_map_file               = false,
+  $cert_map_file                  = '/etc/condor/certificate_mapfile',
+  $krb_map_file                   = '/etc/condor/kerberos_mapfile',
+  ) {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
     dev_repos       => $dev_repositories,
@@ -220,6 +225,7 @@ class htcondor (
     memory_overcommit              => $memory_overcommit,
     request_memory                 => $request_memory,
     certificate_mapfile            => $certificate_mapfile,
+    kerberos_mapfile               => $kerberos_mapfile,
     pool_home                      => $pool_home,
     queues                         => $queues,
     periodic_expr_interval         => $periodic_expr_interval,
@@ -253,7 +259,10 @@ class htcondor (
     use_password_auth              => $use_password_auth,
     use_kerberos_auth              => $use_kerberos_auth,
     use_claim_to_be_auth           => $use_claim_to_be_auth,
-
+    use_cert_map_file              => $use_cert_map_file,
+    use_krb_map_file               => $use_krb_map_file,
+    cert_map_file                  => $cert_map_file,
+    krb_map_file                   => $krb_map_file,
   }
 
   class { 'htcondor::service':
