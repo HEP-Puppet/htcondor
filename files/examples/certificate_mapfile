@@ -1,0 +1,8 @@
+FS (.*) \1
+FS_REMOTE (.*) \1
+GSI (.*) GSS_ASSIST_GRIDMAP
+SSL (.*) ssl@unmapped
+KERBEROS ([^/]*)/?[^@]*@(.*) \1@htcondor.domain
+NTSSPI (.*) \1
+CLAIMTOBE (.*) \1
+PASSWORD (.*) \1
