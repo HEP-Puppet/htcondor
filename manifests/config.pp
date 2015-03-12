@@ -97,6 +97,7 @@ class htcondor::config (
   $computing_elements  = [],
   $condor_admin_email  = 'root@mysite.org',
   $custom_attribute    = 'NORDUGRID_QUEUE',
+  $enable_cgroup       = false,
   $enable_multicore    = false,
   $enable_healthcheck  = false,
   $high_priority_groups           = {

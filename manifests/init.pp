@@ -119,6 +119,7 @@ class htcondor (
   $condor_priority                = '99',
   $condor_version                 = 'present',
   $custom_attribute               = 'NORDUGRID_QUEUE',
+  $enable_cgroup                  = false,
   $enable_multicore               = false,
   $enable_healthcheck             = false,
   $high_priority_groups           = {
@@ -205,6 +206,7 @@ class htcondor (
     computing_elements             => $computing_elements,
     condor_admin_email             => $condor_admin_email,
     custom_attribute               => $custom_attribute,
+    enable_cgroup                  => $enable_cgroup,
     enable_multicore               => $enable_multicore,
     enable_healthcheck             => $enable_healthcheck,
     high_priority_groups           => $high_priority_groups,
