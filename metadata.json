@@ -1,9 +1,8 @@
 {
-  "name": "kreczko-htcondor",
-  "version": "0.0.1",
+  "name": "HEPPuppet-htcondor",
+  "version": "1.2.0",
   "summary": "Puppet module for HTCondor batch system",
-  "author": "kreczko",
-  "description": "Puppet module for HTCondor batch system",
+  "author": "HEPPuppet",
   "dependencies": [
     {
       "name": "puppetlabs/firewall",
@@ -14,8 +13,6 @@
       "version_requirement": "\u003e\u003d4.1.0"
     }
   ],
-  "types": [],
-  "checksums": {},
   "source": "git@github.com:HEP-Puppet/puppet-htcondor.git",
   "project_page": "https://github.com/HEP-Puppet",
   "license": "Apache License, Version 2.0"
