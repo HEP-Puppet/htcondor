@@ -6,6 +6,9 @@ NUM_CPUS = <%= @number_of_cpus %>
 <% else -%>
 NUM_CPUS = <%= @processorcount %>
 <% end -%>
+
+DETECTED_CPUS = $NUM_CPUS
+
 # custom attribute for easier splitting into queues
 # with ARC CE (using condor_requirements=" && custom_attribute"
 <%= @custom_attribute %> = True
