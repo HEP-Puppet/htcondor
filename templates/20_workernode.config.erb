@@ -6,6 +6,9 @@ NUM_CPUS = <%= @number_of_cpus %>
 <% else -%>
 NUM_CPUS = <%= @processorcount %>
 <% end -%>
+
+DETECTED_CPUS = $NUM_CPUS
+
 # custom attribute for easier splitting into queues
 # with ARC CE (using condor_requirements=" && custom_attribute"
 <%= @custom_attribute %> = True
@@ -83,6 +86,12 @@ MAX_NUM_MASTER_LOG = 10
 
 MAX_STARTD_LOG = 104857600
 MAX_NUM_STARTD_LOG = 10
+
+<%- if @enable_cgroup -%>
+# Enable CGROUP
+BASE_CGROUP = htcondor
+CGROUP_MEMORY_LIMIT = soft
+<%- end -%>
 
 ## Debugging
 #STARTD_DEBUG = D_COMMAND D_FULLDEBUG
