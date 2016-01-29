@@ -75,7 +75,9 @@ MASTER_UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 EXECUTE = <%= @pool_home %>/condor
 
 ## Make sure jobs have independent PID namespaces
+<% if @use_pid_namespaces -%>
 USE_PID_NAMESPACES = true
+<% end -%>
 
 ## If the binaries are updated, let any running jobs finish before restarting
 MASTER_NEW_BINARY_RESTART=PEACEFUL
