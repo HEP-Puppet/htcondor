@@ -15,9 +15,9 @@ TRUST_UID_DOMAIN = True
 <% end -%>
 
 # Machines & users
-CMS = <%= @managers.flatten.join(', ') %>
-CES = <%= @computing_elements.flatten.join(', ') %>
-WNS = <%= @worker_nodes.flatten.join(', ') %>
+CMS = <%= @manager_string %>
+CES = <%= @ce_string %>
+WNS = <%= @wn_string %>
 
 USERS = *@$(UID_DOMAIN)
 
