@@ -19,7 +19,7 @@ SUBMIT_EXPRS = $(SUBMIT_EXPRS) request_memory,LeaveJobInQueue
 DELEGATE_JOB_GSI_CREDENTIALS = False
 EMAIL_DOMAIN = <%= @email_domain %>
 
-<% if @is_ce == true -%>
+<% if @is_ce == true and @use_htcondor_account_mapping == true -%>
 AcctSubGroup = \
 ifThenElse(RequestCpus > 1, "multicore",\ 
 ifThenElse(regexp("prd",Owner),	"production",\

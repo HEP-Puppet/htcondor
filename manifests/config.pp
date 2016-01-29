@@ -155,6 +155,7 @@ class htcondor::config (
   $template_workernode = "${module_name}/20_workernode.config.erb",
   $template_ganglia    = "${module_name}/23_ganglia.config.erb",
   $template_defrag     = "${module_name}/33_defrag.config.erb",
+  $use_htcondor_account_mapping   = true,
   $use_fs_auth                    = true,
   $use_password_auth              = true,
   $use_kerberos_auth              = false,
