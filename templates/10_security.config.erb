@@ -64,7 +64,7 @@ SEC_ENABLE_MATCH_PASSWORD_AUTHENTICATION = True
 CERTIFICATE_MAPFILE = <%= @cert_map_file %>
 <% end -%>
 <% if @use_krb_map_file -%>
-CERTIFICATE_MAPFILE = <%= @krb_map_file %>
+KERBEROS_MAP_FILE = <%= @krb_map_file %>
 <% end -%>
 <% end -%>
 <% if @use_password_auth then -%>
