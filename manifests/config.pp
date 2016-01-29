@@ -166,6 +166,13 @@ class htcondor::config (
   $krb_map_file                   = '/etc/condor/kerberos_mapfile',
   $machine_list_prefix            = 'condor_pool@$(UID_DOMAIN)/',
   ) {
+  # purge all non-managed config files from /etc/condor/config.d
+  file {'/etc/condor/config.d':
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
+  }
+
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
