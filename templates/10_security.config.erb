@@ -32,7 +32,8 @@ HOSTALLOW_NEGOTIATOR = $(COLLECTOR_HOST)
 HOSTALLOW_ADMINISTRATOR = $(COLLECTOR_HOST)
 HOSTALLOW_NEGOTIATOR_SCHEDD = $(COLLECTOR_HOST)
 
-ALLOW_READ = */*.$(UID_DOMAIN)
+# allow read to anyone, block unwanted with iptables
+ALLOW_READ = *
 ALLOW_WRITE = $(CMS), $(CES), $(WNS)
 
 #if the CE has a private NIC, it needs to be included here as well
