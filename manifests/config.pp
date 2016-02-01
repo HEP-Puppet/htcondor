@@ -170,6 +170,9 @@ class htcondor::config (
   $max_walltime                   = '80 * 60 * 60',
   $max_cputime                    = '80 * 60 * 60',
   ) {
+    # TODO: instead of all the parameters, do it like https://github.com/puppetlabs/puppetlabs-postgresql/blob/master/manifests/server/install.pp
+    # parameters are read from init, e.g.
+    # $::htcondor::cert_map_file
   # purge all non-managed config files from /etc/condor/config.d
   file {'/etc/condor/config.d':
     ensure  => directory,

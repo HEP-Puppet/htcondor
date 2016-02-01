@@ -99,18 +99,7 @@
 #
 # Sample Usage:
 class htcondor (
-  $accounting_groups              = {
-    'CMS'            => {
-      priority_factor => 10000.00,
-      dynamic_quota   => 0.80,
-    }
-    ,
-    'CMS.production' => {
-      priority_factor => 10000.00,
-      dynamic_quota   => 0.95,
-    }
-  }
-  ,
+  $accounting_groups              = $::htcondor::params::accounting_groups,
   $cluster_has_multiple_domains   = false,
   $collector_name                 = 'Personal Condor at $(FULL_HOSTNAME)',
   $email_domain                   = 'localhost',
@@ -168,17 +157,17 @@ class htcondor (
   $condor_uid                     = 0,
   $condor_gid                     = 0,
   # template selection. Allow for user to override
-  $template_config_local          = "${module_name}/condor_config.local.erb",
-  $template_security              = "${module_name}/10_security.config.erb",
-  $template_resourcelimits        = "${module_name}/12_resourcelimits.config.erb",
-  $template_queues                = "${module_name}/13_queues.config.erb",
-  $template_schedd                = "${module_name}/21_schedd.config.erb",
-  $template_fairshares            = "${module_name}/11_fairshares.config.erb",
-  $template_manager               = "${module_name}/22_manager.config.erb",
-  $template_ganglia               = "${module_name}/23_ganglia.config.erb",
-  $template_workernode            = "${module_name}/20_workernode.config.erb",
-  $template_defrag                = "${module_name}/33_defrag.config.erb",
-  $template_highavailability      = "${module_name}/30_highavailability.config.erb",
+  $template_config_local          = $::htcondor::params::template_config_local,
+  $template_security              = $::htcondor::params::template_security,
+  $template_resourcelimits        = $::htcondor::params::template_resourcelimits,
+  $template_queues                = $::htcondor::params::template_queues,
+  $template_schedd                = $::htcondor::params::template_schedd,
+  $template_fairshares            = $::htcondor::params::template_fairshares,
+  $template_manager               = $::htcondor::params::template_manager,
+  $template_ganglia               = $::htcondor::params::template_ganglia,
+  $template_workernode            = $::htcondor::params::template_workernode,
+  $template_defrag                = $::htcondor::params::template_defrag,
+  $template_highavailability      = $::htcondor::params::template_highavailability,
   $use_htcondor_account_mapping   = true,
   $use_fs_auth                    = true,
   $use_password_auth              = true,
@@ -192,7 +181,7 @@ class htcondor (
   $machine_list_prefix            = 'condor_pool@$(UID_DOMAIN)/',
   $max_walltime                   = '80 * 60 * 60',
   $max_cputime                    = '80 * 60 * 60',
-  ) {
+  ) inherits ::htcondor::params {
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
     dev_repos       => $dev_repositories,
