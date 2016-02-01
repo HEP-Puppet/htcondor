@@ -77,6 +77,8 @@ EXECUTE = <%= @pool_home %>/condor
 ## Make sure jobs have independent PID namespaces
 <% if @use_pid_namespaces -%>
 USE_PID_NAMESPACES = true
+<% else -%>
+USE_PID_NAMESPACES = false
 <% end -%>
 
 ## If the binaries are updated, let any running jobs finish before restarting
