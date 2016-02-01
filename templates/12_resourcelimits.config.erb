@@ -1,8 +1,9 @@
 # HTCondor configuration: resource limits
+# This file will be deployed on every scheduler
 
 ## Time limits
-RemoveDefaultJobWallTime = ( RemoteWallClockTime > 80 * 60 * 60 )
-RemoveDefaultJobCpuTime  = ( RemoteSysCpu + RemoteUserCpu > 80 * 60 * 60 )
+RemoveDefaultJobWallTime = ( RemoteWallClockTime > <%= @max_walltime %> )
+RemoveDefaultJobCpuTime  = ( RemoteSysCpu + RemoteUserCpu > <%= @max_cputime %> )
 
 ## Memory usage limit
 RemoveMemoryUsage = ( ResidentSetSize_RAW > 1000*RequestMemory )

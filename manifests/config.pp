@@ -155,20 +155,51 @@ class htcondor::config (
   $template_workernode = "${module_name}/20_workernode.config.erb",
   $template_ganglia    = "${module_name}/23_ganglia.config.erb",
   $template_defrag     = "${module_name}/33_defrag.config.erb",
+  $use_htcondor_account_mapping   = true,
   $use_fs_auth                    = true,
   $use_password_auth              = true,
   $use_kerberos_auth              = false,
   $use_claim_to_be_auth           = false,
   $use_cert_map_file              = false,
   $use_krb_map_file               = false,
+  $use_pid_namespaces             = false,
   $cert_map_file                  = '/etc/condor/certificate_mapfile',
-  $krb_map_file                   = '/etc/condor/kerberos_mapfile',) {
+  $krb_map_file                   = '/etc/condor/kerberos_mapfile',
+  $machine_list_prefix            = 'condor_pool@$(UID_DOMAIN)/',
+  $max_walltime                   = '80 * 60 * 60',
+  $max_cputime                    = '80 * 60 * 60',
+  ) {
+  # purge all non-managed config files from /etc/condor/config.d
+  file {'/etc/condor/config.d':
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
+  }
+
   $now                 = strftime('%d.%m.%Y_%H.%M')
   $ce_daemon_list      = ['SCHEDD']
   $worker_daemon_list  = ['STARTD']
   $ganglia_daemon_list = ['GANGLIAD']
   $auth_string = construct_auth_string($use_fs_auth, $use_password_auth,
   $use_kerberos_auth, $use_claim_to_be_auth)
+
+  # because HTCondor uses user 'condor_pool' for remote access
+  # and user 'condor' for local the variables below need to include
+  # both users in case a machine has more than one role (i.e. manager + CE)
+  $machine_prefix_local = "${condor_user}@$(UID_DOMAIN)/"
+
+  $manager_string_remote = join_machine_list($machine_list_prefix, $managers)
+  $manager_string_local = join_machine_list($machine_prefix_local, $managers)
+  $manager_string = join([$manager_string_remote, $manager_string_local], ', ')
+
+  $ce_string_remote = join_machine_list($machine_list_prefix, $computing_elements)
+  $ce_string_local = join_machine_list($machine_prefix_local, $computing_elements)
+  $ce_string = join([$ce_string_remote, $ce_string_local], ', ')
+
+  $wn_string_remote = join_machine_list($machine_list_prefix, $worker_nodes)
+  $wn_string_local = join_machine_list($machine_prefix_local, $worker_nodes)
+  $wn_string = join([$wn_string_remote, $wn_string_local], ', ')
+
   if $enable_multicore {
     $manage_daemon_list = ['COLLECTOR', 'NEGOTIATOR', 'DEFRAG']
   } else {
