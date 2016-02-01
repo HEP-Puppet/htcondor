@@ -162,7 +162,7 @@ class htcondor::config (
   $use_claim_to_be_auth           = false,
   $use_cert_map_file              = false,
   $use_krb_map_file               = false,
-  $use_pid_namespaces             = true,
+  $use_pid_namespaces             = false,
   $cert_map_file                  = '/etc/condor/certificate_mapfile',
   $krb_map_file                   = '/etc/condor/kerberos_mapfile',
   $machine_list_prefix            = 'condor_pool@$(UID_DOMAIN)/',
