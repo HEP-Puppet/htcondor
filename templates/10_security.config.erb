@@ -48,6 +48,12 @@ ALLOW_DAEMON = condor@$(UID_DOMAIN), \
                condor_pool@$(UID_DOMAIN), \
                condor_pool@$(UID_DOMAIN)/*.$(UID_DOMAIN), \
                $(FULL_HOSTNAME)
+<% if @is_worker then -%>
+# fix for new security default in HTCondor 8.4.X (fixed in 8.5.1)
+ALLOW_DAEMON = $(ALLOW_DAEMON), \
+               submit-side@matchsession/*, \
+               execute-side@matchsession/*
+<% end -%>
 ALLOW_ADMINISTRATOR = root@$(UID_DOMAIN)/$(IP_ADDRESS), condor_pool@$(UID_DOMAIN)/$(IP_ADDRESS), $(CMS)
 ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 
