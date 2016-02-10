@@ -1,15 +1,15 @@
 # Class htcondor::install
 #
 # Install HTCondor packages
-class htcondor::install (
-  $ensure = present,
-  $dev_repos = false,) {
-  if $dev_repos {
-    $repo = 'htcondor-development'
-  } else {
-    $repo = 'htcondor-stable'
+class htcondor::install {
+  $package_ensure  = $htcondor::condor_version
+
+  $_package_ensure = $package_ensure ? {
+    true     => 'present',
+    false    => 'purged',
+    'absent' => 'purged',
+    default  => $package_ensure,
   }
-  package { 'condor':
-    ensure  => $ensure,
-  }
+
+  package { 'condor': ensure => $_package_ensure, }
 }

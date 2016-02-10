@@ -187,14 +187,11 @@ class htcondor (
   $max_walltime                   = $htcondor::params::max_walltime,
   $max_cputime                    = $htcondor::params::max_cputime,) inherits
 ::htcondor::params {
-
   if $install_repositories {
-    include htcondor::repositories
+    class { 'htcondor::repositories': }
   }
 
   class { 'htcondor::install':
-    ensure    => $condor_version,
-    dev_repos => $dev_repositories,
   }
 
   class { 'htcondor::config':
