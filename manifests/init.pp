@@ -22,8 +22,8 @@
 # Sets COLLECTOR_NAME in 22_manager.config
 # Default: 'Personal Condor at $(FULL_HOSTNAME)'
 #
-# [*computing_elements*]
-# List of CEs that have access to this HTCondor pool
+# [*schedulers*]
+# List of schedulers that are allowed to submit jobs to the HTCondor pool
 #
 # [*admin_email*]
 # Sets CONDOR_ADMIN
@@ -54,8 +54,8 @@
 # [*install_repositories*]
 # Bool to install repositories or not
 #
-# [*is_ce*]
-# If machine is a computing element or a scheduler (condor term)
+# [*$is_scheduler*]
+# If current machine is a condor scheduler
 #
 # [*is_manager*]
 # If machine is a manager or a negotiator (condor term)
@@ -104,12 +104,12 @@
 #
 # Sample Usage:
 class htcondor (
-  $accounting_groups              = $::htcondor::params::accounting_groups,
+  $accounting_groups              = $htcondor::params::accounting_groups,
   $cluster_has_multiple_domains   = false,
   $collector_name                 = 'Personal Condor at $(FULL_HOSTNAME)',
-  $email_domain                   = $::htcondor::params::email_domain,
-  $computing_elements             = [],
-  $admin_email                    = $::htcondor::params::admin_email,
+  $email_domain                   = $htcondor::params::email_domain,
+  $schedulers                     = $htcondor::params::schedulers,
+  $admin_email                    = $htcondor::params::admin_email,
   $condor_priority                = '99',
   $condor_version                 = 'present',
   $custom_attribute               = 'NORDUGRID_QUEUE',
@@ -131,7 +131,7 @@ class htcondor (
   $use_pkg_condor_config          = false,
   $install_repositories           = true,
   $dev_repositories               = false,
-  $is_ce                          = false,
+  $is_scheduler                   = $htcondor::params::is_scheduler,
   $is_manager                     = false,
   $is_worker                      = false,
   $machine_owner                  = 'physics',
@@ -162,19 +162,18 @@ class htcondor (
   $condor_uid                     = 0,
   $condor_gid                     = 0,
   # template selection. Allow for user to override
-  $template_config_local          = $::htcondor::params::template_config_local,
-  $template_security              = $::htcondor::params::template_security,
-  $template_resourcelimits        =
-  $::htcondor::params::template_resourcelimits,
-  $template_queues                = $::htcondor::params::template_queues,
-  $template_schedd                = $::htcondor::params::template_schedd,
-  $template_fairshares            = $::htcondor::params::template_fairshares,
-  $template_manager               = $::htcondor::params::template_manager,
-  $template_ganglia               = $::htcondor::params::template_ganglia,
-  $template_workernode            = $::htcondor::params::template_workernode,
-  $template_defrag                = $::htcondor::params::template_defrag,
+  $template_config_local          = $htcondor::params::template_config_local,
+  $template_security              = $htcondor::params::template_security,
+  $template_resourcelimits        = $htcondor::params::template_resourcelimits,
+  $template_queues                = $htcondor::params::template_queues,
+  $template_schedd                = $htcondor::params::template_schedd,
+  $template_fairshares            = $htcondor::params::template_fairshares,
+  $template_manager               = $htcondor::params::template_manager,
+  $template_ganglia               = $htcondor::params::template_ganglia,
+  $template_workernode            = $htcondor::params::template_workernode,
+  $template_defrag                = $htcondor::params::template_defrag,
   $template_highavailability      =
-  $::htcondor::params::template_highavailability,
+  $htcondor::params::template_highavailability,
   $use_htcondor_account_mapping   = true,
   $use_fs_auth                    = true,
   $use_password_auth              = true,
@@ -204,7 +203,6 @@ class htcondor (
     accounting_groups              => $accounting_groups,
     cluster_has_multiple_domains   => $cluster_has_multiple_domains,
     collector_name                 => $collector_name,
-    computing_elements             => $computing_elements,
     custom_attribute               => $custom_attribute,
     enable_cgroup                  => $enable_cgroup,
     enable_multicore               => $enable_multicore,
@@ -217,7 +215,6 @@ class htcondor (
     health_check_script            => $health_check_script,
     include_username_in_accounting => $include_username_in_accounting,
     use_pkg_condor_config          => $use_pkg_condor_config,
-    is_ce                          => $is_ce,
     is_manager                     => $is_manager,
     is_worker                      => $is_worker,
     machine_owner                  => $machine_owner,
@@ -246,18 +243,6 @@ class htcondor (
     condor_group                   => $condor_group,
     condor_uid                     => $condor_uid,
     condor_gid                     => $condor_gid,
-    # template selection. Allow for user to override
-    template_config_local          => $template_config_local,
-    template_security              => $template_security,
-    template_resourcelimits        => $template_resourcelimits,
-    template_queues                => $template_queues,
-    template_schedd                => $template_schedd,
-    template_fairshares            => $template_fairshares,
-    template_manager               => $template_manager,
-    template_workernode            => $template_workernode,
-    template_ganglia               => $template_ganglia,
-    template_defrag                => $template_defrag,
-    template_highavailability      => $template_highavailability,
     use_htcondor_account_mapping   => $use_htcondor_account_mapping,
     use_fs_auth                    => $use_fs_auth,
     use_password_auth              => $use_password_auth,
