@@ -1,80 +1,5 @@
 # Class htcondor::config
-class htcondor::config (
-  $accounting_groups              = {
-    'CMS'            => {
-      priority_factor => 10000.00,
-      dynamic_quota   => 0.80,
-    }
-    ,
-    'CMS.production' => {
-      priority_factor => 10000.00,
-      dynamic_quota   => 0.95,
-    }
-  }
-  ,
-  $cluster_has_multiple_domains   = false,
-  $collector_name                 = 'Personal Condor at $(FULL_HOSTNAME)',
-  $custom_attribute               = 'NORDUGRID_QUEUE',
-  $enable_cgroup                  = false,
-  $enable_multicore               = false,
-  $enable_healthcheck             = false,
-  $high_priority_groups           = {
-    'cms.admin' => -30,
-    'ops'       => -20,
-    'dteam'     => -10,
-  }
-  ,
-  $priority_halflife              = 43200,
-  $default_prio_factor            = 100000.00,
-  $group_accept_surplus           = true,
-  $group_autoregroup              = true,
-  $health_check_script            = "puppet:///modules/${module_name}/healhcheck_wn_condor",
-  $include_username_in_accounting = false,
-  $use_pkg_condor_config          = false,
-  $is_scheduler                   = false,
-  $is_manager                     = false,
-  $is_worker                      = false,
-  $machine_owner                  = 'physics',
-  $managers                       = [],
-  $number_of_cpus                 = undef,
-  $partitionable_slots            = true,
-  $memory_overcommit              = 1.5,
-  $request_memory                 = true,
-  $certificate_mapfile            = "puppet:///modules/${module_name}/certificate_mapfile",
-  $kerberos_mapfile               = "puppet:///modules/${module_name}/kerberos_mapfile",
-  # pool_password can also be served from central file location using hiera
-  $pool_password                  = "puppet:///modules/${module_name}/pool_password",
-  $pool_home                      = '/pool',
-  $queues                         = hiera('grid_queues', undef),
-  $periodic_expr_interval         = 60,
-  $max_periodic_expr_interval     = 1200,
-  $remove_held_jobs_after         = 1200,
-  $leave_job_in_queue             = undef,
-  $ganglia_cluster_name           = false,
-  $uid_domain                     = 'example.com',
-  $pool_create                    = true,
-  $default_domain_name            = $uid_domain,
-  $filesystem_domain              = $::fqdn,
-  $use_accounting_groups          = false,
-  # specify the networks with write access i.e. ["10.132.0.*"]
-  $workers                   = [],
-  $condor_user                    = root,
-  $condor_group                   = root,
-  $condor_uid                     = 0,
-  $condor_gid                     = 0,
-  $use_htcondor_account_mapping   = true,
-  $use_fs_auth                    = true,
-  $use_password_auth              = true,
-  $use_kerberos_auth              = false,
-  $use_claim_to_be_auth           = false,
-  $use_cert_map_file              = false,
-  $use_krb_map_file               = false,
-  $use_pid_namespaces             = false,
-  $cert_map_file                  = '/etc/condor/certificate_mapfile',
-  $krb_map_file                   = '/etc/condor/kerberos_mapfile',
-  $machine_list_prefix            = 'condor_pool@$(UID_DOMAIN)/',
-  $max_walltime                   = '80 * 60 * 60',
-  $max_cputime                    = '80 * 60 * 60',) {
+class htcondor::config {
   # TODO: instead of all the parameters, do it like
   # https://github.com/puppetlabs/puppetlabs-postgresql/blob/master/manifests/server/install.pp
   # parameters are read from init, e.g.
@@ -82,8 +7,14 @@ class htcondor::config (
   $email_domain = $htcondor::email_domain
   $admin_email  = $htcondor::admin_email
   $schedulers = $htcondor::schedulers
+  $managers = $htcondor::managers
+  $workers = $htcondor::workers
 
   $is_scheduler = $htcondor::is_scheduler
+  $is_manager = $htcondor::is_manager
+  $is_worker = $htcondor::is_worker
+
+  $machine_ownder = $htcondor::machine_owner
 
   # templates
   $template_config_local          = $htcondor::template_config_local
@@ -97,6 +28,65 @@ class htcondor::config (
   $template_ganglia               = $htcondor::template_ganglia
   $template_defrag                = $htcondor::template_defrag
   $template_highavailability      = $htcondor::template_highavailability
+
+  $accounting_groups = $htcondor::accounting_groups
+  $cluster_has_multiple_domains = $htcondor::cluster_has_multiple_domains
+  $collector_name = $htcondor::collector_name
+  $custom_attribute = $htcondor::custom_attribute
+  $enable_cgroup = $htcondor::enable_cgroup
+  $enable_multicore = $htcondor::enable_multicore
+  $enable_healthcheck = $htcondor::enable_healthcheck
+  $high_priority_groups = $htcondor::high_priority_groups
+  $priority_halflife = $htcondor::priority_halflife
+  $default_prio_factor = $htcondor::default_prio_factor
+  $group_accept_surplus = $htcondor::group_accept_surplus
+  $group_autoregroup = $htcondor::group_autoregroup
+  $health_check_script = $htcondor::health_check_script
+  $include_username_in_accounting = $htcondor::include_username_in_accounting
+  $use_pkg_condor_config = $htcondor::use_pkg_condor_config
+
+  $number_of_cpus = $htcondor::number_of_cpus
+  $partitionable_slots = $htcondor::partitionable_slots
+  $memory_overcommit = $htcondor::memory_overcommit
+  $request_memory = $htcondor::request_memory
+  # TODO: duplicate?
+  $cert_map_file = $htcondor::cert_map_file
+  $certificate_mapfile = $htcondor::certificate_mapfile
+  $kerberos_mapfile = $htcondor::kerberos_mapfile
+  $krb_map_file = $htcondor::krb_map_file
+
+  $pool_home = $htcondor::pool_home
+  $queues = $htcondor::queues
+  $periodic_expr_interval = $htcondor::periodic_expr_interval
+  $max_periodic_expr_interval = $htcondor::max_periodic_expr_interval
+  $remove_held_jobs_after = $htcondor::remove_held_jobs_after
+  $leave_job_in_queue = $htcondor::leave_job_in_queue
+  $ganglia_cluster_name = $htcondor::ganglia_cluster_name
+  $pool_password = $htcondor::pool_password
+  $pool_create = $htcondor::pool_create
+  $uid_domain = $htcondor::uid_domain
+  $default_domain_name = $htcondor::default_domain_name
+  $filesystem_domain = $htcondor::filesystem_domain
+  $use_accounting_groups = $htcondor::use_accounting_groups
+
+  $condor_user = $htcondor::condor_user
+  $condor_group = $htcondor::condor_group
+  $condor_uid = $htcondor::condor_uid
+  $condor_gid = $htcondor::condor_gid
+
+  $use_htcondor_account_mapping = $htcondor::use_htcondor_account_mapping
+  $use_fs_auth = $htcondor::use_fs_auth
+  $use_password_auth              = $htcondor::use_password_auth
+  $use_kerberos_auth              = $htcondor::use_kerberos_auth
+  $use_claim_to_be_auth           = $htcondor::use_claim_to_be_auth
+  $use_cert_map_file              = $htcondor::use_cert_map_file
+  $use_krb_map_file               = $htcondor::use_krb_map_file
+  $use_pid_namespaces             = $htcondor::use_pid_namespaces
+
+  $machine_list_prefix = $htcondor::machine_list_prefix
+  $max_walltime = $htcondor::max_walltime
+  $max_cputime = $htcondor::max_cputime
+
 
   # purge all non-managed config files from /etc/condor/config.d
   file { '/etc/condor/config.d':
