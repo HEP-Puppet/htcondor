@@ -1,7 +1,5 @@
 # Class htcondor::config
 #
-# Configuration deployment for HTCondor
-#
 # == Parameters:
 #
 # [*accounting_groups*]
@@ -93,9 +91,7 @@ class htcondor::config (
   ,
   $cluster_has_multiple_domains   = false,
   $collector_name      = 'Personal Condor at $(FULL_HOSTNAME)',
-  $email_domain        = 'localhost',
   $computing_elements  = [],
-  $condor_admin_email  = 'root@mysite.org',
   $custom_attribute    = 'NORDUGRID_QUEUE',
   $enable_cgroup       = false,
   $enable_multicore    = false,
@@ -173,6 +169,8 @@ class htcondor::config (
     # TODO: instead of all the parameters, do it like https://github.com/puppetlabs/puppetlabs-postgresql/blob/master/manifests/server/install.pp
     # parameters are read from init, e.g.
     # $::htcondor::cert_map_file
+    $email_domain = $::htcondor::email_domain
+    $admin_email = $::htcondor::admin_email
   # purge all non-managed config files from /etc/condor/config.d
   file {'/etc/condor/config.d':
     ensure  => directory,
