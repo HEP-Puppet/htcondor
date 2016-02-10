@@ -51,9 +51,7 @@ HAD         = $(SBIN)/condor_had
 REPLICATION = $(SBIN)/condor_replication
 TRANSFERER  = $(LIBEXEC)/condor_transferer
 
-## the master should start at least these five daemons
-DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, HAD, REPLICATION
-## DC_Daemon list should contain at least these five
+DAEMON_LIST = <%= @daemon_list -%>
 DC_DAEMON_LIST = +HAD, REPLICATION
 
 ## Enables/disables the replication feature of HAD daemon

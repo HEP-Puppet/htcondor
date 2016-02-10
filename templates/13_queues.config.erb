@@ -2,4 +2,4 @@ PERIODIC_EXPR_INTERVAL = <%= @periodic_expr_interval %>
 MAX_PERIODIC_EXPR_INTERVAL = <%= @max_periodic_expr_interval %>
 SYSTEM_PERIODIC_HOLD = !member(BatchQueue, {<%= @queues.keys.map{|k| '"' + k + '"'}.join(', ') %>})
 SYSTEM_PERIODIC_HOLD_REASON = "Invalid queue"
-SYSTEM_PERIODIC_REMOVE = (JobStatus == 5 && HoldReasonCode == 26 && (CurrentTime - EnteredCurrentStatus) > <%= remove_held_jobs_after %>)
+SYSTEM_PERIODIC_REMOVE = (JobStatus == 5 && HoldReasonCode == 26 && (CurrentTime - EnteredCurrentStatus) > <%= @remove_held_jobs_after %>)

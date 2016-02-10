@@ -67,8 +67,7 @@ class htcondor::params {
   $max_walltime                   = hiera('max_walltime', '80 * 60 * 60')
   $max_cputime                    = hiera('max_cputime', '80 * 60 * 60')
 
-  $ganglia_cluster_name           = hiera('ganglia_cluster_name', 'Example HTCondor'
-  )
+  $ganglia_cluster_name           = hiera('ganglia_cluster_name', undef)
 
   $uid_domain                     = hiera('uid_domain', 'example.org')
   $default_domain_name            = hiera('default_domain_name', $uid_domain)
