@@ -1,6 +1,11 @@
 # Class: htcondor
 #
-# This module manages htcondor
+# This module manages htcondor. Parameters that refer to condor 'knobs' (e.g.
+# CONDOR_ADMIN) will not be explained here.
+# Instead please refer to the HTCondor documentation:
+# http://research.cs.wisc.edu/htcondor/manual/latest/3_3Configuration.html
+#
+# Defaults for the parameters can be found in htcondor::params
 #
 # == Parameters:
 #
@@ -12,7 +17,6 @@
 # [*cluster_has_multiple_domains*]
 # Specifies if the cluster has more than one domain. If true it will set
 # TRUST_UID_DOMAIN = True in 10_security.config
-# Default: false
 #
 # [*collector_name*]
 # Sets COLLECTOR_NAME in 22_manager.config
@@ -21,8 +25,9 @@
 # [*computing_elements*]
 # List of CEs that have access to this HTCondor pool
 #
-# [*condor_admin_email*]
-# Contact email for the pool admin. Sets CONDOR_ADMIN.
+# [*admin_email*]
+# Sets CONDOR_ADMIN
+# (http://research.cs.wisc.edu/htcondor/manual/latest/3_3Configuration.html).
 #
 # [*custom_attribute*]
 # Can be used to specify a ClassAd via custom_attribute = True. This is useful
@@ -102,9 +107,9 @@ class htcondor (
   $accounting_groups              = $::htcondor::params::accounting_groups,
   $cluster_has_multiple_domains   = false,
   $collector_name                 = 'Personal Condor at $(FULL_HOSTNAME)',
-  $email_domain                   = 'localhost',
+  $email_domain                   = $::htcondor::params::email_domain,
   $computing_elements             = [],
-  $condor_admin_email             = 'root@mysite.org',
+  $admin_email                    = $::htcondor::params::admin_email,
   $condor_priority                = '99',
   $condor_version                 = 'present',
   $custom_attribute               = 'NORDUGRID_QUEUE',
@@ -159,7 +164,8 @@ class htcondor (
   # template selection. Allow for user to override
   $template_config_local          = $::htcondor::params::template_config_local,
   $template_security              = $::htcondor::params::template_security,
-  $template_resourcelimits        = $::htcondor::params::template_resourcelimits,
+  $template_resourcelimits        =
+  $::htcondor::params::template_resourcelimits,
   $template_queues                = $::htcondor::params::template_queues,
   $template_schedd                = $::htcondor::params::template_schedd,
   $template_fairshares            = $::htcondor::params::template_fairshares,
@@ -167,7 +173,8 @@ class htcondor (
   $template_ganglia               = $::htcondor::params::template_ganglia,
   $template_workernode            = $::htcondor::params::template_workernode,
   $template_defrag                = $::htcondor::params::template_defrag,
-  $template_highavailability      = $::htcondor::params::template_highavailability,
+  $template_highavailability      =
+  $::htcondor::params::template_highavailability,
   $use_htcondor_account_mapping   = true,
   $use_fs_auth                    = true,
   $use_password_auth              = true,
@@ -180,8 +187,8 @@ class htcondor (
   $krb_map_file                   = '/etc/condor/kerberos_mapfile',
   $machine_list_prefix            = 'condor_pool@$(UID_DOMAIN)/',
   $max_walltime                   = '80 * 60 * 60',
-  $max_cputime                    = '80 * 60 * 60',
-  ) inherits ::htcondor::params {
+  $max_cputime                    = '80 * 60 * 60',) inherits ::htcondor::params
+{
   class { 'htcondor::repositories':
     install_repos   => $install_repositories,
     dev_repos       => $dev_repositories,
@@ -197,9 +204,7 @@ class htcondor (
     accounting_groups              => $accounting_groups,
     cluster_has_multiple_domains   => $cluster_has_multiple_domains,
     collector_name                 => $collector_name,
-    email_domain                   => $email_domain,
     computing_elements             => $computing_elements,
-    condor_admin_email             => $condor_admin_email,
     custom_attribute               => $custom_attribute,
     enable_cgroup                  => $enable_cgroup,
     enable_multicore               => $enable_multicore,

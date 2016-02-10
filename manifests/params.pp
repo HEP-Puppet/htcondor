@@ -14,6 +14,10 @@ class htcondor::params {
   $accounting_groups         = hiera_hash('accounting_groups',
   $default_accounting_groups)
 
+  # notification settings
+  $admin_email               = hiera('admin_email', 'localhost')
+  $email_domain = hiera('email_domain', 'localhost')
+  # template paths
   $template_config_local     = hiera('template_config_local', "${module_name}/condor_config.local.erb"
   )
   $template_security         = hiera('template_security', "${module_name}/10_security.config.erb"
