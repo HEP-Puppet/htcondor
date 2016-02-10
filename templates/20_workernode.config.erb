@@ -1,11 +1,7 @@
 MachineOwner = <%= @machine_owner %>
 StartJobs = True
 ## NUM_CPUS based on heira (if defined), otherwise on facter
-<% if  @number_of_cpus -%>
 NUM_CPUS = <%= @number_of_cpus %>
-<% else -%>
-NUM_CPUS = <%= @processorcount %>
-<% end -%>
 
 DETECTED_CPUS = $NUM_CPUS
 
@@ -102,4 +98,4 @@ CGROUP_MEMORY_LIMIT = soft
 
 ##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
 ##  The list is a comma or space separated list of subsystem names
-DAEMON_LIST = <%= @daemon_list.flatten.join(', ') %>
+DAEMON_LIST = <%= @daemon_list -%>
