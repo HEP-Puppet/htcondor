@@ -45,7 +45,7 @@ Therefore, the first step is to install the latest HTCondor repository for your 
 ```
 yum install -y https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel6.repo
 ```
-If you wish to use a [pool password for authentication](http://research.cs.wisc.edu/htcondor/manual/v8.4/3_6Security.html#SECTION00463400000000000000) you will need to create one first: ```condor_store_cred -f <path_to_htcondor_module>/files/pool_password```.
+If you wish to use a [pool password for authentication](http://research.cs.wisc.edu/htcondor/manual/latest/3_6Security.html#SECTION00463400000000000000) you will need to create one first: ```condor_store_cred -f <path_to_htcondor_module>/files/pool_password```.
 
 ##Limitations
 ###General
