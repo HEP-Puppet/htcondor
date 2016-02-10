@@ -57,7 +57,7 @@ class htcondor::config (
   $filesystem_domain              = $::fqdn,
   $use_accounting_groups          = false,
   # specify the networks with write access i.e. ["10.132.0.*"]
-  $worker_nodes                   = [],
+  $workers                   = [],
   $condor_user                    = root,
   $condor_group                   = root,
   $condor_uid                     = 0,
@@ -128,10 +128,10 @@ class htcondor::config (
   $schedulers)
   $sched_string             = join([$sched_string_remote, $sched_string_local], ', ')
 
-  $wn_string_remote      = join_machine_list($machine_list_prefix, $worker_nodes
+  $wn_string_remote      = join_machine_list($machine_list_prefix, $workers
   )
   $wn_string_local       = join_machine_list($machine_prefix_local,
-  $worker_nodes)
+  $workers)
   $wn_string             = join([$wn_string_remote, $wn_string_local], ', ')
 
   if $enable_multicore {
