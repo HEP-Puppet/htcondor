@@ -14,7 +14,6 @@ class htcondor::config (
   ,
   $cluster_has_multiple_domains   = false,
   $collector_name                 = 'Personal Condor at $(FULL_HOSTNAME)',
-  $computing_elements             = [],
   $custom_attribute               = 'NORDUGRID_QUEUE',
   $enable_cgroup                  = false,
   $enable_multicore               = false,
@@ -32,7 +31,7 @@ class htcondor::config (
   $health_check_script            = "puppet:///modules/${module_name}/healhcheck_wn_condor",
   $include_username_in_accounting = false,
   $use_pkg_condor_config          = false,
-  $is_ce                          = false,
+  $is_scheduler                   = false,
   $is_manager                     = false,
   $is_worker                      = false,
   $machine_owner                  = 'physics',
@@ -63,18 +62,6 @@ class htcondor::config (
   $condor_group                   = root,
   $condor_uid                     = 0,
   $condor_gid                     = 0,
-  # template selection. Allow for user to override
-  $template_config_local          = "${module_name}/condor_config.local.erb",
-  $template_security              = "${module_name}/10_security.config.erb",
-  $template_resourcelimits        = "${module_name}/12_resourcelimits.config.erb",
-  $template_queues                = "${module_name}/13_queues.config.erb",
-  $template_schedd                = "${module_name}/21_schedd.config.erb",
-  $template_fairshares            = "${module_name}/11_fairshares.config.erb",
-  $template_manager               = "${module_name}/22_manager.config.erb",
-  $template_workernode            = "${module_name}/20_workernode.config.erb",
-  $template_ganglia               = "${module_name}/23_ganglia.config.erb",
-  $template_defrag                = "${module_name}/33_defrag.config.erb",
-  $template_highavailability      = "${module_name}/30_highavailability.config.erb",
   $use_htcondor_account_mapping   = true,
   $use_fs_auth                    = true,
   $use_password_auth              = true,
@@ -92,8 +79,24 @@ class htcondor::config (
   # https://github.com/puppetlabs/puppetlabs-postgresql/blob/master/manifests/server/install.pp
   # parameters are read from init, e.g.
   # $::htcondor::cert_map_file
-  $email_domain = $::htcondor::email_domain
-  $admin_email  = $::htcondor::admin_email
+  $email_domain = $htcondor::email_domain
+  $admin_email  = $htcondor::admin_email
+  $schedulers = $htcondor::schedulers
+
+  $is_scheduler = $htcondor::is_scheduler
+
+  # templates
+  $template_config_local          = $htcondor::template_config_local
+  $template_security              = $htcondor::template_security
+  $template_resourcelimits        = $htcondor::template_resourcelimits
+  $template_queues                = $htcondor::template_queues
+  $template_schedd                = $htcondor::template_schedd
+  $template_fairshares            = $htcondor::template_fairshares
+  $template_manager               = $htcondor::template_manager
+  $template_workernode            = $htcondor::template_workernode
+  $template_ganglia               = $htcondor::template_ganglia
+  $template_defrag                = $htcondor::template_defrag
+  $template_highavailability      = $htcondor::template_highavailability
 
   # purge all non-managed config files from /etc/condor/config.d
   file { '/etc/condor/config.d':
@@ -103,7 +106,7 @@ class htcondor::config (
   }
 
   $now                   = strftime('%d.%m.%Y_%H.%M')
-  $ce_daemon_list        = ['SCHEDD']
+  $sched_daemon_list        = ['SCHEDD']
   $worker_daemon_list    = ['STARTD']
   $ganglia_daemon_list   = ['GANGLIAD']
   $auth_string           = construct_auth_string($use_fs_auth,
@@ -119,11 +122,11 @@ class htcondor::config (
   $manager_string        = join([$manager_string_remote, $manager_string_local], ', '
   )
 
-  $ce_string_remote      = join_machine_list($machine_list_prefix,
-  $computing_elements)
-  $ce_string_local       = join_machine_list($machine_prefix_local,
-  $computing_elements)
-  $ce_string             = join([$ce_string_remote, $ce_string_local], ', ')
+  $sched_string_remote      = join_machine_list($machine_list_prefix,
+  $schedulers)
+  $sched_string_local       = join_machine_list($machine_prefix_local,
+  $schedulers)
+  $sched_string             = join([$sched_string_remote, $sched_string_local], ', ')
 
   $wn_string_remote      = join_machine_list($machine_list_prefix, $worker_nodes
   )
@@ -153,10 +156,10 @@ class htcondor::config (
       ]
   }
 
-  if $is_ce and $is_manager {
+  if $is_scheduler and $is_manager {
     # machine is both CE and manager (for small sites)
     if $ganglia_cluster_name {
-      $temp_list               = concat($default_daemon_list, $ce_daemon_list)
+      $temp_list               = concat($default_daemon_list, $sched_daemon_list)
       $temp2_list              = concat($temp_list, $ganglia_daemon_list)
       $daemon_list             = concat($temp2_list, $manage_daemon_list)
       $additional_config_files = [
@@ -168,7 +171,7 @@ class htcondor::config (
       $config_files            = concat($common_config_files,
       $additional_config_files)
     } else {
-      $temp_list               = concat($default_daemon_list, $ce_daemon_list)
+      $temp_list               = concat($default_daemon_list, $sched_daemon_list)
       $daemon_list             = concat($temp_list, $manage_daemon_list)
       $additional_config_files = [
         File['/etc/condor/config.d/12_resourcelimits.config'],
@@ -179,8 +182,8 @@ class htcondor::config (
       $config_files            = concat($common_config_files,
       $additional_config_files)
     }
-  } elsif $is_ce {
-    $daemon_list             = concat($default_daemon_list, $ce_daemon_list)
+  } elsif $is_scheduler {
+    $daemon_list             = concat($default_daemon_list, $sched_daemon_list)
     $additional_config_files = [
       File['/etc/condor/config.d/12_resourcelimits.config'],
       File['/etc/condor/config.d/21_schedd.config'],
@@ -251,7 +254,7 @@ class htcondor::config (
 
   if $pool_create {
     $condor_directories = [
-      "${pool_home}",
+      $pool_home,
       "${pool_home}/condor",
       '/etc/condor/persistent']
   } else {
@@ -302,7 +305,7 @@ class htcondor::config (
   }
 
   # files for certain roles
-  if $is_ce {
+  if $is_scheduler {
     file { '/etc/condor/config.d/12_resourcelimits.config':
       content => template($template_resourcelimits),
       require => Package['condor'],

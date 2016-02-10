@@ -1,5 +1,8 @@
 # htcondor::params
 class htcondor::params {
+  $schedulers = hiera_array('schedulers', [])
+
+  $is_scheduler = hiera('is_scheduler', false)
   $default_accounting_groups = {
     'CMS'            => {
       priority_factor => 10000.00,
@@ -30,7 +33,7 @@ class htcondor::params {
   )
   $template_fairshares       = hiera('template_fairshares', "${module_name}/11_fairshares.config.erb"
   )
-  $template_collector        = hiera('template_collector', "${module_name}/22_collector.config.erb"
+  $template_manager        = hiera('template_collector', "${module_name}/22_manager.config.erb"
   )
   $template_ganglia          = hiera('template_ganglia', "${module_name}/23_ganglia.config.erb"
   )
