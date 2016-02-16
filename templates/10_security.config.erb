@@ -10,6 +10,11 @@ FILESYSTEM_DOMAIN = <%= @filesystem_domain %>
 
 COLLECTOR_HOST = <%= @managers.flatten.join(', ') %>
 
+<% if @uses_connection_broker == true then -%>
+CCB_ADDRESS = $(COLLECTOR_HOST)
+PRIVATE_NETWORK_NAME = <%= @private_network_name -%>
+<% end -%>
+
 <% if @cluster_has_multiple_domains == true then -%>
 TRUST_UID_DOMAIN = True
 <% end -%>
