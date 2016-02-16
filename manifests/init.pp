@@ -189,6 +189,7 @@ class htcondor (
 ::htcondor::params {
   if $install_repositories {
     class { 'htcondor::repositories': }
+    Class['htcondor::repositories'] -> Class['htcondor::install']
   }
 
   class { 'htcondor::install':
@@ -200,6 +201,6 @@ class htcondor (
   class { 'htcondor::service':
   }
 
-  Class['htcondor::repositories'] -> Class['htcondor::install'] -> Class['htcondor::config'
-    ] -> Class['htcondor::service']
+  Class['htcondor::install'] -> Class['htcondor::config'] -> Class['htcondor::service'
+    ]
 }
