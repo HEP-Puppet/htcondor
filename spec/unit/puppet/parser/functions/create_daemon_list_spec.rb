@@ -17,8 +17,12 @@ describe "create_daemon_list function" do
       expect(result).to eq('MASTER, SCHEDD')
     end
     it "get scheduler with ganglia right" do
-      result = scope.function_create_daemon_list([false, true, false, false, true, false])
+      result = scope.function_create_daemon_list([false, true, false, false, 'DICE HTCondor', false])
       expect(result).to eq('MASTER, SCHEDD, GANGLIAD')
+    end
+    it "ganglia can be undefined" do
+      result = scope.function_create_daemon_list([false, true, false, false, nil, false])
+      expect(result).to eq('MASTER, SCHEDD')
     end
     it "get manager right" do
       result = scope.function_create_daemon_list([false, false, true, false, false, false])
