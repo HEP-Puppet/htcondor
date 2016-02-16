@@ -51,7 +51,7 @@ HAD         = $(SBIN)/condor_had
 REPLICATION = $(SBIN)/condor_replication
 TRANSFERER  = $(LIBEXEC)/condor_transferer
 
-DAEMON_LIST = <%= @daemon_list -%>
+DAEMON_LIST = <%= @daemon_list %>
 DC_DAEMON_LIST = +HAD, REPLICATION
 
 ## Enables/disables the replication feature of HAD daemon
