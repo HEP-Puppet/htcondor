@@ -103,6 +103,10 @@ class htcondor::params {
   $pool_password_file             = hiera('pool_password_file', "puppet:///modules/${module_name}/pool_password"
   )
 
+  # for private networks
+  $uses_connection_broker         = hiera('uses_connection_broker', false)
+  $private_network_name           = hiera('private_network_name', $::domain)
+
   # notification settings
   $admin_email                    = hiera('admin_email', 'localhost')
   $email_domain                   = hiera('email_domain', 'localhost')
