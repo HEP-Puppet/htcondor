@@ -26,7 +26,7 @@ module Puppet::Parser::Functions
     if defrag == true and is_manager == true
       daemon_list.push 'DEFRAG'
     end
-    if ganglia == true and (is_manager == true or is_scheduler == true)
+    if ganglia and (is_manager == true or is_scheduler == true)
       daemon_list.push 'GANGLIAD'
     end
     if high_availability == true and is_manager == true
