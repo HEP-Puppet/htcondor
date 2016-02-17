@@ -18,9 +18,24 @@ class htcondor::config {
   $common_class = 'htcondor::config::common'
 
   class { $common_class: }
+  $more_than_two_managers = size($managers) > 1
+  $run_ganglia            = $ganglia_cluster_name != undef
 
-  $daemon_list = create_daemon_list($is_worker, $is_scheduler, $is_manager,
-  $enable_multicore, $ganglia_cluster_name, size($managers) > 1)
+  $daemon_list            = create_daemon_list($is_worker, $is_scheduler,
+  $is_manager, $enable_multicore, $run_ganglia, $more_than_two_managers)
+
+  $debug_msg = "constructing daemon list from \n \
+                -is_worker: ${is_worker}\n \
+                -is_scheduler: ${is_scheduler}\n \
+                -is_manager: ${is_manager}\n \
+                -enable_multicore: ${enable_multicore}\n \
+                -run_ganglia: ${run_ganglia} \n \
+                -more_than_two_managers: ${more_than_two_managers} \n\
+                resulting in ${daemon_list}"
+  notify { 'checking daemon list:':
+    withpath => true,
+    name     => $debug_msg,
+  }
 
   if $is_scheduler {
     class { 'htcondor::config::scheduler': require => Class[$common_class], }

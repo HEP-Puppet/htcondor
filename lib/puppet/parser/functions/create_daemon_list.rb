@@ -5,9 +5,9 @@ module Puppet::Parser::Functions
     is_scheduler = args[1]
     is_manager = args[2]
 
-    defrag = args[3]
-    ganglia = args[4]
-    high_availability= args[5]
+    enable_multicore = args[3]
+    run_ganglia = args[4]
+    more_than_two_managers = args[5]
 
     daemon_list = Array.new
     # all nodes have master
@@ -23,13 +23,13 @@ module Puppet::Parser::Functions
       daemon_list.push 'COLLECTOR'
       daemon_list.push 'NEGOTIATOR'
     end
-    if defrag == true and is_manager == true
+    if enable_multicore == true && is_manager == true
       daemon_list.push 'DEFRAG'
     end
-    if ganglia and (is_manager == true or is_scheduler == true)
+    if run_ganglia == true && (is_manager == true || is_scheduler == true)
       daemon_list.push 'GANGLIAD'
     end
-    if high_availability == true and is_manager == true
+    if more_than_two_managers == true && is_manager == true
       daemon_list.push 'HAD'
       daemon_list.push 'REPLICATION'
     end
