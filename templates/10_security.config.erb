@@ -20,9 +20,18 @@ TRUST_UID_DOMAIN = True
 <% end -%>
 
 # Machines & users
-CMS = <%= @manager_string %>
-CES = <%= @sched_string %>
-WNS = <%= @wn_string %>
+<% if @manager_list then -%>
+CMS = \
+<%= @manager_list.sort.map { |k| "      #{k}" }.join(", \\\n") -%>
+<% end %>
+<% if @scheduler_list then -%>
+CES = \
+<%= @scheduler_list.sort.map { |k| "      #{k}" }.join(", \\\n") -%>
+<% end %>
+<% if @worker_list then -%>
+WNS = \
+<%= @worker_list.sort.map { |k| "      #{k}" }.join(", \\\n") -%>
+<% end %>
 
 USERS = *@$(UID_DOMAIN)
 
