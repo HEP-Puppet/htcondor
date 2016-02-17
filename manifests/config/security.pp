@@ -26,7 +26,7 @@ class htcondor::config::security {
   $default_domain_name          = $htcondor::default_domain_name
   $filesystem_domain            = $htcondor::filesystem_domain
   $is_worker                    = $htcondor::is_worker
-  $machine_list_prefix          = $htcondor::machine_list_prefix
+  $machine_prefix_remote        = $htcondor::machine_list_prefix
   $uid_domain                   = $htcondor::uid_domain
 
   # for private networks
@@ -44,28 +44,19 @@ class htcondor::config::security {
   # both users in case a machine has more than one role (i.e. manager + CE)
   $machine_prefix_local         = "${condor_user}@$(UID_DOMAIN)/"
 
-  $manager_string_remote        = join_machine_list($machine_list_prefix,
-  $managers)
-  $manager_string_local         = join_machine_list($machine_prefix_local,
-  $managers)
-  $manager_string               = join([
-    $manager_string_remote,
-    $manager_string_local], ', ')
+  $manager_list_local           = prefix($managers, $machine_prefix_local)
+  $manager_list_remote          = prefix($managers, $machine_prefix_remote)
+  $manager_list                 = union($manager_list_local,
+  $manager_list_remote)
 
-  $sched_string_remote          = join_machine_list($machine_list_prefix,
-  $schedulers)
-  $sched_string_local           = join_machine_list($machine_prefix_local,
-  $schedulers)
-  $sched_string                 = join([
-    $sched_string_remote,
-    $sched_string_local], ', ')
+  $scheduler_list_local         = prefix($schedulers, $machine_prefix_local)
+  $scheduler_list_remote        = prefix($schedulers, $machine_prefix_remote)
+  $scheduler_list               = union($scheduler_list_local,
+  $scheduler_list_remote)
 
-  $wn_string_remote             = join_machine_list($machine_list_prefix,
-  $workers)
-  $wn_string_local              = join_machine_list($machine_prefix_local,
-  $workers)
-  $wn_string                    = join([$wn_string_remote, $wn_string_local], ', '
-  )
+  $worker_list_local            = prefix($workers, $machine_prefix_local)
+  $worker_list_remote           = prefix($workers, $machine_prefix_remote)
+  $worker_list                  = union($worker_list_local, $worker_list_remote)
 
   file { '/etc/condor/config.d/10_security.config':
     content => template($template_security),
