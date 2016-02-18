@@ -1,0 +1,5 @@
+---
+classes:
+  - htcondor
+
+htcondor::is_worker: true

@@ -1,0 +1,36 @@
+---
+message: "This is condor!"
+# common htcondor bits
+# all install condor
+classes:
+  - htcondor
+# common parameters
+htcondor::managers:
+  - collector1.example.org
+  - collector2.example.org
+
+htcondor::schedulers:
+  - sched1.example.org
+  - sched2.example.org
+
+htcondor::workers:
+  - '*.example.org'
+
+htcondor::uid_domain: 'example.org'
+htcondor::default_domain_name: 'example.org'
+htcondor::cluster_has_multiple_domains: true
+htcondor::collector_name: 'Example-HTCondor-Cluster'
+htcondor::cluster_has_multiple_domains: true
+htcondor::admin_email: localhost
+htcondor::condor_user: condor
+htcondor::condor_group: condor
+htcondor::machine_owner: condor
+htcondor::include_username_in_accounting: true
+
+htcondor::pool_home: '/condor'
+htcondor::use_pkg_condor_config: true
+# this refers to a custom puppet mount called 'secrets'
+htcondor::pool_password: 'puppet:///secrets/pool_password'
+
+# should be off for a production system (only true for fresh install or update is needed)
+htcondor::install_repositories: false
