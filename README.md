@@ -47,6 +47,15 @@ yum install -y https://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-
 ```
 If you wish to use a [pool password for authentication](http://research.cs.wisc.edu/htcondor/manual/latest/3_6Security.html#SECTION00463400000000000000) you will need to create one first: ```condor_store_cred -f <path_to_htcondor_module>/files/pool_password```.
 
+### Examples
+`hiera` config examples can be found in the examples folder. They describe a minimal example of
+ - settings shared across different node types: `htcondor_common.yaml`
+ - settings for managers (nodes that run collector & negotiator daemons): `htcondor_manager.yaml`
+ - settings for schedulers: `htcondor_scheduler.yaml`
+ - settings for worker nodes: `htcondor_common.yaml`
+The examples assume class management in hiere by adding  `hiera_include('classes')` to the `site.pp`.
+Real life examples can be found in https://github.com/uobdic/UKI-SOUTHGRID-BRIS-HEP.
+
 ##Limitations
 ###General
 
