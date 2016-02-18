@@ -42,3 +42,9 @@ SUBMIT_EXPRS = $(SUBMIT_EXPRS) AcctGroup, AcctSubGroup, AccountingGroup, Concurr
 <% else -%>
 
 <% end %>
+
+<% unless @enable_condor_reporting -%>
+# disable reports to condor-admin@cs.wisc.edu (http://research.cs.wisc.edu/htcondor/privacy.html)
+CONDOR_DEVELOPERS = NONE
+CONDOR_DEVELOPERS_COLLECTOR = NONE
+<% end %>

@@ -15,6 +15,9 @@ class htcondor::params {
   $condor_version                 = hiera('condor_version', 'present')
   $custom_attribute               = hiera('custom_attribute', 'NORDUGRID_QUEUE')
 
+  # this is one of the funding requirements for HTCondor
+  # for more information see https://research.cs.wisc.edu/htcondor/privacy.html
+  $enable_condor_reporting        = hiera('enable_condor_reporting', true)
   $enable_cgroup                  = hiera('enable_cgroup', false)
   $enable_multicore               = hiera('enable_multicore', false)
   $enable_healthcheck             = hiera('enable_healthcheck', false)
