@@ -114,6 +114,7 @@ class htcondor (
   $condor_priority                = $htcondor::params::repo_priority,
   $condor_version                 = $htcondor::params::condor_version,
   $custom_attribute               = $htcondor::params::custom_attribute,
+  $enable_condor_reporting        = $htcondor::params::enable_condor_reporting,
   $enable_cgroup                  = $htcondor::params::enable_cgroup,
   $enable_multicore               = $htcondor::params::enable_multicore,
   $enable_healthcheck             = $htcondor::params::enable_healthcheck,

@@ -5,6 +5,7 @@ class htcondor::config::common {
   $condor_group                   = $htcondor::condor_group
   # /etc/condor/condor_config.local
   $admin_email                    = $htcondor::admin_email
+  $enable_condor_reporting        = $htcondor::enable_condor_reporting
   $email_domain                   = $htcondor::email_domain
   $condor_uid                     = $htcondor::condor_uid
   $condor_gid                     = $htcondor::condor_gid
