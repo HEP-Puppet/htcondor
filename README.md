@@ -56,6 +56,25 @@ If you wish to use a [pool password for authentication](http://research.cs.wisc.
 The examples assume class management in hiere by adding  `hiera_include('classes')` to the `site.pp`.
 Real life examples can be found in https://github.com/uobdic/UKI-SOUTHGRID-BRIS-HEP.
 
+## Custom machine/job attributes
+Sometimes it is necessary to create custom attributes for condor. Machine attributes can be used
+in job requirements (e.g. `HasMatLab = True`) and job attributes for job reporting/monitoring (e.g. `HEPSPEC06 = 14.00`).
+To specify the attributes in hiera simply add
+```
+htcondor::custom_attributes:
+  - HasMatLab: True
+  ...
+```
+and for job attributes
+```
+htcondor::custom_job_attributes:
+  - HEPSPEC06: 14.00
+  - CPUScaling: 1.04
+  ...
+```
+Although the use is identical, they are put into different places. `custom_attributes` end up added to the `STARTD_ATTRS`
+and `custom_job_attributes` are added to `STARTD_JOB_ATTRS`.
+
 ##Limitations
 ###General
 

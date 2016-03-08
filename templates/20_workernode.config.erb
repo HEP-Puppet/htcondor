@@ -5,11 +5,26 @@ NUM_CPUS = <%= @number_of_cpus %>
 
 DETECTED_CPUS = $NUM_CPUS
 
-# custom attribute for easier splitting into queues
-# with ARC CE (using condor_requirements=" && custom_attribute"
-<%= @custom_attribute %> = True
+# custom machine attributes for job matching
+# e.g. queues with ARC CE (using condor_requirements=" && custom_attribute)"
+<% if @custom_attributes.any? -%>
+<% @custom_attributes.each do |k, v| -%>
+<%=k -%> = <%=v %>
+<% end -%>
+STARTD_ATTRS = <%= @custom_attributes.keys.join(', ') -%>, MachineOwner, StartJobs
+<% else -%>
+STARTD_ATTRS = MachineOwner, StartJobs
+<% end -%>
 
-STARTD_ATTRS = <%= @custom_attribute %>, $(STARTD_ATTRS) MachineOwner, StartJobs
+# custom job attributes for job reporting/monitoring
+<% if @custom_job_attributes.any? -%>
+<% @custom_job_attributes.each do |k, v| -%>
+<%=k -%> = <%=v %>
+<% end -%>
+STARTD_JOB_ATTRS = <%= @custom_job_attributes.keys.join(', ') -%>, MemoryUsage
+<% else -%>
+STARTD_JOB_ATTRS = MemoryUsage
+<% end -%>
 
 ## Permanent way of stopping jobs from starting
 STARTD.SETTABLE_ATTRS_ADMINISTRATOR = StartJobs
