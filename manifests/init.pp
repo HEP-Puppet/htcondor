@@ -127,7 +127,6 @@ class htcondor (
   $health_check_script            = $htcondor::params::health_check_script,
   $include_username_in_accounting =
   $htcondor::params::include_username_in_accounting,
-  $use_pkg_condor_config          = $htcondor::params::use_pkg_condor_config,
   $install_repositories           = $htcondor::params::install_repositories,
   $dev_repositories               = $htcondor::params::dev_repositories,
   $is_scheduler                   = $htcondor::params::is_scheduler,

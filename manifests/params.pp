@@ -48,7 +48,6 @@ class htcondor::params {
   )
   $include_username_in_accounting = hiera('include_username_in_accounting',
   false)
-  $use_pkg_condor_config          = hiera('use_pkg_condor_config', false)
   $install_repositories           = hiera('install_repositories', true)
   $dev_repositories               = hiera('dev_repositories', false)
 
