@@ -8,6 +8,7 @@ class htcondor::config::security {
   $managers                     = $htcondor::managers
   $workers                      = $htcondor::workers
 
+  $use_anonymous_auth           = $htcondor::use_anonymous_auth
   $use_fs_auth                  = $htcondor::use_fs_auth
   $use_password_auth            = $htcondor::use_password_auth
   $use_kerberos_auth            = $htcondor::use_kerberos_auth
@@ -37,7 +38,8 @@ class htcondor::config::security {
   $template_security            = $htcondor::template_security
 
   $auth_string                  = construct_auth_string($use_fs_auth,
-  $use_password_auth, $use_kerberos_auth, $use_claim_to_be_auth)
+  $use_password_auth, $use_kerberos_auth, $use_claim_to_be_auth,
+  $use_anonymous_auth)
 
   # because HTCondor uses user 'condor_pool' for remote access
   # and user 'condor' for local the variables below need to include
