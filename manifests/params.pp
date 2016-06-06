@@ -13,7 +13,7 @@ class htcondor::params {
   )
   $repo_priority                  = hiera('repo_priority', '99')
   $condor_version                 = hiera('condor_version', 'present')
-  $custom_attributes              = hiera_hash('custom_attribute', {})
+  $custom_machine_attributes      = hiera_hash('custom_machine_attribute', {})
   $custom_job_attributes          = hiera_hash('custom_job_attributes', {})
 
   # this is one of the funding requirements for HTCondor

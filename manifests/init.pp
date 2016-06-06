@@ -29,11 +29,6 @@
 # Sets CONDOR_ADMIN
 # (http://research.cs.wisc.edu/htcondor/manual/latest/3_3Configuration.html).
 #
-# [*custom_attribute*]
-# Can be used to specify a ClassAd via custom_attribute = True. This is useful
-# when creating queues with ARC CEs
-# Default: NORDUGRID_QUEUE
-#
 # [*high_priority_groups*]
 # A hash of groups with high priority. It is used for the group sorting
 # expression for condor. Groups with lower value are considered first.
@@ -113,7 +108,7 @@ class htcondor (
   $admin_email                    = $htcondor::params::admin_email,
   $condor_priority                = $htcondor::params::repo_priority,
   $condor_version                 = $htcondor::params::condor_version,
-  $custom_attributes              = $htcondor::params::custom_attributes,
+  $custom_machine_attributes      = $htcondor::params::custom_machine_attributes,
   $custom_job_attributes          = $htcondor::params::custom_job_attributes,
   $enable_condor_reporting        = $htcondor::params::enable_condor_reporting,
   $enable_cgroup                  = $htcondor::params::enable_cgroup,

@@ -6,12 +6,12 @@ NUM_CPUS = <%= @number_of_cpus %>
 DETECTED_CPUS = $NUM_CPUS
 
 # custom machine attributes for job matching
-# e.g. queues with ARC CE (using condor_requirements=" && custom_attribute)"
-<% if @custom_attributes.any? -%>
-<% @custom_attributes.each do |k, v| -%>
+# e.g. queues with ARC CE (using condor_requirements=" && NORDUGRID_QUEUE)"
+<% if @custom_machine_attributes.any? -%>
+<% @custom_machine_attributes.each do |k, v| -%>
 <%=k -%> = <%=v %>
 <% end -%>
-STARTD_ATTRS = <%= @custom_attributes.keys.join(', ') -%>, MachineOwner, StartJobs
+STARTD_ATTRS = <%= @custom_machine_attributes.keys.join(', ') -%>, MachineOwner, StartJobs
 <% else -%>
 STARTD_ATTRS = MachineOwner, StartJobs
 <% end -%>
