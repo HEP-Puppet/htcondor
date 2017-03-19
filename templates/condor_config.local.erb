@@ -1,6 +1,4 @@
-<% if @condor_user == 'root' and @condor_group == 'root' -%>
-CONDOR_IDS = 0.0
-<% elsif @condor_uid.to_i  > 0 and @condor_gid.to_i > 0 -%>
+<% if @condor_uid.to_i  > 0 and @condor_gid.to_i > 0 -%>
 CONDOR_IDS = <%= @condor_uid %>.<%= @condor_gid %>
 <% end -%>
 CONDOR_ADMIN = <%= @admin_email %>
