@@ -82,7 +82,7 @@ class htcondor::config::security {
       source => $pool_password_file,
       owner  => root,
       group  => root,
-      mode   => '0640',
+      mode   => '0600',
     }
   }
 
