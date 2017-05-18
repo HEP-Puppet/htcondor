@@ -23,6 +23,16 @@ class htcondor::params {
   $enable_multicore               = hiera('enable_multicore', false)
   $enable_healthcheck             = hiera('enable_healthcheck', false)
 
+
+  if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
+    $htcondor_cgroup_default = '/system.slice/condor.service'
+  }
+  else{
+    $htcondor_cgroup_default = 'htcondor'
+  }
+  $htcondor_cgroup                = hiera('htcondor_cgroup', $htcondor_cgroup_default)
+
+
   $high_priority_groups           = hiera_hash('high_priority_groups', undef)
 
   $default_accounting_groups      = {
