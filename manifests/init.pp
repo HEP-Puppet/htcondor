@@ -185,7 +185,8 @@ class htcondor (
   $krb_map_file                   = $htcondor::params::krb_map_file,
   $machine_list_prefix            = $htcondor::params::machine_list_prefix,
   $max_walltime                   = $htcondor::params::max_walltime,
-  $max_cputime                    = $htcondor::params::max_cputime,) inherits
+  $max_cputime                    = $htcondor::params::max_cputime,
+  $memory_factor                  = $htcondor::paramse::memory_factor,) inherits
 ::htcondor::params {
   if $install_repositories {
     class { 'htcondor::repositories': }

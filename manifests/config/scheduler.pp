@@ -9,6 +9,7 @@ class htcondor::config::scheduler {
   # 12_resourcelimits.config
   $max_walltime               = $htcondor::max_walltime
   $max_cputime                = $htcondor::max_cputime
+  $memory_factor              = $htcondor::memory_factor
   # /etc/condor/config.d/13_queues.config
   $queues                     = $htcondor::queues
   $periodic_expr_interval     = $htcondor::periodic_expr_interval

@@ -79,6 +79,7 @@ class htcondor::params {
   $leave_job_in_queue             = hiera('leave_job_in_queue', undef)
   $max_walltime                   = hiera('max_walltime', '80 * 60 * 60')
   $max_cputime                    = hiera('max_cputime', '80 * 60 * 60')
+  $memory_factor                  = hiera('memory_factor', '1000')
 
   $ganglia_cluster_name           = hiera('ganglia_cluster_name', undef)
 
