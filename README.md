@@ -86,3 +86,8 @@ and `custom_job_attributes` are added to `STARTD_JOB_ATTRS`.
 Please run
 ```bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'```
 and make sure no errors are present when submitting code.
+
+### Generating changlelog
+```
+github_changelog_generator -u hep-puppet -p htcondor
+```
