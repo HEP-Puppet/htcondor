@@ -155,6 +155,7 @@ class htcondor::config (
   $template_workernode = "${module_name}/20_workernode.config.erb",
   $template_ganglia    = "${module_name}/23_ganglia.config.erb",
   $template_defrag     = "${module_name}/33_defrag.config.erb",
+  $template_highavailability      = "${module_name}/30_highavailability.config.erb",
   $use_fs_auth                    = true,
   $use_password_auth              = true,
   $use_kerberos_auth              = false,
@@ -405,7 +406,19 @@ class htcondor::config (
       mode    => '0644',
     }
 
-    # TODO: high availability
+    if size($managers) > 1 {
+      $replication_machines = suffix($managers, ':$(REPLICATION_PORT)')
+      $had_machines = suffix($managers, ':$(HAD_PORT)')
+      $replication_list = join($replication_machines, ', ')
+      $had_list= join($had_machines, ', ')
+      file { '/etc/condor/config.d/30_highavailability.config':
+        content => template($template_highavailability),
+        require => Package['condor'],
+        owner   => $condor_user,
+        group   => $condor_group,
+        mode    => '0644',
+      }
+    }
   }
 
   if $is_worker {
