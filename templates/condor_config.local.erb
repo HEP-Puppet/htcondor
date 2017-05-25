@@ -1,10 +1,7 @@
-<% if @condor_user == 'root' and @condor_group == 'root' -%>
-CONDOR_IDS = 0.0
-<% elsif @condor_uid.to_i  > 0 and @condor_gid.to_i > 0 -%>
+<% if @condor_uid.to_i  > 0 and @condor_gid.to_i > 0 -%>
 CONDOR_IDS = <%= @condor_uid %>.<%= @condor_gid %>
 <% end -%>
-CONDOR_ADMIN = <%= @condor_admin_email %>
-use_x509userproxy = True
+CONDOR_ADMIN = <%= @admin_email %>
 PeriodicRemove = false
 <% if @request_memory -%>
 request_memory = int(JobMemoryLimit/1024.0)
@@ -16,11 +13,11 @@ LeaveJobInQueue = (time() - CompletionDate) > <%= @leave_job_in_queue %>
 <% else -%>
 LeaveJobInQueue = False
 <% end -%>
-SUBMIT_EXPRS = $(SUBMIT_EXPRS) use_x509userproxy,request_memory,LeaveJobInQueue
+SUBMIT_EXPRS = $(SUBMIT_EXPRS) request_memory,LeaveJobInQueue
 DELEGATE_JOB_GSI_CREDENTIALS = False
 EMAIL_DOMAIN = <%= @email_domain %>
 
-<% if @is_ce == true -%>
+<% if @is_scheduler == true and @use_htcondor_account_mapping == true -%>
 AcctSubGroup = \
 ifThenElse(RequestCpus > 1, "multicore",\ 
 ifThenElse(regexp("prd",Owner),	"production",\
@@ -42,4 +39,10 @@ ConcurrencyLimits = strcat(AcctGroup, ",", AcctSubGroup, ",", Owner)
 SUBMIT_EXPRS = $(SUBMIT_EXPRS) AcctGroup, AcctSubGroup, AccountingGroup, ConcurrencyLimits
 <% else -%>
 
-<% end -%>
+<% end %>
+
+<% unless @enable_condor_reporting -%>
+# disable reports to condor-admin@cs.wisc.edu (http://research.cs.wisc.edu/htcondor/privacy.html)
+CONDOR_DEVELOPERS = NONE
+CONDOR_DEVELOPERS_COLLECTOR = NONE
+<% end %>

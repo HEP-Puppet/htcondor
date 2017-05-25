@@ -1,0 +1,38 @@
+---
+classes:
+  - htcondor
+
+htcondor::is_manager: true
+
+htcondor::high_priority_groups:
+  dteam: -10
+  cms.admin: -30
+  ops: -20
+  ops.admin: -21
+htcondor::use_accounting_groups: true
+htcondor::ganglia_cluster_name: 'My HTCondor Cluster'
+htcondor::accounting_groups:
+  alice:
+    dynamic_quota: 0.01
+    priority_factor: 10000.0
+  atlas:
+    dynamic_quota: 0.01
+    priority_factor: 10000.0
+  cms:
+    dynamic_quota: 0.15
+    priority_factor: 10000.0
+  dteam:
+    dynamic_quota: 0.01
+    priority_factor: 100.0
+  ilc:
+    dynamic_quota: 0.01
+    priority_factor: 10000.0
+  lhcb:
+    dynamic_quota: 0.05
+    priority_factor: 10000.0
+  ops:
+    dynamic_quota: 0.01
+    priority_factor: 1.0
+  cms.admin:
+    dynamic_quota: 0.01
+    priority_factor: 1.0

@@ -1,26 +1,37 @@
 MachineOwner = <%= @machine_owner %>
 StartJobs = True
 ## NUM_CPUS based on heira (if defined), otherwise on facter
-<% if  @number_of_cpus -%>
 NUM_CPUS = <%= @number_of_cpus %>
-<% else -%>
-NUM_CPUS = <%= @processorcount %>
-<% end -%>
 
 DETECTED_CPUS = $NUM_CPUS
 
-# custom attribute for easier splitting into queues
-# with ARC CE (using condor_requirements=" && custom_attribute"
-<%= @custom_attribute %> = True
+# custom machine attributes for job matching
+# e.g. queues with ARC CE (using condor_requirements=" && NORDUGRID_QUEUE)"
+<% if @custom_machine_attributes.any? -%>
+<% @custom_machine_attributes.each do |k, v| -%>
+<%=k -%> = <%=v %>
+<% end -%>
+STARTD_ATTRS = <%= @custom_machine_attributes.keys.join(', ') -%>, MachineOwner, StartJobs
+<% else -%>
+STARTD_ATTRS = MachineOwner, StartJobs
+<% end -%>
 
-STARTD_ATTRS = <%= @custom_attribute %>, $(STARTD_ATTRS) MachineOwner, StartJobs
+# custom job attributes for job reporting/monitoring
+<% if @custom_job_attributes.any? -%>
+<% @custom_job_attributes.each do |k, v| -%>
+<%=k -%> = <%=v %>
+<% end -%>
+STARTD_JOB_ATTRS = <%= @custom_job_attributes.keys.join(', ') -%>, MemoryUsage
+<% else -%>
+STARTD_JOB_ATTRS = MemoryUsage
+<% end -%>
 
 ## Permanent way of stopping jobs from starting
 STARTD.SETTABLE_ATTRS_ADMINISTRATOR = StartJobs
 ENABLE_PERSISTENT_CONFIG = TRUE
 PERSISTENT_CONFIG_DIR = /etc/condor/persistent
 
-## Healthcheck 
+## Healthcheck
 <% if  @enable_healthcheck == true -%>
 STARTD_CRON_JOBLIST = $(STARTD_CRON_JOBLIST) WN_HEALTHCHECK
 STARTD_CRON_WN_HEALTHCHECK_EXECUTABLE = /usr/local/bin/healhcheck_wn_condor
@@ -75,7 +86,11 @@ MASTER_UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 EXECUTE = <%= @pool_home %>/condor
 
 ## Make sure jobs have independent PID namespaces
+<% if @use_pid_namespaces -%>
 USE_PID_NAMESPACES = true
+<% else -%>
+USE_PID_NAMESPACES = false
+<% end -%>
 
 ## If the binaries are updated, let any running jobs finish before restarting
 MASTER_NEW_BINARY_RESTART=PEACEFUL
@@ -89,7 +104,7 @@ MAX_NUM_STARTD_LOG = 10
 
 <%- if @enable_cgroup -%>
 # Enable CGROUP
-BASE_CGROUP = htcondor
+BASE_CGROUP = <%= @htcondor_cgroup %>
 CGROUP_MEMORY_LIMIT = soft
 <%- end -%>
 
@@ -98,4 +113,4 @@ CGROUP_MEMORY_LIMIT = soft
 
 ##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
 ##  The list is a comma or space separated list of subsystem names
-DAEMON_LIST = <%= @daemon_list.flatten.join(', ') %>
+DAEMON_LIST = <%= @daemon_list %>

@@ -40,4 +40,4 @@ MAX_NUM_MASTER_LOG = 10
 
 ##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
 ##  The list is a comma or space separated list of subsystem names
-DAEMON_LIST = <%= @daemon_list.flatten.join(', ') %>
+DAEMON_LIST = <%= @daemon_list %>

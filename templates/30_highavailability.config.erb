@@ -1,4 +1,4 @@
-HTCondor configuration: high availability - NOT FOR USE!!!
+## HTCondor configuration: high availability
 
 ## Define the port number on which the condor_had daemon will
 ## listen.  The port must match the port number used
@@ -20,18 +20,14 @@ REPLICATION_ARGS = -p $(REPLICATION_PORT)
 ## as HAD_LIST. In addition, for each hostname, it should specify 
 ## the port number of condor_replication daemon running on that host.
 ## This parameter is mandatory and has no default value
-REPLICATION_LIST = \
-	$(CENTRAL_MANAGER1):$(REPLICATION_PORT), \
-	$(CENTRAL_MANAGER2):$(REPLICATION_PORT)
+REPLICATION_LIST = <%= @replication_list -%>
 
 ## The following list must contain the same addresses in the same order 
 ## as COLLECTOR_HOST. In addition, for each hostname, it should specify 
 ## the port number of condor_had daemon running on that host.
 ## The first machine in the list will be the PRIMARY central manager
 ## machine, in case HAD_USE_PRIMARY is set to true.
-HAD_LIST = \
-	$(CENTRAL_MANAGER1):$(HAD_PORT), \
-	$(CENTRAL_MANAGER2):$(HAD_PORT)
+HAD_LIST = <%= @had_list -%>
 
 
 ## HAD connection time.
@@ -55,9 +51,7 @@ HAD         = $(SBIN)/condor_had
 REPLICATION = $(SBIN)/condor_replication
 TRANSFERER  = $(LIBEXEC)/condor_transferer
 
-## the master should start at least these five daemons
-DAEMON_LIST = MASTER, COLLECTOR, NEGOTIATOR, HAD, REPLICATION
-## DC_Daemon list should contain at least these five
+DAEMON_LIST = <%= @daemon_list %>
 DC_DAEMON_LIST = +HAD, REPLICATION
 
 ## Enables/disables the replication feature of HAD daemon
