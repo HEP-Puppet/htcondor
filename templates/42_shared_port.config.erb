@@ -1,0 +1,4 @@
+SHARED_PORT_ARGS = -p <%= @shared_port %>
+DAEMON_LIST = $(DAEMON_LIST), SHARED_PORT
+COLLECTOR_HOST = <%= @managers.flatten.join("?sock=@shared_port_collector_name, ") %>?sock=<%= @shared_port_collector_name %>
+USE_SHARED_PORT = <%= @use_shared_port %>
