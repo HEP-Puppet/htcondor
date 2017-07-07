@@ -107,11 +107,11 @@ class htcondor::params {
   $use_pid_namespaces             = hiera('use_pid_namespaces', false)
   $cert_map_file                  = hiera('cert_map_file', '/etc/condor/certificate_mapfile'
   )
-  $certificate_mapfile            = hiera('certificate_mapfile', "puppet:///modules/${module_name}/certificate_mapfile"
+  $cert_map_file_source           = hiera('cert_map_file_source', "puppet:///modules/${module_name}/certificate_mapfile"
   )
   $krb_map_file                   = hiera('krb_map_file', '/etc/condor/kerberos_mapfile'
   )
-  $kerberos_mapfile               = hiera('kerberos_mapfile', "puppet:///modules/${module_name}/kerberos_mapfile"
+  $krb_map_file_source            = hiera('krb_map_file_source', "puppet:///modules/${module_name}/kerberos_mapfile"
   )
   $machine_list_prefix            = hiera('machine_list_prefix', 'condor_pool@$(UID_DOMAIN)/'
   )

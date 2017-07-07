@@ -16,11 +16,11 @@ class htcondor::config::security {
 
   $use_cert_map_file            = $htcondor::use_cert_map_file
   $cert_map_file                = $htcondor::cert_map_file
-  $cert_map_file_source         = $htcondor::certificate_mapfile
+  $cert_map_file_source         = $htcondor::cert_map_file_source
 
   $use_krb_map_file             = $htcondor::use_krb_map_file
   $krb_map_file                 = $htcondor::krb_map_file
-  $krb_map_file_source          = $htcondor::kerberos_mapfile
+  $krb_map_file_source          = $htcondor::krb_map_file_source
 
   # /etc/condor/config.d/10_security.config
   $cluster_has_multiple_domains = $htcondor::cluster_has_multiple_domains
