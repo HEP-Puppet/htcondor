@@ -86,16 +86,16 @@ class htcondor::config::security {
     }
   }
 
-  if $use_kerberos_auth {
-    if $use_cert_map_file {
-      file { $cert_map_file:
-        ensure => present,
-        source => $cert_map_file_source,
-        owner  => $condor_user,
-        group  => $condor_group,
-      }
+  if $use_cert_map_file {
+    file { $cert_map_file:
+      ensure => present,
+      source => $cert_map_file_source,
+      owner  => $condor_user,
+      group  => $condor_group,
     }
+  }
 
+  if $use_kerberos_auth {
     if $use_krb_map_file {
       file { $krb_map_file:
         ensure => present,
