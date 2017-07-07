@@ -100,6 +100,17 @@ KERBEROS_MAP_FILE = <%= @krb_map_file %>
 SEC_PASSWORD_FILE = /etc/condor/pool_password
 <% end -%>
 
+<% if @use_ssl_auth then -%>
+AUTH_SSL_SERVER_KEYFILE = <%= @ssl_server_keyfile %>
+AUTH_SSL_CLIENT_KEYFILE = <%= @ssl_client_keyfile %>
+AUTH_SSL_SERVER_CERTFILE = <%= @ssl_server_certfile %>
+AUTH_SSL_CLIENT_CERTFILE = <%= @ssl_client_certfile %>
+AUTH_SSL_SERVER_CAFILE = <%= @ssl_server_cafile %>
+AUTH_SSL_CLIENT_CAFILE = <%= @ssl_client_cafile %>
+AUTH_SSL_SERVER_CADIR = <%= @ssl_server_cadir %>
+AUTH_SSL_CLIENT_CADIR = <%= @ssl_client_cadir %>
+<% end -%>
+
 # Encryption
 SEC_DEFAULT_ENCRYPTION = REQUIRED
 SEC_DEFAULT_CRYPTO_METHODS = BLOWFISH

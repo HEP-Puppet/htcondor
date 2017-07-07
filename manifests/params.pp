@@ -102,6 +102,7 @@ class htcondor::params {
   $use_password_auth              = hiera('use_password_auth', true)
   $use_kerberos_auth              = hiera('use_kerberos_auth', false)
   $use_claim_to_be_auth           = hiera('use_claim_to_be_auth', false)
+  $use_ssl_auth                   = hiera('use_ssl_auth', false)
   $use_cert_map_file              = hiera('use_cert_map_file', false)
   $use_krb_map_file               = hiera('use_krb_map_file', false)
   $use_pid_namespaces             = hiera('use_pid_namespaces', false)
@@ -117,6 +118,14 @@ class htcondor::params {
   )
   $pool_password_file             = hiera('pool_password_file', "puppet:///modules/${module_name}/pool_password"
   )
+  $ssl_server_keyfile             = hiera('ssl_server_keyfile', '')
+  $ssl_client_keyfile             = hiera('ssl_client_keyfile', '')
+  $ssl_server_certfile            = hiera('ssl_server_certfile', '')
+  $ssl_client_certfile            = hiera('ssl_client_certfile', '')
+  $ssl_server_cafile              = hiera('ssl_server_cafile', '')
+  $ssl_client_cafile              = hiera('ssl_client_cafile', '')
+  $ssl_server_cadir               = hiera('ssl_server_cadir', '')
+  $ssl_client_cadir               = hiera('ssl_client_cadir', '')
 
   # for private networks
   $uses_connection_broker         = hiera('uses_connection_broker', false)
