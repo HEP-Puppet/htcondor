@@ -9,27 +9,31 @@ describe "construct_auth_string function" do
 
   context 'construct_auth_string test' do
     it "get FS right" do
-      result = scope.function_construct_auth_string([true, false, false, false, false])
+      result = scope.function_construct_auth_string([true, false, false, false, false, false])
       expect(result).to eq('FS')
     end
     it "get FS,PASSWORD right" do
-      result = scope.function_construct_auth_string([true, true, false, false, false])
+      result = scope.function_construct_auth_string([true, true, false, false, false, false])
       expect(result).to eq('FS,PASSWORD')
     end
     it "get FS,PASSWORD,KERBEROS right" do
-      result = scope.function_construct_auth_string([true, true, true, false, false])
+      result = scope.function_construct_auth_string([true, true, true, false, false, false])
       expect(result).to eq('FS,PASSWORD,KERBEROS')
     end
     it "get FS,PASSWORD,KERBEROS,CLAIMTOBE right" do
-      result = scope.function_construct_auth_string([true, true, true, true, false])
+      result = scope.function_construct_auth_string([true, true, true, true, false, false])
       expect(result).to eq('FS,PASSWORD,KERBEROS,CLAIMTOBE')
     end
     it "get FS,PASSWORD,KERBEROS,CLAIMTOBE,ANONYMOUS right" do
-      result = scope.function_construct_auth_string([true, true, true, true, true])
+      result = scope.function_construct_auth_string([true, true, true, true, true, false])
       expect(result).to eq('FS,PASSWORD,KERBEROS,CLAIMTOBE,ANONYMOUS')
     end
+    it "get FS,PASSWORD,KERBEROS,CLAIMTOBE,ANONYMOUS,SSL right" do
+      result = scope.function_construct_auth_string([true, true, true, true, true, true])
+      expect(result).to eq('FS,PASSWORD,KERBEROS,CLAIMTOBE,ANONYMOUS,SSL')
+    end
     it "get FS,KERBEROS right" do
-      result = scope.function_construct_auth_string([true, false, true, false, false])
+      result = scope.function_construct_auth_string([true, false, true, false, false, false])
       expect(result).to eq('FS,KERBEROS')
     end
   end

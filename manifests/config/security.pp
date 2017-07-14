@@ -13,6 +13,7 @@ class htcondor::config::security {
   $use_password_auth            = $htcondor::use_password_auth
   $use_kerberos_auth            = $htcondor::use_kerberos_auth
   $use_claim_to_be_auth         = $htcondor::use_claim_to_be_auth
+  $use_ssl_auth                 = $htcondor::use_ssl_auth
 
   $use_cert_map_file            = $htcondor::use_cert_map_file
   $cert_map_file                = $htcondor::cert_map_file
@@ -21,6 +22,15 @@ class htcondor::config::security {
   $use_krb_map_file             = $htcondor::use_krb_map_file
   $krb_map_file                 = $htcondor::krb_map_file
   $krb_map_file_source          = $htcondor::krb_map_file_source
+
+  $ssl_server_keyfile           = $htcondor::ssl_server_keyfile
+  $ssl_client_keyfile           = $htcondor::ssl_client_keyfile
+  $ssl_server_certfile          = $htcondor::ssl_server_certfile
+  $ssl_client_certfile          = $htcondor::ssl_client_certfile
+  $ssl_server_cafile            = $htcondor::ssl_server_cafile
+  $ssl_client_cafile            = $htcondor::ssl_client_cafile
+  $ssl_server_cadir             = $htcondor::ssl_server_cadir
+  $ssl_client_cadir             = $htcondor::ssl_client_cadir
 
   # /etc/condor/config.d/10_security.config
   $cluster_has_multiple_domains = $htcondor::cluster_has_multiple_domains
@@ -39,7 +49,7 @@ class htcondor::config::security {
 
   $auth_string                  = construct_auth_string($use_fs_auth,
   $use_password_auth, $use_kerberos_auth, $use_claim_to_be_auth,
-  $use_anonymous_auth)
+  $use_anonymous_auth, $use_ssl_auth)
 
   # because HTCondor uses user 'condor_pool' for remote access
   # and user 'condor' for local the variables below need to include
