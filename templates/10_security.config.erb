@@ -87,12 +87,12 @@ SEC_READ_AUTHENTICATION_METHODS = <%= @auth_string %>
 SCHEDD.SEC_WRITE_AUTHENTICATION_METHODS = <%= @auth_string %>
 SCHEDD.SEC_DAEMON_AUTHENTICATION_METHODS = <%= @auth_string %>
 
-<% if @use_kerberos_auth then -%>
-SEC_ENABLE_MATCH_PASSWORD_AUTHENTICATION = True
-<% if @use_cert_map_file -%>
+<% if @use_cert_map_file then -%>
 CERTIFICATE_MAPFILE = <%= @cert_map_file %>
 <% end -%>
-<% if @use_krb_map_file -%>
+<% if @use_kerberos_auth then -%>
+SEC_ENABLE_MATCH_PASSWORD_AUTHENTICATION = True
+<% if @use_krb_map_file then -%>
 KERBEROS_MAP_FILE = <%= @krb_map_file %>
 <% end -%>
 <% end -%>
