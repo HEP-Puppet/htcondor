@@ -122,6 +122,11 @@ class htcondor::params {
   $uses_connection_broker         = hiera('uses_connection_broker', false)
   $private_network_name           = hiera('private_network_name', $::domain)
 
+  # SharedPort service configuration
+  $use_shared_port                = hiera('use_shared_port', false)
+  $shared_port                    = hiera('shared_port', 9618)
+  $shared_port_collector_name     = hiera('shared_port_collector_name', 'collector')
+
   # notification settings
   $admin_email                    = hiera('admin_email', 'localhost')
   $email_domain                   = hiera('email_domain', 'localhost')
@@ -147,5 +152,7 @@ class htcondor::params {
   $template_defrag                = hiera('template_defrag', "${module_name}/33_defrag.config.erb"
   )
   $template_highavailability      = hiera('template_defrag', "${module_name}/30_highavailability.config.erb"
+  )
+  $template_sharedport            = hiera('template_sharedport', "${module_name}/42_shared_port.config.erb"
   )
 }

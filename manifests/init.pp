@@ -167,6 +167,7 @@ class htcondor (
   $template_ganglia               = $htcondor::params::template_ganglia,
   $template_workernode            = $htcondor::params::template_workernode,
   $template_defrag                = $htcondor::params::template_defrag,
+  $template_sharedport            = $htcondor::params::template_sharedport,
   $template_highavailability      =
   $htcondor::params::template_highavailability,
   $use_htcondor_account_mapping   =
@@ -188,7 +189,10 @@ class htcondor (
   $machine_list_prefix            = $htcondor::params::machine_list_prefix,
   $max_walltime                   = $htcondor::params::max_walltime,
   $max_cputime                    = $htcondor::params::max_cputime,
-  $memory_factor                  = $htcondor::paramse::memory_factor,) inherits
+  $memory_factor                  = $htcondor::paramse::memory_factor,
+  $use_shared_port                = $htcondor::use_shared_port,
+  $shared_port                    = $htcondor::shared_port,
+  $shared_port_collector_name     = $htcondor::shared_port_collector_name,) inherits
 ::htcondor::params {
   if $install_repositories {
     class { 'htcondor::repositories': }
