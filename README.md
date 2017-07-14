@@ -1,4 +1,4 @@
-#Puppet module for HTCondor batch system
+# Puppet module for HTCondor batch system
 
 Latest stable version: https://github.com/HEP-Puppet/htcondor/releases/tag/v2.0.1
 
@@ -9,7 +9,7 @@ Development branch: https://github.com/HEP-Puppet/htcondor/tree/development
 Puppetforge: https://forge.puppetlabs.com/HEPPuppet/htcondor
 
 
-####Table of Contents
+#### Table of Contents
 1. [Overview - What is the htcondor module?](#overview)
 2. [Module Description - What does the module do?](#module-description)
 3. [Setup - The basics of getting started with htcondor](#setup)
@@ -18,12 +18,12 @@ Puppetforge: https://forge.puppetlabs.com/HEPPuppet/htcondor
 	* [Contributing to the htcondor module](#contributing)
     * [Running tests - A quick guide](#running-tests)
 
-##Overview
+## Overview
 The htcondor modules allows you to set up a HTCondor cluster (https://research.cs.wisc.edu/htcondor/).
 It depends on several other modules, including puppetlabs/(stdlib|concat|firewall).
 Please check the metadata.json for detailed dependencies.
 
-##Module Description
+## Module Description
 An HTCondor cluster consists of at least three types of nodes:
  * a worker for executing the jobs
  * a scheduler for job submission
@@ -32,13 +32,13 @@ An HTCondor cluster consists of at least three types of nodes:
 This puppet modules allows for the configuration of these three types of nodes.
 
 
-##Setup
+## Setup
 **What the htcondor module affects:**
  * configuration files and directories (/etc/condor/*)
  * installation of htcondor software (condor* packages)
  * a new fact for facter: condor_version
 
-###Beginning with HTCondor
+### Beginning with HTCondor
 Since admins might wish to run their own repository or disable repositories after install,
 the HTCondor repository is no longer included in the Puppet module since version 2.0.0.
 Therefore, the first step is to install the latest HTCondor repository for your OS (https://research.cs.wisc.edu/htcondor/yum/):
@@ -75,14 +75,14 @@ htcondor::custom_job_attributes:
 Although the use is identical, they are put into different places. `custom_attributes` end up added to the `STARTD_ATTRS`
 and `custom_job_attributes` are added to `STARTD_JOB_ATTRS`.
 
-##Limitations
-###General
+## Limitations
+### General
 
 
-##Development
+## Development
 
-###Contributing
-###Running tests
+### Contributing
+### Running tests
 Please run
 ```bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'```
 and make sure no errors are present when submitting code.
