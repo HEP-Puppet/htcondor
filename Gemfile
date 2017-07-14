@@ -17,10 +17,10 @@ end
 supports_windows = false
 
 gem 'puppet', *location_for(ENV['PUPPET_GEM_VERSION'])
-gem 'puppet-lint', '~> 2.0'
-gem 'puppetlabs_spec_helper', '~> 2.1'
-gem 'github_changelog_generator', '<= 1.14.3'
-gem 'rspec-puppet', '~> 2.5'
+gem 'puppet-lint'
+gem 'puppetlabs_spec_helper'
+gem 'github_changelog_generator'
+gem 'rspec-puppet'
 gem 'rspec-puppet-facts'
 gem 'rspec-puppet-utils'
 gem 'metadata-json-lint'
