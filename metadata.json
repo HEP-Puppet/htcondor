@@ -3,17 +3,37 @@
   "version": "2.0.1",
   "summary": "Puppet module for HTCondor batch system",
   "author": "HEPPuppet",
-  "dependencies": [
+  "requirements": [
     {
       "name": "puppetlabs/firewall",
       "version_requirement": "~> 1.8"
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": "~> 4.1"
+      "version_requirement": ">= 4.1"
     }
   ],
-  "source": "git@github.com:HEP-Puppet/puppet-htcondor.git",
+  "source": "https://github.com/HEP-Puppet",
   "project_page": "https://github.com/HEP-Puppet",
-  "license": "Apache-2.0"
+  "issues_url": "https://github.com/HEP-Puppet/htcondor/issues",
+  "license": "Apache-2.0",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    }
+  ],
+  "dependencies": [
+
+  ]
 }
