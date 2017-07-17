@@ -1,5 +1,31 @@
 # Change Log
 
+## [v2.0.2](https://github.com/hep-puppet/htcondor/tree/v2.0.2) (2017-07-17)
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.0...v2.0.2)
+
+**Closed issues:**
+
+- Changes in CentOS7 cgroup setup [\#59](https://github.com/HEP-Puppet/htcondor/issues/59)
+
+**Merged pull requests:**
+
+- Implement SSL authentication [\#65](https://github.com/HEP-Puppet/htcondor/pull/65) ([olifre](https://github.com/olifre))
+- htcondor::security Pull CERTIFICATE\_MAPFILE out of krb-auth dependency. [\#64](https://github.com/HEP-Puppet/htcondor/pull/64) ([olifre](https://github.com/olifre))
+- Allow to specify the source for certificate and kerberos map files. [\#63](https://github.com/HEP-Puppet/htcondor/pull/63) ([olifre](https://github.com/olifre))
+- htcondor::sharedport: Add configuration for condor\_shared\_port daemon. [\#62](https://github.com/HEP-Puppet/htcondor/pull/62) ([olifre](https://github.com/olifre))
+- Fix baseurl for yum repositories [\#61](https://github.com/HEP-Puppet/htcondor/pull/61) ([wiene](https://github.com/wiene))
+
+## [v2.0.0](https://github.com/hep-puppet/htcondor/tree/v2.0.0) (2017-07-14)
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v1.3.1...v2.0.0)
+
+**Implemented enhancements:**
+
+- Merging development branch into master [\#60](https://github.com/HEP-Puppet/htcondor/pull/60) ([kreczko](https://github.com/kreczko))
+
+**Merged pull requests:**
+
+- Fixing travis tests for Puppet 4.0 [\#67](https://github.com/HEP-Puppet/htcondor/pull/67) ([kreczko](https://github.com/kreczko))
+
 ## [v1.3.1](https://github.com/hep-puppet/htcondor/tree/v1.3.1) (2017-05-18)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v1.3.0...v1.3.1)
 
