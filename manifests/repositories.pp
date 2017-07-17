@@ -10,8 +10,8 @@ class htcondor::repositories {
     'RedHat'  : {
       if $dev_repos {
         yumrepo { 'htcondor-development':
-          descr    => "HTCondor Development RPM Repository for Redhat Enterprise Linux ${major_release}",
-          baseurl  => "http://research.cs.wisc.edu/htcondor/yum/development/rhel${major_release}",
+          descr    => "HTCondor Development RPM Repository for Redhat Enterprise Linux ${facts['os']['release']['major']}",
+          baseurl  => 'http://research.cs.wisc.edu/htcondor/yum/development/rhel$releasever',
           enabled  => 1,
           gpgcheck => 0,
           priority => $condor_priority,
@@ -20,8 +20,8 @@ class htcondor::repositories {
         }
       } else {
         yumrepo { 'htcondor-stable':
-          descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${major_release}",
-          baseurl  => "http://research.cs.wisc.edu/htcondor/yum/stable/rhel${major_release}",
+          descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${facts['os']['release']['major']}",
+          baseurl  => 'http://research.cs.wisc.edu/htcondor/yum/stable/rhel$releasever',
           enabled  => 1,
           gpgcheck => 0,
           priority => $condor_priority,
