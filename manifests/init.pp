@@ -139,6 +139,7 @@ class htcondor (
   $kerberos_mapfile               = $htcondor::params::kerberos_mapfile,
   $pool_home                      = $htcondor::params::pool_home,
   $pool_create                    = $htcondor::params::pool_create,
+  $mount_under_scratch_dirs       = $htcondor::params::mount_under_scratch_dirs,
   $queues                         = $htcondor::params::queues,
   $periodic_expr_interval         = $htcondor::params::periodic_expr_interval,
   $max_periodic_expr_interval     =
@@ -169,6 +170,7 @@ class htcondor (
   $template_workernode            = $htcondor::params::template_workernode,
   $template_defrag                = $htcondor::params::template_defrag,
   $template_sharedport            = $htcondor::params::template_sharedport,
+  $template_singularity           = $htcondor::params::template_singularity,
   $template_highavailability      =
   $htcondor::params::template_highavailability,
   $use_htcondor_account_mapping   =
@@ -202,7 +204,14 @@ class htcondor (
   $memory_factor                  = $htcondor::paramse::memory_factor,
   $use_shared_port                = $htcondor::use_shared_port,
   $shared_port                    = $htcondor::shared_port,
-  $shared_port_collector_name     = $htcondor::shared_port_collector_name,) inherits
+  $shared_port_collector_name     = $htcondor::shared_port_collector_name,
+  $use_singularity                = $htcondor::params::use_singularity,
+  $singularity_path               = $htcondor::params::singularity_path,
+  $force_singularity_jobs         = $htcondor::params::force_singularity_jobs,
+  $singularity_image_expr         = $htcondor::params::singularity_image_expr,
+  $singularity_bind_paths         = $htcondor::params::singularity_bind_paths,
+  $singularity_target_dir         = $htcondor::params::singularity_target_dir,
+) inherits
 ::htcondor::params {
   if $install_repositories {
     class { 'htcondor::repositories': }

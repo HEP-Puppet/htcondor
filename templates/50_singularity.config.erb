@@ -1,0 +1,15 @@
+# Path to the singularity binary.
+SINGULARITY = <%= @singularity_path %>
+
+# Forces _all_ jobs to run inside singularity.
+SINGULARITY_JOB = <%= @force_singularity_jobs %>
+
+# Forces all jobs to use the given image.
+SINGULARITY_IMAGE_EXPR = <%= @singularity_image_expr %>
+
+# Paths to bind via user bind control. 
+SINGULARITY_BIND_EXPR = "<%= @singularity_bind_paths.flatten.join(",") %>"
+
+# Maps $_CONDOR_SCRATCH_DIR on the host to given path inside the image.
+SINGULARITY_TARGET_DIR = <%= @singularity_target_dir %>
+

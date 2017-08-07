@@ -74,6 +74,7 @@ class htcondor::params {
 
   $pool_home                      = hiera('pool_home', '/pool')
   $pool_create                    = hiera('pool_create', true)
+  $mount_under_scratch_dirs       = hiera_array('mount_under_scratch_dirs', ['/tmp', '/var/tmp'])
   $queues                         = hiera('grid_queues', undef)
   $periodic_expr_interval         = hiera('periodic_expr_interval', 60)
   $max_periodic_expr_interval     = hiera('max_periodic_expr_interval', 1200)
@@ -138,6 +139,14 @@ class htcondor::params {
   $shared_port                    = hiera('shared_port', 9618)
   $shared_port_collector_name     = hiera('shared_port_collector_name', 'collector')
 
+  # Singularity configuration
+  $use_singularity                = hiera('use_singularity', false)
+  $singularity_path               = hiera('singularity_path', '/usr/bin/singularity')
+  $force_singularity_jobs         = hiera('force_singularity_jobs', false)
+  $singularity_image_expr         = hiera('singularity_image', 'SingularityImage')
+  $singularity_bind_paths         = hiera_array('singularity_bind_paths', 'SingularityBind')
+  $singularity_target_dir         = hiera('singularity_target_dir', '')
+
   # notification settings
   $admin_email                    = hiera('admin_email', 'localhost')
   $email_domain                   = hiera('email_domain', 'localhost')
@@ -165,5 +174,7 @@ class htcondor::params {
   $template_highavailability      = hiera('template_defrag', "${module_name}/30_highavailability.config.erb"
   )
   $template_sharedport            = hiera('template_sharedport', "${module_name}/42_shared_port.config.erb"
+  )
+  $template_singularity           = hiera('template_singularity', "${module_name}/50_singularity.config.erb"
   )
 }
