@@ -16,6 +16,8 @@ class htcondor::params {
   $custom_machine_attributes      = hiera_hash('custom_machine_attribute', {})
   $custom_job_attributes          = hiera_hash('custom_job_attributes', {})
 
+  $use_debug_notify               = hiera('use_debug_notify', true)
+
   # this is one of the funding requirements for HTCondor
   # for more information see https://research.cs.wisc.edu/htcondor/privacy.html
   $enable_condor_reporting        = hiera('enable_condor_reporting', true)

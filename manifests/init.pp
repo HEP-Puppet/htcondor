@@ -110,6 +110,7 @@ class htcondor (
   $condor_version                 = $htcondor::params::condor_version,
   $custom_machine_attributes      = $htcondor::params::custom_machine_attributes,
   $custom_job_attributes          = $htcondor::params::custom_job_attributes,
+  $use_debug_notify               = $htcondor::params::use_debug_notify,
   $enable_condor_reporting        = $htcondor::params::enable_condor_reporting,
   $enable_cgroup                  = $htcondor::params::enable_cgroup,
   $enable_multicore               = $htcondor::params::enable_multicore,
