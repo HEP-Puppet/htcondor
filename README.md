@@ -13,8 +13,9 @@ Puppetforge: https://forge.puppetlabs.com/HEPPuppet/htcondor
 1. [Overview - What is the htcondor module?](#overview)
 2. [Module Description - What does the module do?](#module-description)
 3. [Setup - The basics of getting started with htcondor](#setup)
-4. [Limitations - OS compatibility, etc.](#limitations)
-7. [Development - Guide for contributing to the module](#development)
+4. [Singularity container support](#singularity)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
 	* [Contributing to the htcondor module](#contributing)
     * [Running tests - A quick guide](#running-tests)
 
@@ -74,6 +75,23 @@ htcondor::custom_job_attributes:
 ```
 Although the use is identical, they are put into different places. `custom_attributes` end up added to the `STARTD_ATTRS`
 and `custom_job_attributes` are added to `STARTD_JOB_ATTRS`.
+
+## Singularity
+The module also provides support for [Singularity](http://singularity.lbl.gov/) containers to the extent to which this is implemented in HTCondor. As compared to e.g. Docker containers, Singularity containers are less isolated and can run without a privileged daemon, granting the user the same permissions inside the container as the user would have on the underlying host. Hence, they are ideal to run HPC jobs.
+
+Example configuration parameters could be:
+```
+use_singularity          => true,
+force_singularity_jobs   => true,
+singularity_image_expr   => "/images/myimage.img",
+singularity_bind_paths   => ['/some_shared_filesystem', '/pool', '/usr/libexec/condor/'],
+singularity_target_dir   => '/srv',
+mount_under_scratch_dirs => ['/tmp','/var/tmp'],
+```
+This forces all jobs to run inside Singularity containers, while offering `tmp` space inside the container, and binding a shared filesystem mount point and HTCondor-specific directories inside.
+The binding of the two HTCondor specific directories is a workaround to allow interactive jobs to run, this will hopefully be fixed in a future HTCondor release.
+
+The Image may also be an expression to allow for user configuration, more details on that are provided in the [HTCondor documentation](https://research.cs.wisc.edu/htcondor/manual/latest/3_17Singularity_Support.html).
 
 ## Limitations
 ### General
