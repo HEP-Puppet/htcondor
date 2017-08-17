@@ -85,6 +85,10 @@ MASTER_UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 ## Location of scratch directories
 EXECUTE = <%= @pool_home %>/condor
 
+## Writable scratch directories bind mounted in scratch, e.g. for docker / singularity containers. 
+## Auto-deleted after the job exits.
+MOUNT_UNDER_SCRATCH = "<%= @mount_under_scratch_dirs.flatten.join(", ") %>"
+
 ## Make sure jobs have independent PID namespaces
 <% if @use_pid_namespaces -%>
 USE_PID_NAMESPACES = true
