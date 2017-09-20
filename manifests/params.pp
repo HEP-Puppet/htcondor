@@ -72,6 +72,7 @@ class htcondor::params {
   $memory_overcommit              = hiera('memory_overcommit', 1.5)
   $request_memory                 = hiera('request_memory', true)
 
+  $starter_job_environment        = hiera_hash('starter_job_environment', {})
   $pool_home                      = hiera('pool_home', '/pool')
   $pool_create                    = hiera('pool_create', true)
   $mount_under_scratch_dirs       = hiera_array('mount_under_scratch_dirs', ['/tmp', '/var/tmp'])
