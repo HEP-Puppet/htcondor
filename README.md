@@ -86,10 +86,12 @@ force_singularity_jobs   => true,
 singularity_image_expr   => "/images/myimage.img",
 singularity_bind_paths   => ['/some_shared_filesystem', '/pool', '/usr/libexec/condor/'],
 singularity_target_dir   => '/srv',
+starter_job_environment  => { 'SINGULARITY_HOME' => '/srv' },
 mount_under_scratch_dirs => ['/tmp','/var/tmp'],
 ```
 This forces all jobs to run inside Singularity containers, while offering `tmp` space inside the container, and binding a shared filesystem mount point and HTCondor-specific directories inside.
 The binding of the two HTCondor specific directories is a workaround to allow interactive jobs to run, this will hopefully be fixed in a future HTCondor release.
+The same holds for setting `SINGULARITY_HOME`: This ensures non-interactive jobs start in the job's working directory instead of the user's home directory which might not even be accessible from the worker.
 
 The Image may also be an expression to allow for user configuration, more details on that are provided in the [HTCondor documentation](https://research.cs.wisc.edu/htcondor/manual/latest/3_17Singularity_Support.html).
 
