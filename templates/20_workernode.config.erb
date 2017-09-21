@@ -82,6 +82,9 @@ MAXJOBRETIREMENTTIME = $(HOUR) * 24 * 3
 UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 MASTER_UPDATE_INTERVAL = $RANDOM_INTEGER(230, 370)
 
+## Special environment setup
+STARTER_JOB_ENVIRONMENT = "<%= @starter_job_environment.map{|e| e.join('=')}.join(" ") %>"
+
 ## Location of scratch directories
 EXECUTE = <%= @pool_home %>/condor
 

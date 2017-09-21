@@ -17,6 +17,7 @@ class htcondor::config::worker {
   $memory_overcommit         = $htcondor::memory_overcommit
   $number_of_cpus            = $htcondor::number_of_cpus
   $partitionable_slots       = $htcondor::partitionable_slots
+  $starter_job_environment   = $htcondor::starter_job_environment
   $pool_create               = $htcondor::pool_create
   $pool_home                 = $htcondor::pool_home
   $use_pid_namespaces        = $htcondor::use_pid_namespaces
