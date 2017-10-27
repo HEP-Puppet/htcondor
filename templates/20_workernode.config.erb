@@ -112,7 +112,7 @@ MAX_NUM_STARTD_LOG = 10
 <%- if @enable_cgroup -%>
 # Enable CGROUP
 BASE_CGROUP = <%= @htcondor_cgroup %>
-CGROUP_MEMORY_LIMIT = soft
+CGROUP_MEMORY_LIMIT_POLICY = soft
 <%- end -%>
 
 ## Debugging
