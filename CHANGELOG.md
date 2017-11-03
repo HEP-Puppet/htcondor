@@ -1,5 +1,18 @@
 # Change Log
 
+## [v2.0.3](https://github.com/hep-puppet/htcondor/tree/v2.0.3) (2017-11-03)
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.2...v2.0.3)
+
+**Merged pull requests:**
+
+- Fixing CGroup issue and badly initialized variables [\#80](https://github.com/HEP-Puppet/htcondor/pull/80) ([kreczko](https://github.com/kreczko))
+- Add starter environment configuration [\#76](https://github.com/HEP-Puppet/htcondor/pull/76) ([olifre](https://github.com/olifre))
+- init: Fixup parameter default values. [\#75](https://github.com/HEP-Puppet/htcondor/pull/75) ([olifre](https://github.com/olifre))
+- Remove bad quotes from MOUNT\_UNDER\_SCRATCH variable. [\#74](https://github.com/HEP-Puppet/htcondor/pull/74) ([olifre](https://github.com/olifre))
+- Allow to turn off debug notification. [\#72](https://github.com/HEP-Puppet/htcondor/pull/72) ([olifre](https://github.com/olifre))
+- Add singularity support. [\#71](https://github.com/HEP-Puppet/htcondor/pull/71) ([olifre](https://github.com/olifre))
+- security: Change CM authentication to use ALLOW instead of HOSTALLOW. [\#70](https://github.com/HEP-Puppet/htcondor/pull/70) ([olifre](https://github.com/olifre))
+
 ## [v2.0.2](https://github.com/hep-puppet/htcondor/tree/v2.0.2) (2017-07-17)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.0...v2.0.2)
 
@@ -9,6 +22,7 @@
 
 **Merged pull requests:**
 
+- updated to version \(2.0.2\) and added changelog [\#69](https://github.com/HEP-Puppet/htcondor/pull/69) ([kreczko](https://github.com/kreczko))
 - Implement SSL authentication [\#65](https://github.com/HEP-Puppet/htcondor/pull/65) ([olifre](https://github.com/olifre))
 - htcondor::security Pull CERTIFICATE\_MAPFILE out of krb-auth dependency. [\#64](https://github.com/HEP-Puppet/htcondor/pull/64) ([olifre](https://github.com/olifre))
 - Allow to specify the source for certificate and kerberos map files. [\#63](https://github.com/HEP-Puppet/htcondor/pull/63) ([olifre](https://github.com/olifre))
