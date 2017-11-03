@@ -135,8 +135,6 @@ class htcondor (
   $partitionable_slots            = $htcondor::params::partitionable_slots,
   $memory_overcommit              = $htcondor::params::memory_overcommit,
   $request_memory                 = $htcondor::params::request_memory,
-  $certificate_mapfile            = $htcondor::params::certificate_mapfile,
-  $kerberos_mapfile               = $htcondor::params::kerberos_mapfile,
   $starter_job_environment        = $htcondor::params::starter_job_environment,
   $pool_home                      = $htcondor::params::pool_home,
   $pool_create                    = $htcondor::params::pool_create,
