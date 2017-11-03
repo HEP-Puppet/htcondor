@@ -136,6 +136,7 @@ class htcondor (
   $memory_overcommit              = $htcondor::params::memory_overcommit,
   $request_memory                 = $htcondor::params::request_memory,
   $starter_job_environment        = $htcondor::params::starter_job_environment,
+  $manage_selinux                 = $htcondor::params::manage_selinux,
   $pool_home                      = $htcondor::params::pool_home,
   $pool_create                    = $htcondor::params::pool_create,
   $mount_under_scratch_dirs       = $htcondor::params::mount_under_scratch_dirs,
