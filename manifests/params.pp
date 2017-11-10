@@ -174,7 +174,7 @@ class htcondor::params {
   )
   $template_highavailability      = hiera('template_defrag', "${module_name}/30_highavailability.config.erb"
   )
-  $template_sharedport            = hiera('template_sharedport', "${module_name}/42_shared_port.config.erb"
+  $template_sharedport            = hiera('template_sharedport', "${module_name}/27_shared_port.config.erb"
   )
   $template_singularity           = hiera('template_singularity', "${module_name}/50_singularity.config.erb"
   )

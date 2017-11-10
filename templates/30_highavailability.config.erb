@@ -5,16 +5,27 @@
 ## for when defining HAD_LIST.  This port number is
 ## arbitrary; make sure that there is no port number collision
 ## with other applications.
+<% use_shared_port = scope.lookupvar('::htcondor::use_shared_port') -%>
+<% if use_shared_port -%>
+HAD_PORT = $(SHARED_PORT_PORT)
+HAD_USE_SHARED_PORT = TRUE
+<% else -%>
 HAD_PORT = 51450
 HAD_ARGS = -p $(HAD_PORT)
+<% end -%>
 
 ## The following macro defines the port number condor_replication will listen
 ## on on this machine. This port should match the port number specified
 ## for that replication daemon in the REPLICATION_LIST
 ## Port number is arbitrary (make sure no collision with other applications)
 ## This is a sample port number
+<% if use_shared_port -%>
+REPLICATION_PORT = $(SHARED_PORT_PORT)
+REPLICATION_USE_SHARED_PORT = TRUE
+<% else -%>
 REPLICATION_PORT = 41450
 REPLICATION_ARGS = -p $(REPLICATION_PORT)
+<% end -%>
 
 ## The following list must contain the same addresses
 ## as HAD_LIST. In addition, for each hostname, it should specify 
