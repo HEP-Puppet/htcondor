@@ -13,7 +13,7 @@ class htcondor::config::sharedport {
   $now                        = strftime('%d.%m.%Y_%H.%M')
 
   # SharedPort service configuration
-  file { '/etc/condor/config.d/42_shared_port.config':
+  file { '/etc/condor/config.d/27_shared_port.config':
     backup  => ".bak.${now}",
     content => template($template_sharedport),
     require => Package['condor'],
