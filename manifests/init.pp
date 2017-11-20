@@ -49,6 +49,12 @@
 # [*install_repositories*]
 # Bool to install repositories or not
 #
+# [*gpgcheck*]
+# Boolean to specify whether the GPG signature of the packages should be checked
+#
+# [*gpgkey*]
+# URL of the GPG key used to sign the packages
+#
 # [*$is_scheduler*]
 # If current machine is a condor scheduler
 #
@@ -125,6 +131,8 @@ class htcondor (
   $include_username_in_accounting =
   $htcondor::params::include_username_in_accounting,
   $install_repositories           = $htcondor::params::install_repositories,
+  $gpgcheck                       = $htcondor::params::gpgcheck,
+  $gpgkey                         = $htcondor::params::gpgkey,
   $dev_repositories               = $htcondor::params::dev_repositories,
   $is_scheduler                   = $htcondor::params::is_scheduler,
   $is_manager                     = $htcondor::params::is_manager,

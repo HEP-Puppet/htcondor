@@ -61,6 +61,8 @@ class htcondor::params {
   $include_username_in_accounting = hiera('include_username_in_accounting',
   false)
   $install_repositories           = hiera('install_repositories', true)
+  $gpgcheck                       = hiera('gpgcheck', true)
+  $gpgkey                         = hiera('gpgkey', 'http://htcondor.org/yum/RPM-GPG-KEY-HTCondor')
   $dev_repositories               = hiera('dev_repositories', false)
 
   $machine_owner                  = hiera('machine_owner', 'physics')
