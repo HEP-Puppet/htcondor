@@ -3,6 +3,8 @@
 # Provides yum repositories for HTCondor installation
 class htcondor::repositories {
   $dev_repos       = $htcondor::dev_repositories
+  $gpgcheck        = $htcondor::gpgcheck
+  $gpgkey          = $htcondor::gpgkey
   $condor_priority = $htcondor::condor_priority
   $major_release   = regsubst($::operatingsystemrelease, '^(\d+)\.\d+$', '\1')
 
@@ -13,7 +15,8 @@ class htcondor::repositories {
           descr    => "HTCondor Development RPM Repository for Redhat Enterprise Linux ${facts['os']['release']['major']}",
           baseurl  => 'http://research.cs.wisc.edu/htcondor/yum/development/rhel$releasever',
           enabled  => 1,
-          gpgcheck => 0,
+          gpgcheck => bool2num($gpgcheck),
+          gpgkey   => $gpgkey,
           priority => $condor_priority,
           exclude  => 'condor.i386, condor.i686',
           before   => [Package['condor']],
@@ -23,7 +26,8 @@ class htcondor::repositories {
           descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${facts['os']['release']['major']}",
           baseurl  => 'http://research.cs.wisc.edu/htcondor/yum/stable/rhel$releasever',
           enabled  => 1,
-          gpgcheck => 0,
+          gpgcheck => bool2num($gpgcheck),
+          gpgkey   => $gpgkey,
           priority => $condor_priority,
           exclude  => 'condor.i386, condor.i686',
           before   => [Package['condor']],
