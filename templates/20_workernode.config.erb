@@ -88,9 +88,11 @@ STARTER_JOB_ENVIRONMENT = "<%= @starter_job_environment.map{|e| e.join('=')}.joi
 ## Location of scratch directories
 EXECUTE = <%= @pool_home %>/condor
 
-## Writable scratch directories bind mounted in scratch, e.g. for docker / singularity containers. 
+<% if @mount_under_scratch_dirs.any? -%>
+## Writable scratch directories bind mounted in scratch, e.g. for docker / singularity containers.
 ## Auto-deleted after the job exits.
 MOUNT_UNDER_SCRATCH = <%= @mount_under_scratch_dirs.flatten.join(", ") %>
+<% end -%>
 
 ## Make sure jobs have independent PID namespaces
 <% if @use_pid_namespaces -%>
