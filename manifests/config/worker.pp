@@ -18,6 +18,7 @@ class htcondor::config::worker {
   $number_of_cpus            = $htcondor::number_of_cpus
   $partitionable_slots       = $htcondor::partitionable_slots
   $starter_job_environment   = $htcondor::starter_job_environment
+  $manage_selinux            = $htcondor::manage_selinux
   $pool_create               = $htcondor::pool_create
   $pool_home                 = $htcondor::pool_home
   $use_pid_namespaces        = $htcondor::use_pid_namespaces
@@ -63,8 +64,25 @@ class htcondor::config::worker {
   if $pool_create {
     $condor_directories = [
       $pool_home,
-      "${pool_home}/condor",
       '/etc/condor/persistent']
+    file { "${pool_home}/condor":
+      ensure  => directory,
+      owner   => 'condor',
+      mode    => '0644',
+      seltype => 'condor_var_lib_t',
+      require => File[$pool_home],
+    }
+    if $manage_selinux {
+      selinux::fcontext { 'htcondor-pool-selinux':
+        seltype  => 'condor_var_lib_t',
+        pathspec => "${pool_home}/condor(/.*)?",
+      }->
+      selinux::exec_restorecon { "${pool_home}/condor":
+        recurse     => true,
+        refreshonly => true,
+        require     => File["${pool_home}/condor"],
+      }
+    }
   } else {
     $condor_directories = ['/etc/condor/persistent']
   }
