@@ -58,7 +58,7 @@ class htcondor::config::worker {
     source => $health_check_script,
     owner  => $condor_user,
     group  => $condor_group,
-    mode   => '0655',
+    mode   => '0755',
   }
 
   if $pool_create {
