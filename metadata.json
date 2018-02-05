@@ -36,7 +36,7 @@
   "dependencies": [
     {
        "name": "puppet/selinux",
-       "version_requirement": "1.x.x",
+       "version_requirement": "> 1.0.0"
     }
   ]
 }
