@@ -109,5 +109,6 @@ and make sure no errors are present when submitting code.
 
 ### Generating changlelog
 ```
+export CHANGELOG_GITHUB_TOKEN<your github token>
 github_changelog_generator -u hep-puppet -p htcondor
 ```
