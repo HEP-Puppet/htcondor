@@ -1,5 +1,29 @@
 # Change Log
 
+## [v2.0.4](https://github.com/hep-puppet/htcondor/tree/v2.0.4) (2018-02-05)
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.3...v2.0.4)
+
+**Fixed bugs:**
+
+- CGROUPS setup in 20\_workernode.config.erb [\#78](https://github.com/HEP-Puppet/htcondor/issues/78)
+
+**Closed issues:**
+
+- Badly initialized variables [\#79](https://github.com/HEP-Puppet/htcondor/issues/79)
+- healhcheck script mode [\#77](https://github.com/HEP-Puppet/htcondor/issues/77)
+- Some changes aren't working [\#73](https://github.com/HEP-Puppet/htcondor/issues/73)
+- Changes in HTCondor 8.6.1 [\#58](https://github.com/HEP-Puppet/htcondor/issues/58)
+
+**Merged pull requests:**
+
+- Fixing permissions for worker healthcheck script \(issue \#77\) [\#87](https://github.com/HEP-Puppet/htcondor/pull/87) ([kreczko](https://github.com/kreczko))
+- config::worker Fix puppet lint warning. [\#86](https://github.com/HEP-Puppet/htcondor/pull/86) ([olifre](https://github.com/olifre))
+- Repair metadata.json syntax. [\#85](https://github.com/HEP-Puppet/htcondor/pull/85) ([olifre](https://github.com/olifre))
+- Remove MOUNT\_UNDER\_SCRATCH if no folders are defined [\#84](https://github.com/HEP-Puppet/htcondor/pull/84) ([kreczko](https://github.com/kreczko))
+- Add parameters gpgcheck and gpgkey [\#83](https://github.com/HEP-Puppet/htcondor/pull/83) ([wiene](https://github.com/wiene))
+- Central manager HA with shared port [\#82](https://github.com/HEP-Puppet/htcondor/pull/82) ([wiene](https://github.com/wiene))
+- Setting of correct SELinux context for pool directory if we create it. [\#81](https://github.com/HEP-Puppet/htcondor/pull/81) ([olifre](https://github.com/olifre))
+
 ## [v2.0.3](https://github.com/hep-puppet/htcondor/tree/v2.0.3) (2017-11-03)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.2...v2.0.3)
 
