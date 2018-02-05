@@ -76,8 +76,8 @@ class htcondor::config::worker {
       selinux::fcontext { 'htcondor-pool-selinux':
         seltype  => 'condor_var_lib_t',
         pathspec => "${pool_home}/condor(/.*)?",
-      }->
-      selinux::exec_restorecon { "${pool_home}/condor":
+      }
+      ->selinux::exec_restorecon { "${pool_home}/condor":
         recurse     => true,
         refreshonly => true,
         require     => File["${pool_home}/condor"],
