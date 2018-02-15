@@ -5,7 +5,7 @@ class htcondor::config::security (
   Optional[String] $krb_srv_service     = $htcondor::krb_srv_service,
   Optional[String] $krb_client_keytab   = $htcondor::krb_client_keytab,
   Optional[Hash]   $krb_mapfile_entries = $htcondor::krb_mapfile_entries,
-) 
+)
 {
   # general - manifest or 1 or more configs
   $condor_user                  = $htcondor::condor_user
