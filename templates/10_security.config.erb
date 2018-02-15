@@ -97,6 +97,21 @@ SEC_ENABLE_MATCH_PASSWORD_AUTHENTICATION = True
 <% if @use_krb_map_file then -%>
 KERBEROS_MAP_FILE = <%= @krb_map_file %>
 <% end -%>
+<% if (defined?(@krb_srv_keytab)) then -%>
+KERBEROS_SERVER_KEYTAB = <%= @krb_srv_keytab %>
+<% end -%>
+<% if (defined?(@krb_srv_principal)) then -%>
+KERBEROS_SERVER_PRINCIPAL = <%= @krb_srv_principal %>
+<% end -%>
+<% if (defined?(@krb_srv_user)) then -%>
+KERBEROS_SERVER_USER = <%= @krb_srv_user %>
+<% end -%>
+<% if (defined?(@krb_srv_service)) then -%>
+KERBEROS_SERVER_SERVICE = <%= @krb_srv_service %>
+<% end -%>
+<% if (defined?(@krb_client_keytab)) then -%>
+KERBEROS_CLIENT_KEYTAB = <%= @krb_client_keytab %>
+<% end -%>
 <% end -%>
 <% if @use_password_auth then -%>
 SEC_PASSWORD_FILE = /etc/condor/pool_password

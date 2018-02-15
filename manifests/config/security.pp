@@ -1,4 +1,11 @@
-class htcondor::config::security {
+class htcondor::config::security (
+  Optional[String] $krb_srv_keytab      = $htcondor::krb_srv_keytab,
+  Optional[String] $krb_srv_principal   = $htcondor::krb_srv_principal,
+  Optional[String] $krb_srv_user        = $htcondor::krb_srv_user,
+  Optional[String] $krb_srv_service     = $htcondor::krb_srv_service,
+  Optional[String] $krb_client_keytab   = $htcondor::krb_client_keytab,
+) 
+{
   # general - manifest or 1 or more configs
   $condor_user                  = $htcondor::condor_user
   $condor_group                 = $htcondor::condor_group
