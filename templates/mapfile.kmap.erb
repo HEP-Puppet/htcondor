@@ -1,0 +1,5 @@
+<% if @krb_mapfile_entries.any? -%>
+<% @krb_mapfile_entries.each do |realm, domain| -%>
+<%=realm -%> = <%=domain %>
+<% end -%>
+<% end -%>
