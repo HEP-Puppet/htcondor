@@ -1,10 +1,10 @@
 class htcondor::config::security (
-  Optional[String] $krb_srv_keytab      = $htcondor::krb_srv_keytab,
-  Optional[String] $krb_srv_principal   = $htcondor::krb_srv_principal,
-  Optional[String] $krb_srv_user        = $htcondor::krb_srv_user,
-  Optional[String] $krb_srv_service     = $htcondor::krb_srv_service,
-  Optional[String] $krb_client_keytab   = $htcondor::krb_client_keytab,
-  Optional[Hash]   $krb_mapfile_entries = $htcondor::krb_mapfile_entries,
+  $krb_srv_keytab      = $htcondor::krb_srv_keytab,
+  $krb_srv_principal   = $htcondor::krb_srv_principal,
+  $krb_srv_user        = $htcondor::krb_srv_user,
+  $krb_srv_service     = $htcondor::krb_srv_service,
+  $krb_client_keytab   = $htcondor::krb_client_keytab,
+  $krb_mapfile_entries = $htcondor::krb_mapfile_entries,
 )
 {
   # general - manifest or 1 or more configs
