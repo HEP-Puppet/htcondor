@@ -119,7 +119,7 @@ class htcondor::params {
   )
   $krb_map_file                   = hiera('krb_map_file', '/etc/condor/kerberos_mapfile'
   )
-  $krb_map_file_source            = hiera('krb_map_file_source', "puppet:///modules/${module_name}/kerberos_mapfile"
+  $krb_map_file_template          = hiera('krb_map_file_template', "${module_name}/mapfile.kmap.erb"
   )
   $machine_list_prefix            = hiera('machine_list_prefix', 'condor_pool@$(UID_DOMAIN)/'
   )

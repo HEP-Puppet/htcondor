@@ -14,8 +14,9 @@ Puppetforge: https://forge.puppetlabs.com/HEPPuppet/htcondor
 2. [Module Description - What does the module do?](#module-description)
 3. [Setup - The basics of getting started with htcondor](#setup)
 4. [Singularity container support](#singularity)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+5. [Kerberos authentication support](#kerberos)
+6. [Limitations - OS compatibility, etc.](#limitations)
+7. [Development - Guide for contributing to the module](#development)
 	* [Contributing to the htcondor module](#contributing)
     * [Running tests - A quick guide](#running-tests)
 
@@ -94,6 +95,20 @@ The binding of the two HTCondor specific directories is a workaround to allow in
 The same holds for setting `SINGULARITY_HOME`: This ensures non-interactive jobs start in the job's working directory instead of the user's home directory which might not even be accessible from the worker.
 
 The Image may also be an expression to allow for user configuration, more details on that are provided in the [HTCondor documentation](https://research.cs.wisc.edu/htcondor/manual/latest/3_17Singularity_Support.html).
+
+## Kerberos
+The module provides support for Kerberos auth, to the extent to which this is implemented in HTCondor.
+
+Example configuration parameters could be:
+```
+use_kerberos_auth => true,
+krb_srv_keytab    => '/etc/condor/condor.keytab',
+krb_srv_principal => 'condor-daemon/$(FULL_HOSTNAME)@MYREALM',
+krb_srv_user      => 'condor-daemon',
+use_krb_map_file  => true,
+krb_mapfile_entries => {'REALM1' =>'realm1', 'REALM2' => 'realm2'},
+```
+This will deploy a map file containing the entries listed in the `krb_mapfile_entries` hash. The keytab, however, is not deployed through this module and has to be placed to a path corresponding to `krb_srv_keytab`, with the appropriate owner and mode.
 
 ## Limitations
 ### General

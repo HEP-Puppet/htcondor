@@ -1,4 +1,12 @@
-class htcondor::config::security {
+class htcondor::config::security (
+  $krb_srv_keytab      = $htcondor::krb_srv_keytab,
+  $krb_srv_principal   = $htcondor::krb_srv_principal,
+  $krb_srv_user        = $htcondor::krb_srv_user,
+  $krb_srv_service     = $htcondor::krb_srv_service,
+  $krb_client_keytab   = $htcondor::krb_client_keytab,
+  $krb_mapfile_entries = $htcondor::krb_mapfile_entries,
+)
+{
   # general - manifest or 1 or more configs
   $condor_user                  = $htcondor::condor_user
   $condor_group                 = $htcondor::condor_group
@@ -21,7 +29,7 @@ class htcondor::config::security {
 
   $use_krb_map_file             = $htcondor::use_krb_map_file
   $krb_map_file                 = $htcondor::krb_map_file
-  $krb_map_file_source          = $htcondor::krb_map_file_source
+  $krb_map_file_template        = $htcondor::krb_map_file_template
 
   $ssl_server_keyfile           = $htcondor::ssl_server_keyfile
   $ssl_client_keyfile           = $htcondor::ssl_client_keyfile
@@ -108,10 +116,10 @@ class htcondor::config::security {
   if $use_kerberos_auth {
     if $use_krb_map_file {
       file { $krb_map_file:
-        ensure => present,
-        source => $krb_map_file_source,
-        owner  => $condor_user,
-        group  => $condor_group,
+        ensure  => present,
+        content => template($krb_map_file_template),
+        owner   => $condor_user,
+        group   => $condor_group,
       }
     }
   }
