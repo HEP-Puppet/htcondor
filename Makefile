@@ -6,7 +6,7 @@ build:
 changelog:
 	github_changelog_generator -u hep-puppet -p htcondor
 
-release: build changlelog
+release: build changelog
 
 verify: bundle_install
 	bundle exec rake test

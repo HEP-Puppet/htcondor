@@ -1,7 +1,14 @@
 # Change Log
 
-## [v2.0.5](https://github.com/hep-puppet/htcondor/tree/HEAD)
+## [v2.0.6](https://github.com/hep-puppet/htcondor/tree/v2.0.6)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.5...v2.0.6)
+
+**Merged pull requests:**
+
+- Custom logging manifest [\#89](https://github.com/HEP-Puppet/htcondor/pull/89) ([ccnifo](https://github.com/ccnifo))
+
+## [v2.0.5](https://github.com/hep-puppet/htcondor/tree/v2.0.5) (2018-05-02)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.4...v2.0.5)
 
 **Merged pull requests:**
