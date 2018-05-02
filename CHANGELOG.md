@@ -1,5 +1,13 @@
 # Change Log
 
+## [v2.0.5](https://github.com/hep-puppet/htcondor/tree/HEAD)
+
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.4...v2.0.5)
+
+**Merged pull requests:**
+
+- Kerberos auth support in security config [\#88](https://github.com/HEP-Puppet/htcondor/pull/88) ([ccnifo](https://github.com/ccnifo))
+
 ## [v2.0.4](https://github.com/hep-puppet/htcondor/tree/v2.0.4) (2018-02-05)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.3...v2.0.4)
 
