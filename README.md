@@ -142,3 +142,11 @@ and make sure no errors are present when submitting code.
 export CHANGELOG_GITHUB_TOKEN<your github token>
 github_changelog_generator -u hep-puppet -p htcondor
 ```
+
+### Release instructions
+```
+export CHANGELOG_GITHUB_TOKEN<your github token>
+export RELEASE=2.0.7
+make release
+# follow instructions
+```
