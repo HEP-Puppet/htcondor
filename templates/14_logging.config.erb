@@ -1,1 +1,7 @@
 LOG_TO_SYSLOG = <%= @log_to_syslog %>
+
+<% if @logging_parameters.any? -%>
+<% @logging_parameters.each do |param, value| -%>
+<%=param -%> = <%=value %>
+<% end -%>
+<% end -%>

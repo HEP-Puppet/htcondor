@@ -146,6 +146,7 @@ class htcondor::params {
   # Custom logging config
   $use_custom_logs                = hiera('use_custom_logs', false)
   $log_to_syslog                  = hiera('log_to_syslog', false)
+  $logging_parameters             = hiera('logging_parameters', {})
 
   # Singularity configuration
   $use_singularity                = hiera('use_singularity', false)
