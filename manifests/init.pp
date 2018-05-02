@@ -178,6 +178,7 @@ class htcondor (
   $template_workernode            = $htcondor::params::template_workernode,
   $template_defrag                = $htcondor::params::template_defrag,
   $template_sharedport            = $htcondor::params::template_sharedport,
+  $template_logging               = $htcondor::params::template_logging,
   $template_singularity           = $htcondor::params::template_singularity,
   $template_highavailability      =
   $htcondor::params::template_highavailability,
@@ -219,6 +220,9 @@ class htcondor (
   $use_shared_port                = $htcondor::params::use_shared_port,
   $shared_port                    = $htcondor::params::shared_port,
   $shared_port_collector_name     = $htcondor::params::shared_port_collector_name,
+  $use_custom_logs                = $htcondor::params::use_custom_logs,
+  $log_to_syslog                  = $htcondor::params::log_to_syslog,
+  $logging_parameters             = $htcondor::params::logging_parameters,
   $use_singularity                = $htcondor::params::use_singularity,
   $singularity_path               = $htcondor::params::singularity_path,
   $force_singularity_jobs         = $htcondor::params::force_singularity_jobs,

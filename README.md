@@ -15,8 +15,9 @@ Puppetforge: https://forge.puppetlabs.com/HEPPuppet/htcondor
 3. [Setup - The basics of getting started with htcondor](#setup)
 4. [Singularity container support](#singularity)
 5. [Kerberos authentication support](#kerberos)
-6. [Limitations - OS compatibility, etc.](#limitations)
-7. [Development - Guide for contributing to the module](#development)
+6. [Additional logging parameters](#logging)
+7. [Limitations - OS compatibility, etc.](#limitations)
+8. [Development - Guide for contributing to the module](#development)
 	* [Contributing to the htcondor module](#contributing)
     * [Running tests - A quick guide](#running-tests)
 
@@ -109,6 +110,20 @@ use_krb_map_file  => true,
 krb_mapfile_entries => {'REALM1' =>'realm1', 'REALM2' => 'realm2'},
 ```
 This will deploy a map file containing the entries listed in the `krb_mapfile_entries` hash. The keytab, however, is not deployed through this module and has to be placed to a path corresponding to `krb_srv_keytab`, with the appropriate owner and mode.
+
+## Logging
+If you want HTCondor to use custom logging parameters, you may specify `use_custom_logs` and the `logging_parameters` hash with the `{parameter_name => desired_value}` form. For example:
+```
+use_custom_logs     => true,
+$logging_parameters => { 'SCHEDD_DEBUG' => 'D_NETWORK,D_PROTOCOL', NEGOTIATOR_DEBUG' => 'D_FULLDEBUG', ... }
+```
+Please note that no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly.
+
+If you want HTCondor to log to syslog, there's a specific `log_to_syslog` boolean predefined, which defaults to false. To enable it:
+```
+use_custom_logs => true,
+log_to_syslog   => true,
+```
 
 ## Limitations
 ### General

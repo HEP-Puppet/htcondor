@@ -143,6 +143,11 @@ class htcondor::params {
   $shared_port                    = hiera('shared_port', 9618)
   $shared_port_collector_name     = hiera('shared_port_collector_name', 'collector')
 
+  # Custom logging config
+  $use_custom_logs                = hiera('use_custom_logs', false)
+  $log_to_syslog                  = hiera('log_to_syslog', false)
+  $logging_parameters             = hiera('logging_parameters', {})
+
   # Singularity configuration
   $use_singularity                = hiera('use_singularity', false)
   $singularity_path               = hiera('singularity_path', '/usr/bin/singularity')
@@ -178,6 +183,8 @@ class htcondor::params {
   $template_highavailability      = hiera('template_defrag', "${module_name}/30_highavailability.config.erb"
   )
   $template_sharedport            = hiera('template_sharedport', "${module_name}/27_shared_port.config.erb"
+  )
+  $template_logging               = hiera('template_logging', "${module_name}/14_logging.config.erb"
   )
   $template_singularity           = hiera('template_singularity', "${module_name}/50_singularity.config.erb"
   )

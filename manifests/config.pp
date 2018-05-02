@@ -7,6 +7,7 @@ class htcondor::config {
   $is_worker            = $htcondor::is_worker
   $managers             = $htcondor::managers
   $use_shared_port      = $htcondor::use_shared_port
+  $use_custom_logs      = $htcondor::use_custom_logs
   $use_debug_notify     = $htcondor::use_debug_notify
 
   # purge all non-managed config files from /etc/condor/config.d
@@ -22,7 +23,11 @@ class htcondor::config {
   # SharedPort service configuration
   $sharedport_class = 'htcondor::config::sharedport'
 
+  # Logging params configuration
+  $logging_class = 'htcondor::config::logging'
+
   class { $common_class: }
+  contain "${common_class}"
   $more_than_two_managers = size($managers) > 1
   $run_ganglia            = $ganglia_cluster_name != undef
 
@@ -44,27 +49,29 @@ class htcondor::config {
     }
   }
 
+  if $use_custom_logs {
+    class { $logging_class: }
+    contain "${logging_class}"
+  }
+
   if $use_shared_port {
     class { $sharedport_class: }
-    anchor { 'htcondor::common_config_done':
-      require => [ Class[$common_class], Class[$sharedport_class] ],
-    }
-  } else {
-    anchor { 'htcondor::common_config_done':
-      require => Class[$common_class]
-    }
+    contain "${sharedport_class}"
   }
 
   if $is_scheduler {
-    class { 'htcondor::config::scheduler': require => Anchor['htcondor::common_config_done'], }
+    class { 'htcondor::config::scheduler': }
+    contain 'htcondor::config::scheduler'
   }
 
   if $is_manager {
-    class { 'htcondor::config::manager': require => Anchor['htcondor::common_config_done'], }
+    class { 'htcondor::config::manager': }
+    contain 'htcondor::config::manager'
   }
 
   if $is_worker {
-    class { 'htcondor::config::worker': require => Anchor['htcondor::common_config_done'], }
+    class { 'htcondor::config::worker': }
+    contain 'htcondor::config::worker'
   }
 
 }
