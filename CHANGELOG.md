@@ -1,5 +1,13 @@
 # Change Log
 
+## [v2.0.7](https://github.com/hep-puppet/htcondor/tree/v2.0.7)
+
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.6...v2.0.7)
+
+**Merged pull requests:**
+
+- Fixing invalid SINGULARITY\_IMAGE\_EXPR by adding missing double-quotes [\#90](https://github.com/HEP-Puppet/htcondor/pull/90) ([kreczko](https://github.com/kreczko))
+
 ## [v2.0.6](https://github.com/hep-puppet/htcondor/tree/v2.0.6) (2018-05-02)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.5...v2.0.6)
 

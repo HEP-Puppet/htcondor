@@ -1,6 +1,6 @@
 # Puppet module for HTCondor batch system
 
-Latest stable version: https://github.com/HEP-Puppet/htcondor/releases/tag/v2.0.3
+Latest stable version: https://github.com/HEP-Puppet/htcondor/releases/tag/v2.0.7
 
 Development branch: https://github.com/HEP-Puppet/htcondor/tree/development
 

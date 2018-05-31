@@ -16,7 +16,7 @@
   "project_page": "https://github.com/HEP-Puppet", 
   "summary": "Puppet module for HTCondor batch system", 
   "source": "https://github.com/HEP-Puppet", 
-  "version": "2.0.6", 
+  "version": "2.0.7", 
   "dependencies": [
     {
       "name": "puppet/selinux", 
