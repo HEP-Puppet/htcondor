@@ -1,7 +1,18 @@
 # Change Log
 
-## [v2.0.7](https://github.com/hep-puppet/htcondor/tree/v2.0.7)
+## [v2.0.8](https://github.com/hep-puppet/htcondor/tree/v2.0.8)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.7...v2.0.8)
+
+**Closed issues:**
+
+- \[Regression\] Unable to specify actual expression for SINGULARITY\_IMAGE\_EXPR since 2.0.7 [\#91](https://github.com/HEP-Puppet/htcondor/issues/91)
+
+**Merged pull requests:**
+
+- Fixup SINGULARITY\_IMAGE\_EXPR [\#92](https://github.com/HEP-Puppet/htcondor/pull/92) ([olifre](https://github.com/olifre))
+
+## [v2.0.7](https://github.com/hep-puppet/htcondor/tree/v2.0.7) (2018-05-31)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.6...v2.0.7)
 
 **Merged pull requests:**
