@@ -85,7 +85,7 @@ Example configuration parameters could be:
 ```
 use_singularity          => true,
 force_singularity_jobs   => true,
-singularity_image_expr   => "/images/myimage.img",
+singularity_image_expr   => '"/images/myimage.img"',
 singularity_bind_paths   => ['/some_shared_filesystem', '/pool', '/usr/libexec/condor/'],
 singularity_target_dir   => '/srv',
 starter_job_environment  => { 'SINGULARITY_HOME' => '/srv' },
@@ -95,7 +95,12 @@ This forces all jobs to run inside Singularity containers, while offering `tmp` 
 The binding of the two HTCondor specific directories is a workaround to allow interactive jobs to run, this will hopefully be fixed in a future HTCondor release.
 The same holds for setting `SINGULARITY_HOME`: This ensures non-interactive jobs start in the job's working directory instead of the user's home directory which might not even be accessible from the worker.
 
-The Image may also be an expression to allow for user configuration, more details on that are provided in the [HTCondor documentation](https://research.cs.wisc.edu/htcondor/manual/latest/3_17Singularity_Support.html).
+The Image in this example is a simple string, but the variable allows to set an HTCondor expression. Hence, for a simple string, one needs to add explicit double quotes. One more complex example relying on a custom JobAd variable `ContainerOS` would be:
+```
+singularity_image_expr   => 'ifThenElse(TARGET.ContainerOS is "Ubuntu1604", "/somewhere/Ubuntu1604", "/somewhere/SL6")',
+```
+More details on that are provided in the [HTCondor documentation](http://research.cs.wisc.edu/htcondor/manual/v8.7/SingularitySupport.html).
+
 
 ## Kerberos
 The module provides support for Kerberos auth, to the extent to which this is implemented in HTCondor.
