@@ -6,7 +6,7 @@ class htcondor::config::worker {
   $condor_user               = $htcondor::condor_user
   $condor_group              = $htcondor::condor_group
   $healthcheck_path          = $htcondor::healthcheck_path
-  $health_check_script       = $htcondor::health_check_script
+  $healthcheck_script        = $htcondor::healthcheck_script
   # /etc/condor/config.d/20_workernode.config
   $custom_machine_attributes = $htcondor::custom_machine_attributes
   $custom_job_attributes     = $htcondor::custom_job_attributes
@@ -56,7 +56,7 @@ class htcondor::config::worker {
   }
 
   file { "$healthcheck_path":
-    source => $health_check_script,
+    source => $healthcheck_script,
     owner  => $condor_user,
     group  => $condor_group,
     mode   => '0755',
