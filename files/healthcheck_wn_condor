@@ -14,7 +14,7 @@
 # Added '-x fuse' option to df 
 # Added Alice to list of VOs being tested in CVMFS
 #
-# Note to explain healhcheck script with per VO disabling.
+# Note to explain healthcheck script with per VO disabling.
 # If we want to disable jobs starts on a per VO basis the script needs to return something like:
 # NODE_IS_HEALTHY = True && (regexp("atl", Owner) =!= False) && (regexp("cms", Owner) =!= False)
 
