@@ -56,6 +56,7 @@ class htcondor::params {
   $group_accept_surplus           = hiera('group_accept_surplus', true)
   $group_autoregroup              = hiera('group_autoregroup', true)
 
+  $healthcheck_path               = hiera('healthcheck_path', '/usr/local/bin/healhcheck_wn_condor')
   $health_check_script            = hiera('health_check_script', "puppet:///modules/${module_name}/healhcheck_wn_condor"
   )
   $include_username_in_accounting = hiera('include_username_in_accounting',

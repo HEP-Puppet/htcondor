@@ -127,6 +127,7 @@ class htcondor (
   $default_prio_factor            = $htcondor::params::default_prio_factor,
   $group_accept_surplus           = $htcondor::params::group_accept_surplus,
   $group_autoregroup              = $htcondor::params::group_autoregroup,
+  $healthcheck_path               = $htcondor::params::healthcheck_path,
   $health_check_script            = $htcondor::params::health_check_script,
   $include_username_in_accounting =
   $htcondor::params::include_username_in_accounting,
