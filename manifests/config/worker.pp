@@ -13,6 +13,7 @@ class htcondor::config::worker {
   $daemon_list               = $htcondor::config::daemon_list
   $enable_cgroup             = $htcondor::enable_cgroup
   $htcondor_cgroup           = $htcondor::htcondor_cgroup
+  $cgroup_memory_limit       = $htcondor::cgroup_memory_limit
   $enable_healthcheck        = $htcondor::enable_healthcheck
   $machine_owner             = $htcondor::machine_owner
   $memory_overcommit         = $htcondor::memory_overcommit

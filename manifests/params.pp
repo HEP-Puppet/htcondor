@@ -33,6 +33,7 @@ class htcondor::params {
     $htcondor_cgroup_default = 'htcondor'
   }
   $htcondor_cgroup                = hiera('htcondor_cgroup', $htcondor_cgroup_default)
+  $cgroup_memory_limit            = hiera('cgroup_memory_limit', 'soft')
 
 
   $high_priority_groups           = hiera_hash('high_priority_groups', undef)
