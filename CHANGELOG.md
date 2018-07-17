@@ -1,7 +1,15 @@
 # Change Log
 
-## [v2.0.8](https://github.com/hep-puppet/htcondor/tree/v2.0.8)
+## [v2.0.9](https://github.com/hep-puppet/htcondor/tree/v2.0.9)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.8...v2.0.9)
+
+**Merged pull requests:**
+
+- CGROUP\_MEMORY\_LIMIT\_POLICY customizable [\#96](https://github.com/HEP-Puppet/htcondor/pull/96) ([ccnifo](https://github.com/ccnifo))
+- parameterize healthcheck script path [\#93](https://github.com/HEP-Puppet/htcondor/pull/93) ([ccnifo](https://github.com/ccnifo))
+
+## [v2.0.8](https://github.com/hep-puppet/htcondor/tree/v2.0.8) (2018-05-31)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.7...v2.0.8)
 
 **Closed issues:**
