@@ -136,7 +136,9 @@ If you want HTCondor to use custom parameters which are not managed elsewhere in
 ```
 custom_knobs => { 'CLAIM_PARTITIONABLE_LEFTOVERS' => 'false', ... }
 ```
-Please note that no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly.
+Please note that:
+* no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly
+* these parameters will be deployed on all nodes (workers, schedulers and managers)
 
 ## Limitations
 ### General
