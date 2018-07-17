@@ -26,6 +26,9 @@ class htcondor::config {
   # Logging params configuration
   $logging_class = 'htcondor::config::logging'
 
+  # Custom params configuration
+  $custom_knobs_class = 'htcondor::config::custom_knobs'
+
   class { $common_class: }
   contain "${common_class}"
   $more_than_two_managers = size($managers) > 1
@@ -53,6 +56,9 @@ class htcondor::config {
     class { $logging_class: }
     contain "${logging_class}"
   }
+
+  class { $custom_knobs_class: }
+  contain "${custom_knobs_class}"
 
   if $use_shared_port {
     class { $sharedport_class: }
