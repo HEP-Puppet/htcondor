@@ -121,7 +121,7 @@ This will deploy a map file containing the entries listed in the `krb_mapfile_en
 If you want HTCondor to use custom logging parameters, you may specify `use_custom_logs` and the `logging_parameters` hash with the `{parameter_name => desired_value}` form. For example:
 ```
 use_custom_logs     => true,
-$logging_parameters => { 'SCHEDD_DEBUG' => 'D_NETWORK,D_PROTOCOL', NEGOTIATOR_DEBUG' => 'D_FULLDEBUG', ... }
+logging_parameters => { 'SCHEDD_DEBUG' => 'D_NETWORK,D_PROTOCOL', NEGOTIATOR_DEBUG' => 'D_FULLDEBUG', ... }
 ```
 Please note that no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly.
 
