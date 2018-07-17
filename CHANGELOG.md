@@ -1,7 +1,18 @@
 # Change Log
 
-## [v2.0.9](https://github.com/hep-puppet/htcondor/tree/v2.0.9)
+## [v2.1.0](https://github.com/hep-puppet/htcondor/tree/v2.1.0)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.9...v2.1.0)
+
+**Implemented enhancements:**
+
+- Add general knob turning [\#57](https://github.com/HEP-Puppet/htcondor/issues/57)
+
+**Merged pull requests:**
+
+- Feature: custom params [\#95](https://github.com/HEP-Puppet/htcondor/pull/95) ([ccnifo](https://github.com/ccnifo))
+
+## [v2.0.9](https://github.com/hep-puppet/htcondor/tree/v2.0.9) (2018-07-17)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.8...v2.0.9)
 
 **Merged pull requests:**
