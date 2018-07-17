@@ -150,6 +150,9 @@ class htcondor::params {
   $log_to_syslog                  = hiera('log_to_syslog', false)
   $logging_parameters             = hiera('logging_parameters', {})
 
+  # Custom knobs config
+  $custom_knobs                   = hiera('custom_knobs', {})
+
   # Singularity configuration
   $use_singularity                = hiera('use_singularity', false)
   $singularity_path               = hiera('singularity_path', '/usr/bin/singularity')
@@ -187,6 +190,8 @@ class htcondor::params {
   $template_sharedport            = hiera('template_sharedport', "${module_name}/27_shared_port.config.erb"
   )
   $template_logging               = hiera('template_logging', "${module_name}/14_logging.config.erb"
+  )
+  $template_custom_knobs          = hiera('template_custom_knobs', "${module_name}/60_custom_knobs.config.erb"
   )
   $template_singularity           = hiera('template_singularity', "${module_name}/50_singularity.config.erb"
   )

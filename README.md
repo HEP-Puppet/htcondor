@@ -16,8 +16,9 @@ Puppetforge: https://forge.puppetlabs.com/HEPPuppet/htcondor
 4. [Singularity container support](#singularity)
 5. [Kerberos authentication support](#kerberos)
 6. [Additional logging parameters](#logging)
-7. [Limitations - OS compatibility, etc.](#limitations)
-8. [Development - Guide for contributing to the module](#development)
+7. [Additional custom parameters](#custom-parameters)
+8. [Limitations - OS compatibility, etc.](#limitations)
+9. [Development - Guide for contributing to the module](#development)
 	* [Contributing to the htcondor module](#contributing)
     * [Running tests - A quick guide](#running-tests)
 
@@ -120,7 +121,7 @@ This will deploy a map file containing the entries listed in the `krb_mapfile_en
 If you want HTCondor to use custom logging parameters, you may specify `use_custom_logs` and the `logging_parameters` hash with the `{parameter_name => desired_value}` form. For example:
 ```
 use_custom_logs     => true,
-$logging_parameters => { 'SCHEDD_DEBUG' => 'D_NETWORK,D_PROTOCOL', NEGOTIATOR_DEBUG' => 'D_FULLDEBUG', ... }
+logging_parameters => { 'SCHEDD_DEBUG' => 'D_NETWORK,D_PROTOCOL', NEGOTIATOR_DEBUG' => 'D_FULLDEBUG', ... }
 ```
 Please note that no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly.
 
@@ -129,6 +130,15 @@ If you want HTCondor to log to syslog, there's a specific `log_to_syslog` boolea
 use_custom_logs => true,
 log_to_syslog   => true,
 ```
+
+## Custom parameters
+If you want HTCondor to use custom parameters which are not managed elsewhere in the module, you may specify `custom_knobs` hash with the `{parameter_name => desired_value}` form. For example:
+```
+custom_knobs => { 'CLAIM_PARTITIONABLE_LEFTOVERS' => 'false', ... }
+```
+Please note that:
+* no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly
+* these parameters will be deployed on all nodes (workers, schedulers and managers)
 
 ## Limitations
 ### General

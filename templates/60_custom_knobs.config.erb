@@ -1,0 +1,5 @@
+<% if @custom_knobs.any? -%>
+<% @custom_knobs.each do |param, value| -%>
+<%=param -%> = <%=value %>
+<% end -%>
+<% end -%>
