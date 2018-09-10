@@ -73,6 +73,10 @@ ALLOW_CONFIG = root@$(FULL_HOSTNAME)
 ALLOW_NEGOTIATOR = $(CMS)
 ALLOW_NEGOTIATOR_SCHEDD = $(CMS)
 
+<% if ! @queue_super_users.empty? then -%>
+QUEUE_SUPER_USERS = <%= @queue_super_users.flatten.join(', ') %>
+<% end -%>
+
 # Don't allow nobody to run jobs
 SCHEDD.DENY_WRITE = nobody@$(UID_DOMAIN)
 # Authentication
