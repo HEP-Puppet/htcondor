@@ -76,6 +76,9 @@ ALLOW_NEGOTIATOR_SCHEDD = $(CMS)
 <% if ! @queue_super_users.empty? then -%>
 QUEUE_SUPER_USERS = <%= @queue_super_users.flatten.join(', ') %>
 <% end -%>
+<% if ! @queue_super_user_impersonate.empty? then -%>
+QUEUE_SUPER_USER_MAY_IMPERSONATE = <%= @queue_super_user_impersonate %>
+<% end -%>
 
 # Don't allow nobody to run jobs
 SCHEDD.DENY_WRITE = nobody@$(UID_DOMAIN)

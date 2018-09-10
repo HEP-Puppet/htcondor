@@ -107,6 +107,7 @@ class htcondor::params {
 
   # authentication
   $queue_super_users              = hiera_array('queue_super_users', [])
+  $queue_super_user_impersonate   = hiera('queue_super_user_impersonate', '')
   $use_anonymous_auth             = hiera('use_anonymous_auth', false)
   $use_fs_auth                    = hiera('use_fs_auth', true)
   $use_password_auth              = hiera('use_password_auth', true)
