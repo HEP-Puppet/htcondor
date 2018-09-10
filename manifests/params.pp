@@ -15,6 +15,7 @@ class htcondor::params {
   $condor_version                 = hiera('condor_version', 'present')
   $custom_machine_attributes      = hiera_hash('custom_machine_attribute', {})
   $custom_job_attributes          = hiera_hash('custom_job_attributes', {})
+  $claim_worklife                 = hiera('claim_worklife', 0)
 
   $use_debug_notify               = hiera('use_debug_notify', true)
 

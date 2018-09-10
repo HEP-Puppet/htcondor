@@ -10,6 +10,7 @@ class htcondor::config::worker {
   # /etc/condor/config.d/20_workernode.config
   $custom_machine_attributes = $htcondor::custom_machine_attributes
   $custom_job_attributes     = $htcondor::custom_job_attributes
+  $claim_worklife            = $htcondor::claim_worklife
   $daemon_list               = $htcondor::config::daemon_list
   $enable_cgroup             = $htcondor::enable_cgroup
   $htcondor_cgroup           = $htcondor::htcondor_cgroup

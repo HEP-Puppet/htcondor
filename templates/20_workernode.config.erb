@@ -73,7 +73,7 @@ RANK = 0
 JOB_RENICE_INCREMENT = 10
 
 ## Since we don't use preemption, make sure slots aren't permanently taken by specific users
-CLAIM_WORKLIFE = 0
+CLAIM_WORKLIFE = <%= @claim_worklife %>
 
 ## Allow jobs time to finish if they need to be preempted (should be same as max walltime allowed)
 MAXJOBRETIREMENTTIME = $(HOUR) * 24 * 3
