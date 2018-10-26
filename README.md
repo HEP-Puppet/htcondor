@@ -33,7 +33,8 @@ An HTCondor cluster consists of at least three types of nodes:
  * a scheduler for job submission
  * a collector/negotiator to match jobs with workers
 
-This puppet modules allows for the configuration of these three types of nodes.
+This puppet modules allows for the configuration of these three types of nodes plus a fourth one:
+ * a remote_submit, for local users to login and have a configured condor_submit
 
 
 ## Setup
@@ -57,6 +58,8 @@ If you wish to use a [pool password for authentication](http://research.cs.wisc.
  - settings for managers (nodes that run collector & negotiator daemons): `htcondor_manager.yaml`
  - settings for schedulers: `htcondor_scheduler.yaml`
  - settings for worker nodes: `htcondor_common.yaml`
+ - settings for remote submit nodes: `htcondor_remote_submit.yaml`
+
 The examples assume class management in hiere by adding  `hiera_include('classes')` to the `site.pp`.
 Real life examples can be found in https://github.com/uobdic/UKI-SOUTHGRID-BRIS-HEP.
 
