@@ -58,6 +58,9 @@
 # [*$is_scheduler*]
 # If current machine is a condor scheduler
 #
+# [*$is_remote_submit*]
+# If current machine is a machine dedicated to submit jobs to a condor scheduler
+#
 # [*is_manager*]
 # If machine is a manager or a negotiator (condor term)
 #
@@ -137,6 +140,7 @@ class htcondor (
   $gpgkey                         = $htcondor::params::gpgkey,
   $dev_repositories               = $htcondor::params::dev_repositories,
   $is_scheduler                   = $htcondor::params::is_scheduler,
+  $is_remote_submit               = $htcondor::params::is_remote_submit,
   $is_manager                     = $htcondor::params::is_manager,
   $is_worker                      = $htcondor::params::is_worker,
   $machine_owner                  = $htcondor::params::machine_owner,

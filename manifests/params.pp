@@ -6,6 +6,7 @@ class htcondor::params {
 
   $is_manager                     = hiera('is_manager', false)
   $is_scheduler                   = hiera('is_scheduler', false)
+  $is_remote_submit               = hiera('is_remote_submit', false)
   $is_worker                      = hiera('is_worker', false)
 
   $cluster_has_multiple_domains   = hiera('cluster_has_multiple_domains', false)
