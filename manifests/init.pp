@@ -130,6 +130,7 @@ class htcondor (
   $group_autoregroup              = $htcondor::params::group_autoregroup,
   $healthcheck_path               = $htcondor::params::healthcheck_path,
   $healthcheck_script             = $htcondor::params::healthcheck_script,
+  $healthcheck_period             = $htcondor::params::healthcheck_period,
   $include_username_in_accounting =
   $htcondor::params::include_username_in_accounting,
   $install_repositories           = $htcondor::params::install_repositories,
