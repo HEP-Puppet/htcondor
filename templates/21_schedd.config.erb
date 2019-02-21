@@ -34,9 +34,9 @@ NEGOTIATOR_USE_WEIGHTED_DEMAND=True
 SCHEDD_QUERY_WORKERS = 6
 
 ## Logs
-MAX_HISTORY_LOG = 104857600
-MAX_HISTORY_ROTATIONS = 14
-ROTATE_HISTORY_DAILY = True
+MAX_HISTORY_LOG = <%= @max_history_log %>
+MAX_HISTORY_ROTATIONS = <%= @max_history_rotations %>
+ROTATE_HISTORY_DAILY = <% if @rotate_history_daily == true -%>True<% else -%>False<% end %>
 
 MAX_SCHEDD_LOG = 104857600
 MAX_NUM_SCHEDD_LOG = 10

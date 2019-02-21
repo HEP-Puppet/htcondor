@@ -16,6 +16,9 @@ class htcondor::config::scheduler {
   $max_periodic_expr_interval = $htcondor::max_periodic_expr_interval
   $remove_held_jobs_after     = $htcondor::remove_held_jobs_after
   # /etc/condor/config.d/21_schedd.config
+  $max_history_log            = $htcondor::max_history_log
+  $max_history_rotations      = $htcondor::max_history_rotations
+  $rotate_history_daily       = $htcondor::rotate_history_daily
   $daemon_list                = $htcondor::config::daemon_list
   # template files
   $template_ganglia           = $htcondor::template_ganglia

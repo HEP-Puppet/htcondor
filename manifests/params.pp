@@ -145,6 +145,11 @@ class htcondor::params {
   $shared_port                    = hiera('shared_port', 9618)
   $shared_port_collector_name     = hiera('shared_port_collector_name', 'collector')
 
+  # History parameters on schedd
+  $max_history_log                = hiera('max_history_log', 104857600)
+  $max_history_rotations          = hiera('max_history_rotations', 14)
+  $rotate_history_daily           = hiera('rotate_history_daily', true)
+
   # Custom logging config
   $use_custom_logs                = hiera('use_custom_logs', false)
   $log_to_syslog                  = hiera('log_to_syslog', false)
