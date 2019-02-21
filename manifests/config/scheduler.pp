@@ -19,6 +19,7 @@ class htcondor::config::scheduler {
   $max_history_log            = $htcondor::max_history_log
   $max_history_rotations      = $htcondor::max_history_rotations
   $rotate_history_daily       = $htcondor::rotate_history_daily
+  $log_to_syslog              = $htcondor::log_to_syslog
   $daemon_list                = $htcondor::config::daemon_list
   # template files
   $template_ganglia           = $htcondor::template_ganglia
