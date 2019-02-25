@@ -62,6 +62,7 @@ class htcondor::params {
   $healthcheck_path               = hiera('healthcheck_path', '/usr/local/bin/healthcheck_wn_condor')
   $healthcheck_script             = hiera('healthcheck_script', "puppet:///modules/${module_name}/healthcheck_wn_condor"
   )
+  $healthcheck_period             = hiera('healthcheck_period', '10m')
   $include_username_in_accounting = hiera('include_username_in_accounting',
   false)
   $install_repositories           = hiera('install_repositories', true)
