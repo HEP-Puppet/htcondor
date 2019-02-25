@@ -187,6 +187,8 @@ class htcondor (
   $htcondor::params::template_highavailability,
   $use_htcondor_account_mapping   =
   $htcondor::params::use_htcondor_account_mapping,
+  $queue_super_users              = $htcondor::params::queue_super_users,
+  $queue_super_user_impersonate   = $htcondor::params::queue_super_user_impersonate,
   $use_anonymous_auth             = $htcondor::params::use_anonymous_auth,
   $use_fs_auth                    = $htcondor::params::use_fs_auth,
   $use_password_auth              = $htcondor::params::use_password_auth,

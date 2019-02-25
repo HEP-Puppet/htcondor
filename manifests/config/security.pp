@@ -16,6 +16,8 @@ class htcondor::config::security (
   $managers                     = $htcondor::managers
   $workers                      = $htcondor::workers
 
+  $queue_super_users            = $htcondor::queue_super_users
+  $queue_super_user_impersonate = $htcondor::queue_super_user_impersonate
   $use_anonymous_auth           = $htcondor::use_anonymous_auth
   $use_fs_auth                  = $htcondor::use_fs_auth
   $use_password_auth            = $htcondor::use_password_auth
