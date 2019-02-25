@@ -3,6 +3,7 @@ class htcondor::config {
   $enable_multicore     = $htcondor::enable_multicore
   $ganglia_cluster_name = $htcondor::ganglia_cluster_name
   $is_scheduler         = $htcondor::is_scheduler
+  $is_remote_submit     = $htcondor::is_remote_submit
   $is_manager           = $htcondor::is_manager
   $is_worker            = $htcondor::is_worker
   $managers             = $htcondor::managers
@@ -41,6 +42,7 @@ class htcondor::config {
     $debug_msg = "constructing daemon list from \n \
                   -is_worker: ${is_worker}\n \
                   -is_scheduler: ${is_scheduler}\n \
+                  -is_remote_submit: ${is_remote_submit}\n \
                   -is_manager: ${is_manager}\n \
                   -enable_multicore: ${enable_multicore}\n \
                   -run_ganglia: ${run_ganglia} \n \
@@ -68,6 +70,11 @@ class htcondor::config {
   if $is_scheduler {
     class { 'htcondor::config::scheduler': }
     contain 'htcondor::config::scheduler'
+  }
+
+  if $is_remote_submit {
+    class { 'htcondor::config::remote_submit': }
+    contain 'htcondor::config::remote_submit'
   }
 
   if $is_manager {
