@@ -68,6 +68,8 @@ class htcondor::params {
   $install_repositories           = hiera('install_repositories', true)
   $gpgcheck                       = hiera('gpgcheck', true)
   $gpgkey                         = hiera('gpgkey', 'http://htcondor.org/yum/RPM-GPG-KEY-HTCondor')
+  $condor_major_version           = hiera('condor_major_version', '8.8')
+  $versioned_repos                = hiera('versioned_repos', false)
   $dev_repositories               = hiera('dev_repositories', false)
 
   $machine_owner                  = hiera('machine_owner', 'physics')
