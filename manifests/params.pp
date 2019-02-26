@@ -25,6 +25,7 @@ class htcondor::params {
   $enable_condor_reporting        = hiera('enable_condor_reporting', true)
   $enable_cgroup                  = hiera('enable_cgroup', false)
   $enable_healthcheck             = hiera('enable_healthcheck', false)
+  $start_always_users             = hiera_array('start_always_users', [])
   $enable_multicore               = hiera('enable_multicore', false)
   # defrag parameters
   $defrag_interval                 = hiera('defrag_interval',600)

@@ -42,6 +42,10 @@ STARTD_CRON_WN_HEALTHCHECK_KILL = true
 
 ## When is this node willing to run jobs?
 START = (NODE_IS_HEALTHY =?= True) && (StartJobs =?= True)
+<% if ! @start_always_users.empty? then -%>
+## Some users can also run jobs if the node is not healthy / startjobs is false.
+START = ($(START)) || ( <%= @start_always_users.map { |s| "TARGET.Owner =?= \"#{s}\"" }.join(' || ') %> )
+<% end -%>
 <% else -%>
 START = TRUE
 <% end -%>

@@ -124,6 +124,7 @@ class htcondor (
   $enable_condor_reporting        = $htcondor::params::enable_condor_reporting,
   $enable_cgroup                  = $htcondor::params::enable_cgroup,
   $enable_healthcheck             = $htcondor::params::enable_healthcheck,
+  $start_always_users             = $htcondor::params::start_always_users,
   $enable_multicore               = $htcondor::params::enable_multicore,
   $defrag_interval                 = $htcondor::params::defrag_interval,
   $defrag_draining_machines_per_hr = $htcondor::params::defrag_draining_machines_per_hr,

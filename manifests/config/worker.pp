@@ -17,6 +17,7 @@ class htcondor::config::worker {
   $htcondor_cgroup           = $htcondor::htcondor_cgroup
   $cgroup_memory_limit       = $htcondor::cgroup_memory_limit
   $enable_healthcheck        = $htcondor::enable_healthcheck
+  $start_always_users        = $htcondor::start_always_users
   $machine_owner             = $htcondor::machine_owner
   $memory_overcommit         = $htcondor::memory_overcommit
   $number_of_cpus            = $htcondor::number_of_cpus
