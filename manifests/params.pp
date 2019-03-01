@@ -24,9 +24,17 @@ class htcondor::params {
   # for more information see https://research.cs.wisc.edu/htcondor/privacy.html
   $enable_condor_reporting        = hiera('enable_condor_reporting', true)
   $enable_cgroup                  = hiera('enable_cgroup', false)
-  $enable_multicore               = hiera('enable_multicore', false)
   $enable_healthcheck             = hiera('enable_healthcheck', false)
-
+  $enable_multicore               = hiera('enable_multicore', false)
+  # defrag parameters
+  $defrag_interval                 = hiera('defrag_interval',600)
+  $defrag_draining_machines_per_hr = hiera('defrag_draining_machines_per_hr',60)
+  $defrag_max_concurrent_draining  = hiera('defrag_max_concurrent_draining',8)
+  $defrag_max_whole_machines       = hiera('defrag_max_whole_machines',20)
+  $defrag_schedule                 = hiera('defrag_schedule','graceful')
+  $defrag_rank                     = hiera('defrag_rank','ifThenElse(Cpus >= 8, -10, (TotalCpus - Cpus)/(8.0 - Cpus))')
+  $whole_machine_cpus              = hiera('whole_machine_cpus',8)
+  $defrag_requirements             = hiera('defrag_requirements','PartitionableSlot && Offline =!= True && StartJobs =?= True')
 
   if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
     $htcondor_cgroup_default = '/system.slice/condor.service'
