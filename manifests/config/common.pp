@@ -16,6 +16,7 @@ class htcondor::config::common {
 
   $leave_job_in_queue             = $htcondor::leave_job_in_queue
   $request_memory                 = $htcondor::request_memory
+  $dns_cache_refresh              = $htcondor::dns_cache_refresh
 
   $template_config_local          = $htcondor::template_config_local
 

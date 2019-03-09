@@ -228,6 +228,7 @@ class htcondor (
   $max_walltime                   = $htcondor::params::max_walltime,
   $max_cputime                    = $htcondor::params::max_cputime,
   $memory_factor                  = $htcondor::params::memory_factor,
+  $dns_cache_refresh              = $htcondor::params::dns_cache_refresh,
   $use_shared_port                = $htcondor::params::use_shared_port,
   $shared_port                    = $htcondor::params::shared_port,
   $shared_port_collector_name     = $htcondor::params::shared_port_collector_name,
