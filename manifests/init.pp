@@ -206,6 +206,8 @@ class htcondor (
   $use_pid_namespaces             = $htcondor::params::use_pid_namespaces,
   $uses_connection_broker         = $htcondor::params::uses_connection_broker,
   $private_network_name           = $htcondor::params::private_network_name,
+  $schedd_blocked_users           = $htcondor::params::schedd_blocked_users,
+  $schedd_blocked_user_msg        = $htcondor::params::schedd_blocked_user_msg,
   $cert_map_file                  = $htcondor::params::cert_map_file,
   $cert_map_file_source           = $htcondor::params::cert_map_file_source,
   $krb_map_file                   = $htcondor::params::krb_map_file,

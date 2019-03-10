@@ -145,6 +145,10 @@ class htcondor::params {
   $uses_connection_broker         = hiera('uses_connection_broker', false)
   $private_network_name           = hiera('private_network_name', $::domain)
 
+  # Schedd configuration
+  $schedd_blocked_users           = hiera_array('schedd_blocked_users', [])
+  $schedd_blocked_user_msg        = hiera('schedd_blocked_user_msg', 'Submission is blocked for you, please contact cluster admins.')
+
   # SharedPort service configuration
   $use_shared_port                = hiera('use_shared_port', false)
   $shared_port                    = hiera('shared_port', 9618)

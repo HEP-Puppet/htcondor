@@ -17,6 +17,8 @@ class htcondor::config::scheduler {
   $remove_held_jobs_after     = $htcondor::remove_held_jobs_after
   # /etc/condor/config.d/21_schedd.config
   $daemon_list                = $htcondor::config::daemon_list
+  $schedd_blocked_users       = $htcondor::schedd_blocked_users
+  $schedd_blocked_user_msg    = $htcondor::schedd_blocked_user_msg
   # template files
   $template_ganglia           = $htcondor::template_ganglia
   $template_queues            = $htcondor::template_queues
