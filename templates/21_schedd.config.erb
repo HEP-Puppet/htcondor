@@ -34,10 +34,11 @@ NEGOTIATOR_USE_WEIGHTED_DEMAND=True
 SCHEDD_QUERY_WORKERS = 6
 
 ## Logs
-MAX_HISTORY_LOG = 104857600
-MAX_HISTORY_ROTATIONS = 14
-ROTATE_HISTORY_DAILY = True
+MAX_HISTORY_LOG = <%= @max_history_log %>
+MAX_HISTORY_ROTATIONS = <%= @max_history_rotations %>
+ROTATE_HISTORY_DAILY = <% if @rotate_history_daily == true -%>True<% else -%>False<% end %>
 
+<% if @log_to_syslog == false -%>
 MAX_SCHEDD_LOG = 104857600
 MAX_NUM_SCHEDD_LOG = 10
 
@@ -47,6 +48,7 @@ MAX_NUM_SHADOW_LOG = 10
 MAX_MASTER_LOG = 104857600
 MAX_NUM_MASTER_LOG = 10
 
+<% end -%>
 ##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
 ##  The list is a comma or space separated list of subsystem names
 DAEMON_LIST = <%= @daemon_list %>
