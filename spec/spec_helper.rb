@@ -1,35 +1,47 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
-require 'rspec-puppet-utils'
-require 'rspec/mocks'
 require 'rspec-puppet-facts'
 
-# hack to enable all the expect syntax (like allow_any_instance_of) in rspec-puppet examples
-RSpec::Mocks::Syntax.enable_expect(RSpec::Puppet::ManifestMatchers)
+require 'spec_helper_local' if File.file?(File.join(File.dirname(__FILE__), 'spec_helper_local.rb'))
+
+include RspecPuppetFacts
+
+default_facts = {
+  puppetversion: Puppet.version,
+  facterversion: Facter.version,
+}
+
+default_fact_files = [
+  File.expand_path(File.join(File.dirname(__FILE__), 'default_facts.yml')),
+  File.expand_path(File.join(File.dirname(__FILE__), 'default_module_facts.yml')),
+]
+
+default_fact_files.each do |f|
+  next unless File.exist?(f) && File.readable?(f) && File.size?(f)
+
+  begin
+    default_facts.merge!(YAML.safe_load(File.read(f), [], [], true))
+  rescue => e
+    RSpec.configuration.reporter.message "WARNING: Unable to load #{f}: #{e}"
+  end
+end
 
 RSpec.configure do |c|
-  c.add_setting :puppet_future
-  c.puppet_future = Puppet.version.to_f >= 4.0
-
+  c.default_facts = default_facts
   c.before :each do
-    # Ensure that we don't accidentally cache facts and environment
-    # between test cases.
-    Facter::Util::Loader.any_instance.stubs(:load_all)
-    Facter.clear
-    Facter.clear_messages
-    # Store any environment variables away to be restored later
-    @old_env = {}
-    ENV.each_key {|k| @old_env[k] = ENV[k]}
-    if ENV['STRICT_VARIABLES'] == 'yes'
-      Puppet.settings[:strict_variables]=true
-    end
-    RSpec::Mocks.setup
+    # set to strictest setting for testing
+    # by default Puppet runs at warning level
+    Puppet.settings[:strict] = :warning
   end
+  c.filter_run_excluding(bolt: true) unless ENV['GEM_BOLT']
+  c.after(:suite) do
+  end
+end
 
-  c.after :each do
-    RSpec::Mocks.verify
-    RSpec::Mocks.teardown
+def ensure_module_defined(module_name)
+  module_name.split('::').reduce(Object) do |last_module, next_module|
+    last_module.const_set(next_module, Module.new) unless last_module.const_defined?(next_module, false)
+    last_module.const_get(next_module, false)
   end
 end
-shared_examples :compile, :compile => true do
-  it { should compile.with_all_deps }
-end
+
+# 'spec_overrides' from sync.yml will appear below this line

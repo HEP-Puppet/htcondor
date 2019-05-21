@@ -1,5 +1,10 @@
 module Puppet::Parser::Functions
-  newfunction(:create_daemon_list, :type => :rvalue) do |args|
+  # rubocop:disable Style/HashSyntax
+  newfunction(:create_daemon_list, :type => :rvalue, :doc => <<-DOC
+    Parses bool array of enabled roles into a comma-separated list of condor daemons
+    DOC
+             ) do |args|
+    # rubocop:enable Style/HashSyntax
     raise(Puppet::ParseError, "create_daemon_list() wrong number of arguments. Given: #{args.size} for 6)") if args.size != 6
     is_worker = args[0]
     is_scheduler = args[1]
@@ -9,7 +14,7 @@ module Puppet::Parser::Functions
     run_ganglia = args[4]
     more_than_two_managers = args[5]
 
-    daemon_list = Array.new
+    daemon_list = []
     # all nodes have master
     daemon_list.push 'MASTER'
 
@@ -34,6 +39,6 @@ module Puppet::Parser::Functions
       daemon_list.push 'REPLICATION'
     end
 
-    return daemon_list.join(", ")
+    return daemon_list.join(', ')
   end
 end
