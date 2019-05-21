@@ -26,5 +26,13 @@ acceptance: bundle_install
 	exit 0
 	#bundle exec rake beaker:default
 
-test:
+test: validate run-spec lint
+
+validate:
+	bundle exec rake validate
+
+run-spec:
+	bundle exec rake spec SPEC_OPTS='--format documentation'
+
+lint:
 	bundle exec rake lint
