@@ -46,3 +46,6 @@ SUBMIT_EXPRS = $(SUBMIT_EXPRS) AcctGroup, AcctSubGroup, AccountingGroup, Concurr
 CONDOR_DEVELOPERS = NONE
 CONDOR_DEVELOPERS_COLLECTOR = NONE
 <% end %>
+
+## If the binaries are updated, let any running jobs finish before restarting
+MASTER_NEW_BINARY_RESTART=PEACEFUL
