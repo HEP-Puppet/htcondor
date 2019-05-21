@@ -21,6 +21,8 @@ class htcondor::config::scheduler {
   $rotate_history_daily       = $htcondor::rotate_history_daily
   $log_to_syslog              = $htcondor::log_to_syslog
   $daemon_list                = $htcondor::config::daemon_list
+  $schedd_blocked_users       = $htcondor::schedd_blocked_users
+  $schedd_blocked_user_msg    = $htcondor::schedd_blocked_user_msg
   # template files
   $template_ganglia           = $htcondor::template_ganglia
   $template_queues            = $htcondor::template_queues

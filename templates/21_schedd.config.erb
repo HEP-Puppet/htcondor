@@ -52,3 +52,9 @@ MAX_NUM_MASTER_LOG = 10
 ##  This macro determines what daemons the condor_master will start and keep its watchful eyes on.
 ##  The list is a comma or space separated list of subsystem names
 DAEMON_LIST = <%= @daemon_list %>
+
+<% if ! @schedd_blocked_users.empty? then -%>
+SUBMIT_REQUIREMENT_NAMES = $(SUBMIT_REQUIREMENT_NAMES) NotBlockedUser
+SUBMIT_REQUIREMENT_NotBlockedUser = <%= @schedd_blocked_users.map { |s| "Owner != \"#{s}\"" }.join(' && ') %>
+SUBMIT_REQUIREMENT_NotBlockedUser_REASON = "<%= @schedd_blocked_user_msg %>"
+<% end -%>
