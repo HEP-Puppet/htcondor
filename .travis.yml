@@ -13,6 +13,7 @@ before_install:
   - gem update --system $RUBYGEMS_VERSION
   - gem --version
   - bundle -v
+  - gem install puppet
 
 stages:
   - test
