@@ -10,7 +10,7 @@ def update_metadata_json(release):
 
     content['version'] = release
     with open(input_file, 'w+') as f:
-        json.dump(content, f, indent=2)
+        json.dump(content, f, indent=2, separators=(',', ': '))
 
 
 def update_readme(release):

@@ -1,7 +1,17 @@
 # Change Log
 
-## [v2.3.1](https://github.com/hep-puppet/htcondor/tree/v2.3.1)
+## [v2.4.0](https://github.com/hep-puppet/htcondor/tree/v2.4.0)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.3.1...v2.4.0)
+
+**Merged pull requests:**
+
+- Puppet 5 & Puppet 6 in CI [\#113](https://github.com/HEP-Puppet/htcondor/pull/113) ([kreczko](https://github.com/kreczko))
+- Add schedd\_blocked\_users and block message. [\#111](https://github.com/HEP-Puppet/htcondor/pull/111) ([olifre](https://github.com/olifre))
+- Add dns\_cache\_refresh parameter. [\#110](https://github.com/HEP-Puppet/htcondor/pull/110) ([olifre](https://github.com/olifre))
+- defrag params customizables [\#109](https://github.com/HEP-Puppet/htcondor/pull/109) ([ccnifo](https://github.com/ccnifo))
+
+## [v2.3.1](https://github.com/hep-puppet/htcondor/tree/v2.3.1) (2019-05-21)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.3.0...v2.3.1)
 
 **Merged pull requests:**
