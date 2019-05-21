@@ -4,6 +4,7 @@ language: ruby
 cache: bundler
 bundler_args: --without development
 script:
+  - make build
   - make test
 
 before_install:
@@ -48,7 +49,7 @@ deploy:
   provider: puppetforge
   user: "HEPPuppet"
   password:
-    secure: "cF7HLnEO05rYFNukshMcw00tFudutpBqP2PF25ypbru1q+qmg/uNJp09k61wOaPYHwk/ZkpzDByGelJSPRoA04cEa/j+CshkrxfOwTzRLgEhy2FZUoBhHCDxMeQ5evG+GbzIu62Tpl9vuvxQBdIO072uF6DWEn6SjoqJQohifRk="
+    secure: "MvOxbuUg/XBozfwdQRrQ/6/G3XFzELKSYFg49mrSqzxsUkV33A7IUhgSdBEo8Th29CB8qMo3vHvY7dZRG8cqKkMZPY9gpcVpB+DvGCgq3MA3ZRm0dsyUsAqmN/bp2XBu6eoSlcZ1Ivp0mHjMEzDZ/CBg1oIWjN3JS5Xd1McAsLM="
   on:
     tags: true
     condition: "$DEPLOY_TO_FORGE = yes"
