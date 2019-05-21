@@ -1,6 +1,6 @@
 {
   "name": "HEPPuppet-htcondor",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "author": "HEPPuppet",
   "summary": "Puppet module for HTCondor batch system",
   "license": "Apache-2.0",
