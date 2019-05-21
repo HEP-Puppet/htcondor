@@ -58,7 +58,7 @@ class htcondor::config::worker {
     }
   }
 
-  file { "${healthcheck_path}":
+  file { $healthcheck_path:
     source => $healthcheck_script,
     owner  => $condor_user,
     group  => $condor_group,

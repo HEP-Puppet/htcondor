@@ -1,6 +1,6 @@
 BUNDLE_DIR ?= .bundle
 build:
-	puppet module build
+	pdk build
 
 changelog:
 	github_changelog_generator -u hep-puppet -p htcondor

@@ -31,7 +31,7 @@ class htcondor::config {
   $custom_knobs_class = 'htcondor::config::custom_knobs'
 
   class { $common_class: }
-  contain "${common_class}"
+  contain $common_class
   $more_than_two_managers = size($managers) > 1
   $run_ganglia            = $ganglia_cluster_name != undef
 
@@ -56,15 +56,15 @@ class htcondor::config {
 
   if $use_custom_logs {
     class { $logging_class: }
-    contain "${logging_class}"
+    contain $logging_class
   }
 
   class { $custom_knobs_class: }
-  contain "${custom_knobs_class}"
+  contain $custom_knobs_class
 
   if $use_shared_port {
     class { $sharedport_class: }
-    contain "${sharedport_class}"
+    contain $sharedport_class
   }
 
   if $is_scheduler {

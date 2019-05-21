@@ -1,56 +1,54 @@
 ---
-sudo: false
+dist: trusty
 language: ruby
 cache: bundler
-bundler_args: --without development
-script:
-  - make build
-  - make test
-
 before_install:
   - bundle -v
   - rm -f Gemfile.lock
   - gem update --system $RUBYGEMS_VERSION
   - gem --version
   - bundle -v
-  - gem install puppet
-
+script:
+  - 'bundle exec rake $CHECK'
+bundler_args: --without system_tests
+rvm:
+  - 2.5.3
 stages:
-  - test
+  - static
+  - spec
+  - acceptance
   -
     if: tag =~ ^v\d
     name: deploy
-
 matrix:
   fast_finish: true
   include:
-    - rvm: 2.3.1
-      env: PUPPET_GEM_VERSION="~> 4.0"
-      stage: test
-    - rvm: 2.4.5
-      env: PUPPET_GEM_VERSION="~> 5.0"
-      stage: test
-    - env: PUPPET_GEM_VERSION="~> 6.0"
+    -
+      env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
+      stage: static
+    -
+      env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
+      rvm: 2.4.5
+      stage: spec
+    -
+      env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
       rvm: 2.5.3
-      stage: test
-    - env: DEPLOY_TO_FORGE=yes
+      stage: spec
+    -
+      env: DEPLOY_TO_FORGE=yes
       stage: deploy
-
 branches:
   only:
     - master
     - /^v\d/
-    - release
-    - development
-
 notifications:
   email: false
-
 deploy:
   provider: puppetforge
-  user: "HEPPuppet"
+  user: HEPPuppet
   password:
     secure: "MvOxbuUg/XBozfwdQRrQ/6/G3XFzELKSYFg49mrSqzxsUkV33A7IUhgSdBEo8Th29CB8qMo3vHvY7dZRG8cqKkMZPY9gpcVpB+DvGCgq3MA3ZRm0dsyUsAqmN/bp2XBu6eoSlcZ1Ivp0mHjMEzDZ/CBg1oIWjN3JS5Xd1McAsLM="
   on:
     tags: true
+    all_branches: true
     condition: "$DEPLOY_TO_FORGE = yes"
