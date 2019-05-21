@@ -1,7 +1,14 @@
 # Change Log
 
-## [v2.2.0](https://github.com/hep-puppet/htcondor/tree/v2.2.0)
+## [v2.3.0](https://github.com/hep-puppet/htcondor/tree/v2.3.0)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.2.0...v2.3.0)
+
+**Merged pull requests:**
+
+- Add support for Debian repos and new versioned repo structure. [\#106](https://github.com/HEP-Puppet/htcondor/pull/106) ([olifre](https://github.com/olifre))
+
+## [v2.2.0](https://github.com/hep-puppet/htcondor/tree/v2.2.0) (2019-05-21)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.1.0...v2.2.0)
 
 **Closed issues:**
