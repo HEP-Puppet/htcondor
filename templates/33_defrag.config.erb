@@ -1,28 +1,30 @@
-DEFRAG_INTERVAL = 600
-DEFRAG_DRAINING_MACHINES_PER_HOUR = 60
-DEFRAG_MAX_CONCURRENT_DRAINING = 8
-DEFRAG_MAX_WHOLE_MACHINES = 20
-DEFRAG_SCHEDULE = graceful
+DEFRAG_INTERVAL = <%= @defrag_interval %>
+DEFRAG_DRAINING_MACHINES_PER_HOUR = <%= @defrag_draining_machines_per_hr %>
+DEFRAG_MAX_CONCURRENT_DRAINING = <%= @defrag_max_concurrent_draining %>
+DEFRAG_MAX_WHOLE_MACHINES = <%= @defrag_max_whole_machines %>
+DEFRAG_SCHEDULE = <%= @defrag_schedule %>
 
 ## Allow some defrag configuration to be settable
 DEFRAG.SETTABLE_ATTRS_ADMINISTRATOR = DEFRAG_MAX_CONCURRENT_DRAINING,DEFRAG_DRAINING_MACHINES_PER_HOUR,DEFRAG_MAX_WHOLE_MACHINES
 ENABLE_RUNTIME_CONFIG = TRUE
 
 ## Which machines are more desirable to drain
-DEFRAG_RANK = ifThenElse(Cpus >= 8, -10, (TotalCpus - Cpus)/(8.0 - Cpus))
+DEFRAG_RANK = <%= @defrag_rank %>
 
-# Define a whole machine to be anything with 8 cores.
+# Define a whole machine to be anything with <%= @whole_machine_cpus %> cores.
 # Prevents us from draining off a full machine since we know we need
-# at most 8 cores.
-DEFRAG_WHOLE_MACHINE_EXPR = ((Cpus == TotalCpus) || (Cpus >= 8)) && StartJobs =?= True
+# at most <%= @whole_machine_cpus %> cores.
+DEFRAG_WHOLE_MACHINE_EXPR = ((Cpus == TotalCpus) || (Cpus >= <%= @whole_machine_cpus %>)) && StartJobs =?= True
 
-# Decide which machines to drain
+# Decide which machines to drain, for example:
 # # - must not be cloud machines
 # # - must be healthy
 # # - must be configured to actually start new jobs
 # DEFRAG_REQUIREMENTS = PartitionableSlot && Offline =!= True && RalCluster =!= "wn-cloud" && StartJobs =?= True && NODE_IS_HEALTHY =?= True
-DEFRAG_REQUIREMENTS = PartitionableSlot && Offline =!= True && StartJobs =?= True 
+DEFRAG_REQUIREMENTS = <%= @defrag_requirements %>
+<% if @log_to_syslog == false -%>
 
 ## Logs
 MAX_DEFRAG_LOG = 104857600
 MAX_NUM_DEFRAG_LOG = 10
+<% end -%>
