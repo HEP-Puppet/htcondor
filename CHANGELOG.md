@@ -1,5 +1,21 @@
 # Change Log
 
+## [v2.4.2](https://github.com/hep-puppet/htcondor/tree/v2.4.2)
+
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.4.1...v2.4.2)
+
+**Closed issues:**
+
+- Typo in params.pp [\#114](https://github.com/HEP-Puppet/htcondor/issues/114)
+
+**Merged pull requests:**
+
+- Converting to a standard Puppet Development Kit module [\#116](https://github.com/HEP-Puppet/htcondor/pull/116) ([kreczko](https://github.com/kreczko))
+- fix \#114 [\#115](https://github.com/HEP-Puppet/htcondor/pull/115) ([ccnifo](https://github.com/ccnifo))
+
+## [v2.4.1](https://github.com/hep-puppet/htcondor/tree/v2.4.1) (2019-05-21)
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.4.0...v2.4.1)
+
 ## [v2.4.0](https://github.com/hep-puppet/htcondor/tree/v2.4.0) (2019-05-21)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.3.1...v2.4.0)
 

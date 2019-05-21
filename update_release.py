@@ -1,12 +1,12 @@
 import json
 import os
 import re
-
+from collections import OrderedDict
 
 def update_metadata_json(release):
     input_file = 'metadata.json'
     with open(input_file) as f:
-        content = json.load(f)
+        content = json.load(f, object_pairs_hook=OrderedDict)
 
     content['version'] = release
     with open(input_file, 'w+') as f:
