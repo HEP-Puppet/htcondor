@@ -1,7 +1,6 @@
 # Change Log
 
-## [v2.4.0](https://github.com/hep-puppet/htcondor/tree/v2.4.0)
-
+## [v2.4.0](https://github.com/hep-puppet/htcondor/tree/v2.4.0) (2019-05-21)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.3.1...v2.4.0)
 
 **Merged pull requests:**
