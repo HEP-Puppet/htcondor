@@ -26,3 +26,9 @@ matrix:
 
 notifications:
   email: false
+
+deploy:
+  provider: puppetforge
+  user: "HEPPuppet"
+  password:
+    secure: "cF7HLnEO05rYFNukshMcw00tFudutpBqP2PF25ypbru1q+qmg/uNJp09k61wOaPYHwk/ZkpzDByGelJSPRoA04cEa/j+CshkrxfOwTzRLgEhy2FZUoBhHCDxMeQ5evG+GbzIu62Tpl9vuvxQBdIO072uF6DWEn6SjoqJQohifRk="
