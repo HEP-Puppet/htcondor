@@ -41,6 +41,8 @@ SUBMIT_EXPRS = $(SUBMIT_EXPRS) AcctGroup, AcctSubGroup, AccountingGroup, Concurr
 
 <% end %>
 
+DNS_CACHE_REFRESH = <%= @dns_cache_refresh %>
+
 <% unless @enable_condor_reporting -%>
 # disable reports to condor-admin@cs.wisc.edu (http://research.cs.wisc.edu/htcondor/privacy.html)
 CONDOR_DEVELOPERS = NONE
