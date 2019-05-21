@@ -1,7 +1,24 @@
 # Change Log
 
-## [v2.1.0](https://github.com/hep-puppet/htcondor/tree/v2.1.0)
+## [v2.2.0](https://github.com/hep-puppet/htcondor/tree/v2.2.0)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.1.0...v2.2.0)
+
+**Closed issues:**
+
+- QUEUE\_SUPER\_USERS not set [\#97](https://github.com/HEP-Puppet/htcondor/issues/97)
+
+**Merged pull requests:**
+
+- Fix lint errors on Travis test [\#112](https://github.com/HEP-Puppet/htcondor/pull/112) ([ccnifo](https://github.com/ccnifo))
+- History and logging [\#105](https://github.com/HEP-Puppet/htcondor/pull/105) ([ccnifo](https://github.com/ccnifo))
+- fix requirements range error for travis test [\#104](https://github.com/HEP-Puppet/htcondor/pull/104) ([ccnifo](https://github.com/ccnifo))
+- Make healthcheck\_period configurable. [\#102](https://github.com/HEP-Puppet/htcondor/pull/102) ([olifre](https://github.com/olifre))
+- Add a "remote\_submit" role [\#101](https://github.com/HEP-Puppet/htcondor/pull/101) ([ccnifo](https://github.com/ccnifo))
+- Make claim\_worklife configurable. [\#100](https://github.com/HEP-Puppet/htcondor/pull/100) ([olifre](https://github.com/olifre))
+- Queue super users [\#99](https://github.com/HEP-Puppet/htcondor/pull/99) ([olifre](https://github.com/olifre))
+
+## [v2.1.0](https://github.com/hep-puppet/htcondor/tree/v2.1.0) (2018-07-17)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.0.9...v2.1.0)
 
 **Implemented enhancements:**
