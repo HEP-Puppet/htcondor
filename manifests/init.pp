@@ -149,7 +149,7 @@ class htcondor (
   $gpgcheck                       = $htcondor::params::gpgcheck,
   $gpgkey                         = $htcondor::params::gpgkey,
   $condor_major_version           = $htcondor::params::condor_major_version,
-  $versioned_repositories         = $htcondor::params::versioned_repositories,
+  $versioned_repos                = $htcondor::params::versioned_repos,
   $dev_repositories               = $htcondor::params::dev_repositories,
   $is_scheduler                   = $htcondor::params::is_scheduler,
   $is_remote_submit               = $htcondor::params::is_remote_submit,

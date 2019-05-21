@@ -3,7 +3,7 @@
 # Provides yum repositories for HTCondor installation
 class htcondor::repositories {
   $htcondor_major  = $htcondor::condor_major_version
-  $versioned_repos = $htcondor::versioned_repositories
+  $versioned_repos = $htcondor::versioned_repos
   $dev_repos       = $htcondor::dev_repositories
   $gpgcheck        = $htcondor::gpgcheck
   $gpgkey          = $htcondor::gpgkey
