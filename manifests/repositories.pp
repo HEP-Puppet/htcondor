@@ -45,8 +45,8 @@ class htcondor::repositories {
       $distro_name = downcase($facts['os']['name'])
       $distro_code = $facts['os']['distro']['codename']
       apt::source { 'htcondor':
-        allow_unsigned => false,
         ensure         => present,
+        allow_unsigned => false,
         comment        => "HTCondor ${distro_name} ${distro_code} Repository",
         location       => "http://research.cs.wisc.edu/htcondor/${distro_name}/${htcondor_major}/${distro_code}",
         repos          => 'contrib',
@@ -58,8 +58,8 @@ class htcondor::repositories {
           source => "http://research.cs.wisc.edu/htcondor/${distro_name}/HTCondor-Release.gpg.key",
         },
         include        => {
-          src    => false,
-          deb    => true,
+          src => false,
+          deb => true,
         },
         notify_update  => true,
       }
