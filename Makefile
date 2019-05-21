@@ -3,7 +3,8 @@ build:
 	pdk build
 
 changelog:
-	github_changelog_generator -u hep-puppet -p htcondor
+	@echo "Updating CHANGELOG.md"
+	@github_changelog_generator -u hep-puppet -p htcondor -t ${CHANGELOG_GITHUB_TOKEN}
 
 update_release:
 	@python update_release.py
