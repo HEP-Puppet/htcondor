@@ -1,7 +1,14 @@
 # Change Log
 
-## [v2.4.2](https://github.com/hep-puppet/htcondor/tree/v2.4.2)
+## [v2.4.3](https://github.com/hep-puppet/htcondor/tree/v2.4.3)
 
+[Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.4.2...v2.4.3)
+
+**Merged pull requests:**
+
+- Allow to define start\_always\_users. [\#108](https://github.com/HEP-Puppet/htcondor/pull/108) ([olifre](https://github.com/olifre))
+
+## [v2.4.2](https://github.com/hep-puppet/htcondor/tree/v2.4.2) (2019-05-21)
 [Full Changelog](https://github.com/hep-puppet/htcondor/compare/v2.4.1...v2.4.2)
 
 **Closed issues:**
