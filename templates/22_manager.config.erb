@@ -7,7 +7,12 @@ COLLECTOR_NAME = <%= @collector_name -%>
 START = FALSE
 
 ## Max number of processes to deal with query requests
-COLLECTOR_QUERY_WORKERS	= 16
+COLLECTOR_QUERY_WORKERS	= <%= @collector_query_workers -%>
+
+<% unless @collector_max_file_descriptors.nil? %>
+## Under Unix, maximum number of file descriptors to allow the collector to use.
+COLLECTOR_MAX_FILE_DESCRIPTORS = <%= @collector_max_file_descriptors -%>
+<% end %>
 
 ## Weight slots using CPUs
 NEGOTIATOR_USE_SLOT_WEIGHTS = True

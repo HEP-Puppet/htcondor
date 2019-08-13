@@ -12,6 +12,8 @@ class htcondor::params {
   $cluster_has_multiple_domains   = hiera('cluster_has_multiple_domains', false)
   $collector_name                 = hiera('collector_name', 'Personal Condor at $(FULL_HOSTNAME)'
   )
+  $collector_query_workers        = hiera('collector_query_workers', 16)
+  $collector_max_file_descriptors = hiera('collector_max_file_descriptors', undef)
   $repo_priority                  = hiera('repo_priority', '99')
   $condor_version                 = hiera('condor_version', 'present')
   $custom_machine_attributes      = hiera_hash('custom_machine_attribute', {})

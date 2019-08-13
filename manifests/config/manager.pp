@@ -17,6 +17,8 @@ class htcondor::config::manager {
   $priority_halflife               = $htcondor::priority_halflife
   # /etc/condor/config.d/22_manager.config
   $collector_name                  = $htcondor::collector_name
+  $collector_query_workers         = $htcondor::collector_query_workers
+  $collector_max_file_descriptors  = $htcondor::collector_max_file_descriptors
   $daemon_list                     = $htcondor::config::daemon_list
   # /etc/condor/config.d/33_defrag.config
   $defrag_interval                 = $htcondor::defrag_interval
