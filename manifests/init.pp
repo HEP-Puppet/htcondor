@@ -22,6 +22,14 @@
 # Sets COLLECTOR_NAME in 22_manager.config
 # Default: 'Personal Condor at $(FULL_HOSTNAME)'
 #
+# [*collector_query_workers*]
+# Sets COLLECTOR_QUERY_WORKERS in 22_manager.config
+# Default: 16
+#
+# [*collector_max_file_descriptors*]
+# Sets COLLECTOR_MAX_FILE_DESCRIPTORS in 22_manager.config if defined
+# Default: undef
+#
 # [*schedulers*]
 # List of schedulers that are allowed to submit jobs to the HTCondor pool
 #
@@ -112,6 +120,8 @@ class htcondor (
   $cluster_has_multiple_domains   =
   $htcondor::params::cluster_has_multiple_domains,
   $collector_name                 = $htcondor::params::collector_name,
+  $collector_query_workers        = $htcondor::params::collector_query_workers,
+  $collector_max_file_descriptors = $htcondor::params::collector_max_file_descriptors,
   $email_domain                   = $htcondor::params::email_domain,
   $schedulers                     = $htcondor::params::schedulers,
   $admin_email                    = $htcondor::params::admin_email,
