@@ -144,6 +144,7 @@ class htcondor::params {
   )
   $pool_password_file             = hiera('pool_password_file', "puppet:///modules/${module_name}/pool_password"
   )
+  $users_list                     = hiera('users_list', '*@$(UID_DOMAIN)')
   $ssl_server_keyfile             = hiera('ssl_server_keyfile', '')
   $ssl_client_keyfile             = hiera('ssl_client_keyfile', '')
   $ssl_server_certfile            = hiera('ssl_server_certfile', '')

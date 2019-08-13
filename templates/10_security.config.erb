@@ -33,7 +33,7 @@ WNS = \
 <%= @worker_list.sort.map { |k| "      #{k}" }.join(", \\\n") -%>
 <% end %>
 
-USERS = *@$(UID_DOMAIN)
+USERS = <%= @users_list %>
 
 # Clear out any old-style HOSTALLOW settings:
 HOSTALLOW_READ =
