@@ -80,6 +80,10 @@
 # [*pool_password*]
 # Path to pool password file.
 #
+# [*users_list*]
+# customize the list of users in SCHEDD.ALLOW_WRITE
+# Default: *@$(UID_DOMAIN)
+#
 # [*uid_domain*]
 # Condor UID_DOMAIN
 # Default: example.com
