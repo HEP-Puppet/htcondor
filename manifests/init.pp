@@ -175,6 +175,7 @@ class htcondor (
   $leave_job_in_queue             = $htcondor::params::leave_job_in_queue,
   $ganglia_cluster_name           = $htcondor::params::ganglia_cluster_name,
   $pool_password                  = $htcondor::params::pool_password_file,
+  $users_list                     = $htcondor::params::users_list,
   $uid_domain                     = $htcondor::params::uid_domain,
   $default_domain_name            = $htcondor::params::default_domain_name,
   $filesystem_domain              = $htcondor::params::filesystem_domain,

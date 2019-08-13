@@ -11,6 +11,7 @@ class htcondor::config::security (
   $condor_user                  = $htcondor::condor_user
   $condor_group                 = $htcondor::condor_group
   $pool_password_file           = $htcondor::pool_password
+  $users_list                   = $htcondor::users_list
 
   $schedulers                   = $htcondor::schedulers
   $managers                     = $htcondor::managers
