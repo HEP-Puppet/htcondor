@@ -24,7 +24,6 @@ class htcondor::config::common {
 
   # files common between machines
   file { '/etc/condor/config.d/00_config_local.config':
-    backup  => ".bak.${now}",
     content => template($template_config_local),
     require => Package['condor'],
     owner   => $condor_user,
