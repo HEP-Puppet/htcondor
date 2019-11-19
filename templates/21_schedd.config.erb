@@ -58,3 +58,7 @@ SUBMIT_REQUIREMENT_NAMES = $(SUBMIT_REQUIREMENT_NAMES) NotBlockedUser
 SUBMIT_REQUIREMENT_NotBlockedUser = <%= @schedd_blocked_users.map { |s| "Owner != \"#{s}\"" }.join(' && ') %>
 SUBMIT_REQUIREMENT_NotBlockedUser_REASON = "<%= @schedd_blocked_user_msg %>"
 <% end -%>
+
+JOB_DEFAULT_REQUESTCPUS = <%= @job_default_requestcpus %>
+JOB_DEFAULT_REQUESTDISK = <%= @job_default_requestdisk %>
+JOB_DEFAULT_REQUESTMEMORY = <%= @job_default_requestmemory %>

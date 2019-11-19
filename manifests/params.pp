@@ -161,6 +161,11 @@ class htcondor::params {
   $schedd_blocked_users           = hiera_array('schedd_blocked_users', [])
   $schedd_blocked_user_msg        = hiera('schedd_blocked_user_msg', 'Submission is blocked for you, please contact cluster admins.')
 
+  # Job default resource requests. These are interpreted as expressions.
+  $job_default_requestcpus        = hiera('job_default_requestcpus', '1')
+  $job_default_requestdisk        = hiera('job_default_requestdisk', 'DiskUsage')
+  $job_default_requestmemory      = hiera('job_default_requestmemory', 'ifthenelse(MemoryUsage =!= UNDEFINED,MemoryUsage,(ImageSize+1023)/1024)')
+
   # SharedPort service configuration
   $use_shared_port                = hiera('use_shared_port', false)
   $shared_port                    = hiera('shared_port', 9618)
