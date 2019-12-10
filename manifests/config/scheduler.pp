@@ -23,6 +23,9 @@ class htcondor::config::scheduler {
   $daemon_list                = $htcondor::config::daemon_list
   $schedd_blocked_users       = $htcondor::schedd_blocked_users
   $schedd_blocked_user_msg    = $htcondor::schedd_blocked_user_msg
+  $job_default_requestcpus    = $htcondor::job_default_requestcpus
+  $job_default_requestdisk    = $htcondor::job_default_requestdisk
+  $job_default_requestmemory  = $htcondor::job_default_requestmemory
   # template files
   $template_ganglia           = $htcondor::template_ganglia
   $template_queues            = $htcondor::template_queues
