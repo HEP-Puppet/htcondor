@@ -15,7 +15,7 @@ class htcondor::repositories {
       if $dev_repos {
         yumrepo { 'htcondor-development':
           descr    => "HTCondor Development RPM Repository for Redhat Enterprise Linux ${facts['os']['release']['major']}",
-          baseurl  => 'http://research.cs.wisc.edu/htcondor/yum/development/rhel$releasever',
+          baseurl  => 'https://research.cs.wisc.edu/htcondor/yum/development/rhel$releasever',
           enabled  => 1,
           gpgcheck => bool2num($gpgcheck),
           gpgkey   => $gpgkey,
@@ -25,9 +25,9 @@ class htcondor::repositories {
         }
       } else {
         if $versioned_repos {
-          $repo_url = "http://research.cs.wisc.edu/htcondor/yum/stable/${htcondor_major}/rhel\$releasever"
+          $repo_url = "https://research.cs.wisc.edu/htcondor/yum/stable/${htcondor_major}/rhel\$releasever"
         } else {
-          $repo_url = 'http://research.cs.wisc.edu/htcondor/yum/stable/rhel$releasever'
+          $repo_url = 'https://research.cs.wisc.edu/htcondor/yum/stable/rhel$releasever'
         }
         yumrepo { 'htcondor-stable':
           descr    => "HTCondor Stable RPM Repository for Redhat Enterprise Linux ${facts['os']['release']['major']}",
@@ -48,14 +48,14 @@ class htcondor::repositories {
         ensure         => present,
         allow_unsigned => false,
         comment        => "HTCondor ${distro_name} ${distro_code} Repository",
-        location       => "http://research.cs.wisc.edu/htcondor/${distro_name}/${htcondor_major}/${distro_code}",
+        location       => "https://research.cs.wisc.edu/htcondor/${distro_name}/${htcondor_major}/${distro_code}",
         repos          => 'contrib',
         release        => $distro_code,
         architecture   => 'amd64',
         key            => {
           ensure => refreshed,
           id     => '4B9D355DF3674E0E272D2E0A973FC7D2670079F6',
-          source => "http://research.cs.wisc.edu/htcondor/${distro_name}/HTCondor-Release.gpg.key",
+          source => "https://research.cs.wisc.edu/htcondor/${distro_name}/HTCondor-Release.gpg.key",
         },
         include        => {
           src => false,
