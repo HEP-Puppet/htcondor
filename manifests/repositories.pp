@@ -48,7 +48,7 @@ class htcondor::repositories {
         allow_unsigned => false,
         comment        => "HTCondor ${distro_name} Repository",
         location       => "https://research.cs.wisc.edu/htcondor/repo/${distro_name}/${htcondor_major}",
-        repos          => 'contrib',
+        repos          => 'main',
         release        => $distro_code,
         architecture   => 'amd64',
         key            => {
