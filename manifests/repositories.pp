@@ -25,7 +25,7 @@ class htcondor::repositories {
         }
       } else {
         if $versioned_repos {
-          $repo_url = "https://research.cs.wisc.edu/htcondor/yum/stable/${htcondor_major}/rhel\$releasever"
+          $repo_url = "https://research.cs.wisc.edu/htcondor/repo/${htcondor_major}/el\$releasever/release"
         } else {
           $repo_url = 'https://research.cs.wisc.edu/htcondor/yum/stable/rhel$releasever'
         }
@@ -43,13 +43,12 @@ class htcondor::repositories {
     }
     'Debian'  : {
       $distro_name = downcase($facts['os']['name'])
-      $distro_code = $facts['os']['distro']['codename']
       apt::source { 'htcondor':
         ensure         => present,
         allow_unsigned => false,
-        comment        => "HTCondor ${distro_name} ${distro_code} Repository",
-        location       => "https://research.cs.wisc.edu/htcondor/${distro_name}/${htcondor_major}/${distro_code}",
-        repos          => 'contrib',
+        comment        => "HTCondor ${distro_name} Repository",
+        location       => "https://research.cs.wisc.edu/htcondor/repo/${distro_name}/${htcondor_major}",
+        repos          => 'main',
         release        => $distro_code,
         architecture   => 'amd64',
         key            => {
