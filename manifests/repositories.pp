@@ -43,6 +43,7 @@ class htcondor::repositories {
     }
     'Debian'  : {
       $distro_name = downcase($facts['os']['name'])
+      $distro_code = $facts['os']['distro']['codename']
       apt::source { 'htcondor':
         ensure         => present,
         allow_unsigned => false,
