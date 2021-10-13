@@ -229,4 +229,9 @@ class htcondor::params {
   )
   $template_singularity           = hiera('template_singularity', "${module_name}/50_singularity.config.erb"
   )
+  $template_metaknob_submit       = hiera('template_metaknob_submit', "${module_name}/01_metaknob_submit.config.erb"
+  )
+  
+  # Enable support of get_htcondor metaknob
+  $use_get_htcondor_metaknob      = hiera('use_get_htcondor_metaknob', false)
 }

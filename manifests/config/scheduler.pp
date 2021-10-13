@@ -1,6 +1,9 @@
 # htcondor::config::scheduler
 class htcondor::config::scheduler {
-  include htcondor::config::security
+  # the get_htcondor metaknob will take of security configuration
+  if ! $htcondor::condor_user::use_get_htcondor_metaknob {
+    include htcondor::config::security
+  }
 
   # general - manifest or 1 or more configs
   $condor_user                = $htcondor::condor_user
@@ -31,7 +34,18 @@ class htcondor::config::scheduler {
   $template_queues            = $htcondor::template_queues
   $template_resourcelimits    = $htcondor::template_resourcelimits
   $template_schedd            = $htcondor::template_schedd
+  $template_metaknob_submit   = $htcondor::template_metaknob_submit
 
+  if $htcondor::condor_user::use_get_htcondor_metaknob {
+    file { '/etc/condor/config.d/01_metaknob_submit.config':
+      content => template($template_metaknob_submit),
+      require => Package['condor'],
+      owner   => $condor_user,
+      group   => $condor_group,
+      mode    => '0644',
+      notify  => Exec['/usr/sbin/condor_reconfig'],
+    }
+  }
   file { '/etc/condor/config.d/12_resourcelimits.config':
     content => template($template_resourcelimits),
     require => Package['condor'],
