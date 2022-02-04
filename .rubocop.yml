@@ -1,8 +1,10 @@
 ---
-require: rubocop-rspec
+require:
+ - rubocop-rspec
+ - rubocop-i18n
 AllCops:
   DisplayCopNames: true
-  TargetRubyVersion: '2.1'
+  TargetRubyVersion: '2.7'
   Include:
   - "./**/*.rb"
   Exclude:
@@ -16,10 +18,10 @@ AllCops:
   - "**/Puppetfile"
   - "**/Vagrantfile"
   - "**/Guardfile"
-Metrics/LineLength:
+Layout/LineLength:
   Description: People have wide screens, use them.
   Max: 200
-GetText/DecorateString:
+I18n/GetText/DecorateString:
   Description: We don't want to decorate test output.
   Exclude:
   - spec/*
@@ -63,7 +65,11 @@ Style/TrailingCommaInArguments:
   Description: Prefer always trailing comma on multiline argument lists. This makes
     diffs, and re-ordering nicer.
   EnforcedStyleForMultiline: comma
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+  Description: Prefer always trailing comma on multiline literals. This makes diffs,
+    and re-ordering nicer.
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
   Description: Prefer always trailing comma on multiline literals. This makes diffs,
     and re-ordering nicer.
   EnforcedStyleForMultiline: comma
@@ -86,7 +92,7 @@ Style/StringMethods:
   Enabled: true
 Layout/EndOfLine:
   Enabled: false
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Enabled: false
 Metrics/AbcSize:
   Enabled: false
