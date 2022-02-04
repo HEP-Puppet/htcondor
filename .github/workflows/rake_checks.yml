@@ -1,0 +1,66 @@
+name: Run rake tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  rake-static:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        checks:
+          - check:symlinks
+          - check:git_ignore
+          - check:dot_underscore
+          - check:test_file
+          - rubocop
+          - syntax
+          - lint
+          - metadata_lint
+          - parallel_spec
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prepare bundle
+        run: |
+          sudo apt install bundler
+          bundle -v
+          rm -f Gemfile.lock
+          bundle install --path=~/test_bundle
+          bundle config set without 'system_tests'
+
+      - name: Run checks
+        run: |
+          bundle exec rake ${{ matrix.checks }}
+
+  rake-spec:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        puppet_version:
+          - "~> 6.0"
+          - "~> 7.0"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prepare bundle
+        env:
+          PUPPET_GEM_VERSION: ${{ matrix.puppet_version }}
+        run: |
+          sudo apt install bundler
+          bundle -v
+          rm -f Gemfile.lock
+          bundle install --path=~/test_bundle
+          bundle config set without 'system_tests'
+
+      - name: Run spec tests
+        run: |
+          bundle exec rake parallel_spec
