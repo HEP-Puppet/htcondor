@@ -29,7 +29,7 @@ jobs:
       with:
         ref: ${{ steps.vars.outputs.tag }}
     - name: Build and publish module
-      uses: barnumbirr/action-forge-publish@v2.12.0
+      uses: barnumbirr/action-forge-publish@v2.10.0
       if: github.event_name == 'release' && github.event.action == 'published'
       env:
        FORGE_API_KEY: ${{ secrets.FORGE_API_KEY }}
