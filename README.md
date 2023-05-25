@@ -100,7 +100,7 @@ The binding of the two HTCondor specific directories is a workaround to allow in
 The same holds for setting `SINGULARITY_HOME`: This ensures non-interactive jobs start in the job's working directory instead of the user's home directory which might not even be accessible from the worker.
 
 The Image in this example is a simple string, but the variable allows to set an HTCondor expression. Hence, for a simple string, one needs to add explicit double quotes. One more complex example relying on a custom JobAd variable `ContainerOS` would be:
-```
+```puppet
 singularity_image_expr   => 'ifThenElse(TARGET.ContainerOS is "Ubuntu1604", "/somewhere/Ubuntu1604", "/somewhere/SL6")',
 ```
 More details on that are provided in the [HTCondor documentation](http://research.cs.wisc.edu/htcondor/manual/v8.7/SingularitySupport.html).
@@ -110,7 +110,7 @@ More details on that are provided in the [HTCondor documentation](http://researc
 The module provides support for Kerberos auth, to the extent to which this is implemented in HTCondor.
 
 Example configuration parameters could be:
-```
+```puppet
 use_kerberos_auth => true,
 krb_srv_keytab    => '/etc/condor/condor.keytab',
 krb_srv_principal => 'condor-daemon/$(FULL_HOSTNAME)@MYREALM',
@@ -122,21 +122,21 @@ This will deploy a map file containing the entries listed in the `krb_mapfile_en
 
 ## Logging
 If you want HTCondor to use custom logging parameters, you may specify `use_custom_logs` and the `logging_parameters` hash with the `{parameter_name => desired_value}` form. For example:
-```
+```puppet
 use_custom_logs     => true,
 logging_parameters => { 'SCHEDD_DEBUG' => 'D_NETWORK,D_PROTOCOL', NEGOTIATOR_DEBUG' => 'D_FULLDEBUG', ... }
 ```
 Please note that no verification is applied, you have to carefully check your syntax to ensure daemons will restart correctly.
 
 If you want HTCondor to log to syslog, there's a specific `log_to_syslog` boolean predefined, which defaults to false. To enable it:
-```
+```puppet
 use_custom_logs => true,
 log_to_syslog   => true,
 ```
 
 ## Custom parameters
 If you want HTCondor to use custom parameters which are not managed elsewhere in the module, you may specify `custom_knobs` hash with the `{parameter_name => desired_value}` form. For example:
-```
+```puppet
 custom_knobs => { 'CLAIM_PARTITIONABLE_LEFTOVERS' => 'false', ... }
 ```
 Please note that:
@@ -152,7 +152,9 @@ Please note that:
 ### Contributing
 ### Running tests
 Please run
-```bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'```
+```bash
+bundle exec rake validate && bundle exec rake lint && bundle exec rake spec SPEC_OPTS='--format documentation'
+```
 and make sure no errors are present when submitting code.
 
 ### Generating changlelog

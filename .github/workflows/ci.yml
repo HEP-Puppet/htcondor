@@ -1,0 +1,36 @@
+name: Run pdk static validation
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Run pdk validate
+        uses: puppets-epic-show-theatre/action-pdk-validate@v1
+    strategy:
+      matrix:
+        puppet-version: ["6.28.0", "7.18.0"]
+  publish:
+    runs-on: ubuntu-latest
+    needs: [validate]
+    
+    steps:
+    - name: Get latest tag
+      id: vars
+      run: echo "{tag}=${GITHUB_REF:10}" >> $GITHUB_OUTPUT
+    - name: Clone repository
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ steps.vars.outputs.tag }}
+    - name: Build and publish module
+      uses: barnumbirr/action-forge-publish@v2.10.0
+      if: github.event_name == 'release' && github.event.action == 'published'
+      env:
+       FORGE_API_KEY: ${{ secrets.FORGE_API_KEY }}
+       REPOSITORY_URL: https://forgeapi.puppet.com/v3/releases
