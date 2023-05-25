@@ -169,7 +169,10 @@ class htcondor::params {
   # Job default resource requests. These are interpreted as expressions.
   $job_default_requestcpus        = hiera('job_default_requestcpus', '1')
   $job_default_requestdisk        = hiera('job_default_requestdisk', 'DiskUsage')
-  $job_default_requestmemory      = hiera('job_default_requestmemory', 'ifthenelse(MemoryUsage =!= UNDEFINED,MemoryUsage,(ImageSize+1023)/1024)')
+  $job_default_requestmemory      = hiera(
+    'job_default_requestmemory',
+    'ifthenelse(MemoryUsage =!= UNDEFINED,MemoryUsage,(ImageSize+1023)/1024)'
+  )
 
   # SharedPort service configuration
   $use_shared_port                = hiera('use_shared_port', false)
