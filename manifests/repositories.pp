@@ -7,6 +7,8 @@ class htcondor::repositories {
   $dev_repos       = $htcondor::dev_repositories
   $gpgcheck        = $htcondor::gpgcheck
   $gpgkey          = $htcondor::gpgkey
+  $apt_key_id      = $htcondor::apt_key_id
+  $apt_key_source  = $htcondor::apt_key_source
   $condor_priority = $htcondor::condor_priority
   $major_release   = regsubst($::operatingsystemrelease, '^(\d+)\.\d+$', '\1')
 
@@ -54,8 +56,8 @@ class htcondor::repositories {
         architecture   => 'amd64',
         key            => {
           ensure => refreshed,
-          id     => '4B9D355DF3674E0E272D2E0A973FC7D2670079F6',
-          source => "https://research.cs.wisc.edu/htcondor/${distro_name}/HTCondor-Release.gpg.key",
+          id     => $apt_key_id,
+          source => $apt_key_source,
         },
         include        => {
           src => false,

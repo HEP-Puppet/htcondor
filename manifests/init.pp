@@ -63,6 +63,12 @@
 # [*gpgkey*]
 # URL of the GPG key used to sign the packages
 #
+# [*apt_key_id*]
+# ID of the GPG key used for apt repository
+#
+# [*apt_key_source*]
+# URL to the GPG key used for apt repository
+#
 # [*$is_scheduler*]
 # If current machine is a condor scheduler
 #
@@ -163,6 +169,8 @@ class htcondor (
   $install_repositories           = $htcondor::params::install_repositories,
   $gpgcheck                       = $htcondor::params::gpgcheck,
   $gpgkey                         = $htcondor::params::gpgkey,
+  $apt_key_id                     = $htcondor::params::apt_key_id,
+  $apt_key_source                 = $htcondor::params::apt_key_source,
   $condor_major_version           = $htcondor::params::condor_major_version,
   $versioned_repos                = $htcondor::params::versioned_repos,
   $dev_repositories               = $htcondor::params::dev_repositories,
