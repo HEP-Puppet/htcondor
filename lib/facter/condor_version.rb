@@ -4,10 +4,6 @@
 #
 Facter.add(:condor_version) do
   setcode do
-    begin
-      Facter::Util::Resolution.exec('condor_version 2>&1').split('\n')[0].split(' ')[1]
-    rescue StandardError
-      Facter.debug('condor_version not available')
-    end
+    Facter::Util::Resolution.exec('condor_version 2>&1').split('\n')[0].split(' ')[1]
   end
 end
