@@ -42,12 +42,11 @@ class htcondor::params {
   if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] == '7' {
     $htcondor_cgroup_default = '/system.slice/condor.service'
   }
-  else{
+  else {
     $htcondor_cgroup_default = 'htcondor'
   }
   $htcondor_cgroup                = hiera('htcondor_cgroup', $htcondor_cgroup_default)
   $cgroup_memory_limit            = hiera('cgroup_memory_limit', 'soft')
-
 
   $high_priority_groups           = hiera_hash('high_priority_groups', undef)
 
@@ -60,7 +59,7 @@ class htcondor::params {
     'CMS.production' => {
       priority_factor => 10000.00,
       dynamic_quota   => 0.95,
-    }
+    },
   }
   $accounting_groups              = hiera_hash('accounting_groups',
   $default_accounting_groups)
@@ -87,8 +86,8 @@ class htcondor::params {
 
   $machine_owner                  = hiera('machine_owner', 'physics')
 
-  $number_of_cpus                 = hiera('number_of_cpus', $::processors['count'
-    ])
+  $number_of_cpus                 = hiera('number_of_cpus', $facts['processors']['count'],
+  )
 
   $partitionable_slots            = hiera('partitionable_slots', true)
   $memory_overcommit              = hiera('memory_overcommit', 1.5)
@@ -113,7 +112,7 @@ class htcondor::params {
 
   $uid_domain                     = hiera('uid_domain', 'example.org')
   $default_domain_name            = hiera('default_domain_name', $uid_domain)
-  $filesystem_domain              = hiera('filesystem_domain', $::fqdn)
+  $filesystem_domain              = hiera('filesystem_domain', $facts['networking']['fqdn'])
 
   $use_accounting_groups          = hiera('use_accounting_groups', false)
   $use_htcondor_account_mapping   = hiera('use_htcondor_account_mapping', true)
@@ -160,7 +159,7 @@ class htcondor::params {
 
   # for private networks
   $uses_connection_broker         = hiera('uses_connection_broker', false)
-  $private_network_name           = hiera('private_network_name', $::domain)
+  $private_network_name           = hiera('private_network_name', $facts['networking']['domain'])
 
   # Schedd configuration
   $schedd_blocked_users           = hiera_array('schedd_blocked_users', [])

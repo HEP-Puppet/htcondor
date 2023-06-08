@@ -1,65 +1,27 @@
+# @summary
 # This class is used to configure the security settings for HTCondor.
 #
-# Parameters:
-#   $krb_srv_keytab: the path to the keytab file for the HTCondor service
-#   $krb_srv_principal: the principal name for the HTCondor service
-#   $krb_srv_user: the user name for the HTCondor service
-#   $krb_srv_service: the service name for the HTCondor service
-#   $krb_client_keytab: the path to the keytab file for the HTCondor client
-#   $krb_mapfile_entries: an array of entries for the Kerberos mapfile
+# @param krb_srv_keytab
+#   the path to the keytab file for the HTCondor service
 #
-#   $condor_user: the user name for the HTCondor service
-#   $condor_group: the group name for the HTCondor service
-#   $pool_password_file: the path to the pool password file
-#   $users_list: an array of users to be added to the HTCondor authorization
-#     configuration
+# @param krb_srv_principal
+#    the principal name for the HTCondor service
+# 
+# @param krb_srv_user
+#   the user name for the HTCondor service
 #
-#   $schedulers: an array of machines that are schedulers
-#   $managers: an array of machines that are managers
-#   $workers: an array of machines that are workers
+# @param krb_srv_service [String] The service name for the HTCondor service.
+# @param krb_client_keytab [String] The path to the keytab file for the HTCondor client.
+# @param krb_mapfile_entries [Array] An array of entries for the Kerberos mapfile.
 #
-#   $queue_super_users: an array of users that are super users
-#   $queue_super_user_impersonate: an array of users that are super users
-#     that can impersonate other users
-#   $use_anonymous_auth: a boolean indicating whether to use anonymous
-#     authentication
-#   $use_fs_auth: a boolean indicating whether to use file system
-#     authentication
-#   $use_password_auth: a boolean indicating whether to use password
-#     authentication
-#   $use_kerberos_auth: a boolean indicating whether to use Kerberos
-#     authentication
-#   $use_claim_to_be_auth: a boolean indicating whether to use claim-to-be
-#     authentication
-#   $use_ssl_auth: a boolean indicating whether to use SSL authentication
-#
-#   $use_cert_map_file: a boolean indicating whether to use a certificate map
-#     file
-#   $cert_map_file: the path to the certificate map file
-#   $cert_map_file_source: the source of the certificate map file
-#
-#   $use_krb_map_file: a boolean indicating whether to use a Kerberos map file
-#   $krb_map_file: the path to the Kerberos map file
-#   $krb_map_file_template: the path to the Kerberos map file template
-#
-#   $ssl_server_keyfile: the path to the SSL server key file
-#   $ssl_client_keyfile: the path to the SSL client key file
-#   $ssl_server_certfile: the path to the SSL server certificate file
-#   $ssl_client_certfile: the path to the SSL client certificate file
-#   $ssl_server_cafile: the path to the SSL server CA file
-#   $ssl_client_cafile: the path to the SSL client CA file
-#   $ssl_server_cadir: the path to the SSL server CA directory
-#   $ssl_client_cadir: the path to the SSL client CA directory
-
 class htcondor::config::security (
-  $krb_srv_keytab      = $htcondor::krb_srv_keytab,
-  $krb_srv_principal   = $htcondor::krb_srv_principal,
-  $krb_srv_user        = $htcondor::krb_srv_user,
-  $krb_srv_service     = $htcondor::krb_srv_service,
-  $krb_client_keytab   = $htcondor::krb_client_keytab,
-  $krb_mapfile_entries = $htcondor::krb_mapfile_entries,
-)
-{
+  String $krb_srv_keytab      = $htcondor::krb_srv_keytab,
+  String $krb_srv_principal   = $htcondor::krb_srv_principal,
+  String $krb_srv_user        = $htcondor::krb_srv_user,
+  String $krb_srv_service     = $htcondor::krb_srv_service,
+  String $krb_client_keytab   = $htcondor::krb_client_keytab,
+  Hash $krb_mapfile_entries = $htcondor::krb_mapfile_entries,
+) {
   # general - manifest or 1 or more configs
   $condor_user                  = $htcondor::condor_user
   $condor_group                 = $htcondor::condor_group
@@ -112,7 +74,7 @@ class htcondor::config::security (
   $template_security            = $htcondor::template_security
 
   $auth_string                  = construct_auth_string($use_fs_auth,
-  $use_password_auth, $use_kerberos_auth, $use_claim_to_be_auth,
+    $use_password_auth, $use_kerberos_auth, $use_claim_to_be_auth,
   $use_anonymous_auth, $use_ssl_auth)
 
   # because HTCondor uses user 'condor_pool' for remote access
@@ -152,7 +114,7 @@ class htcondor::config::security (
     # 06/12/14 15:38:40 error: SEC_PASSWORD_FILE must be owned by Condor's real
     # uid
     file { '/etc/condor/pool_password':
-      ensure => present,
+      ensure => file,
       source => $pool_password_file,
       owner  => root,
       group  => root,
@@ -162,7 +124,7 @@ class htcondor::config::security (
 
   if $use_cert_map_file {
     file { $cert_map_file:
-      ensure => present,
+      ensure => file,
       source => $cert_map_file_source,
       owner  => $condor_user,
       group  => $condor_group,
@@ -172,7 +134,7 @@ class htcondor::config::security (
   if $use_kerberos_auth {
     if $use_krb_map_file {
       file { $krb_map_file:
-        ensure  => present,
+        ensure  => file,
         content => template($krb_map_file_template),
         owner   => $condor_user,
         group   => $condor_group,

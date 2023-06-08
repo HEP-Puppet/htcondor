@@ -10,9 +10,9 @@ class htcondor::repositories {
   $apt_key_id      = $htcondor::apt_key_id
   $apt_key_source  = $htcondor::apt_key_source
   $condor_priority = $htcondor::condor_priority
-  $major_release   = regsubst($::operatingsystemrelease, '^(\d+)\.\d+$', '\1')
+  $major_release   = regsubst($facts['os']['name'], '^(\d+)\.\d+$', '\1')
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat'  : {
       if $dev_repos {
         yumrepo { 'htcondor-development':
@@ -71,10 +71,9 @@ class htcondor::repositories {
       notify { 'Windows based systems currently not supported': }
     }
     default   : {
-      $osfamily = $::osfamily
+      $osfamily = $facts['os']['family']
 
       notify { "OS family '${osfamily}' not recognised": }
     }
   }
-
 }
