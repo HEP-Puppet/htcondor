@@ -69,7 +69,7 @@ class htcondor::config::worker {
   if $pool_create {
     $condor_directories = [
       $pool_home,
-      '/etc/condor/persistent']
+    '/etc/condor/persistent']
     file { "${pool_home}/condor":
       ensure  => directory,
       owner   => 'condor',

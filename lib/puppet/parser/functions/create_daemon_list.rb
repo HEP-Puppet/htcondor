@@ -1,9 +1,10 @@
 module Puppet::Parser::Functions
   # rubocop:disable Style/HashSyntax
-  newfunction(:create_daemon_list, :type => :rvalue, :doc => <<-DOC
-    Parses bool array of enabled roles into a comma-separated list of condor daemons
-    DOC
-             ) do |args|
+  newfunction(
+    :create_daemon_list,
+    :type => :rvalue,
+    :doc => 'Parses bool array of enabled roles into a comma-separated list of condor daemons',
+  ) do |args|
     # rubocop:enable Style/HashSyntax
     raise(Puppet::ParseError, "create_daemon_list() wrong number of arguments. Given: #{args.size} for 6)") if args.size != 6
     is_worker = args[0]

@@ -86,5 +86,4 @@ class htcondor::config {
     class { 'htcondor::config::worker': }
     contain 'htcondor::config::worker'
   }
-
 }
